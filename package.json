@@ -1,0 +1,11 @@
+{
+  "name": "house-chat-sdk",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "repository": "git@github.com:Generative-Labs/house_chat_SDK.git",
+  "author": "<fanxiangyu66@163.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}
