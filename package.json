@@ -1,11 +1,42 @@
 {
   "name": "house-chat-sdk",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "lib/index.esm.js",
   "repository": "git@github.com:Generative-Labs/house_chat_SDK.git",
   "author": "<fanxiangyu66@163.com>",
+  "scripts": {
+    "dev": "set NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
+    "build": "rm -fr lib && set NODE_ENV=production&& rollup -c rollup.config.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "types": "lib/index.d.ts",
   "license": "MIT",
   "devDependencies": {
+    "@typescript-eslint/parser": "^5.12.0",
+    "axios": "^0.26.0",
+    "eslint": "^8.9.0",
+    "husky": "3.0.9",
+    "lint-staged": "^11.2.6",
+    "rollup": "^2.67.2",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.31.2",
     "typescript": "^4.5.5"
   }
 }

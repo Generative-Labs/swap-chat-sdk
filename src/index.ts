@@ -1,4 +1,10 @@
+import request from '@/core/request';
+
 const fun = () => {
-  return '测试';
+  request.get('/onetime_jwt');
+  return '123';
 };
-export { fun };
+
+fun();
+
+export default fun;
