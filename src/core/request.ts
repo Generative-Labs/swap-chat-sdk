@@ -2,7 +2,9 @@
 import axios from 'axios/dist/axios';
 
 import { BASE_URL, getToken } from './config';
+import { TOKEN_KEY_MAP } from '@/types/requestType';
 
+const refreshAPIUrl = `${BASE_URL}/refresh`;
 const request = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -13,12 +15,32 @@ const request = axios.create({
 });
 
 request.interceptors.request.use(
-  (config: any) => {
+  async (config: any) => {
     const newConfig = { ...config };
-    const { url } = newConfig;
-    if (getToken(url as string)) {
-      //@ts-ignore
-      newConfig.headers['Authorization'] = getToken(url);
+    let accessToken = getToken();
+    if (accessToken) {
+      let jwtToken = accessToken.substring(7);
+      let tokenArr = jwtToken.split('.');
+      let tokenObj = JSON.parse(atob(tokenArr[1]));
+      let accessExpiredAt = tokenObj.access_expired_at;
+      const dateTime = Date.now();
+      const timestamp = Math.floor(dateTime / 1000);
+      if (timestamp >= accessExpiredAt) {
+        // ready to refresh token
+        console.log('ready to refresh token');
+        const token = await axios.get(refreshAPIUrl, {
+          headers: {
+            Authorization: accessToken,
+          },
+        });
+        if (token.data.data.access_token) {
+          localStorage.setItem(
+            TOKEN_KEY_MAP.ACCESS_TOKEN,
+            token.data.data.access_token
+          );
+        }
+      }
+      newConfig.headers['Authorization'] = getToken();
     }
     return newConfig;
   },
@@ -30,7 +52,10 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response: any) => {
     const { data } = response;
-    return data;
+    if (data.code !== 0) {
+      throw new Error(data.msg);
+    }
+    return data.data;
   },
   (error: any) => {
     const { status, data } = error.response;
