@@ -5,7 +5,70 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>example</title>
+    <style>
+      #box1 {
+        padding: 30px;
+        border: 1px solid red;
+        height: 400px;
+      }
+      #box2 {
+        padding: 30px;
+        margin-top: 50px;
+        border: 1px solid blue;
+        height: 400px;
+      }
+      #show1 {
+        height: 300px;
+        border: 1px solid red;
+      }
+      #show2 {
+        height: 300px;
+        border: 1px solid blue;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div id="box1">
+      <input type="text" id="user1input" />
+      <button id="user1btn">用户一发送</button>
+      <div id="show1">show1</div>
+    </div>
+    <div id="box2">
+      <input type="text" id="user2input" />
+      <button id="user2btn">用户二发送</button>
+      <div id="show2">show2</div>
+    </div>
+  </body>
   <script src="../dist/index.js"></script>
+  <script>
+    ws.init();
+    const btn1 = document.getElementById('user1btn');
+    const btn2 = document.getElementById('user2btn');
+    const text1 = document.getElementById('user1input');
+    const text2 = document.getElementById('user2input');
+    const show1 = document.getElementById('show1');
+    const show2 = document.getElementById('show2');
+
+    // box1
+    btn1.onclick = function () {
+      const text = show1.innerText;
+      ws.send({ test: text }, () => {
+        console.log('这是回调函数，发送test 123后执行');
+      });
+      console.log('btn1', text);
+    };
+    text1.onchange = function (e) {
+      show1.innerText = e.target.value;
+    };
+
+
+    // box2
+    btn2.onclick = function () {
+      const text = show2.innerText;
+      console.log('btn2', text);
+    };
+    text2.onchange = function (e) {
+      show2.innerText = e.target.value;
+    };
+  </script>
 </html>

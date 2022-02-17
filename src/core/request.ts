@@ -1,10 +1,8 @@
 //@ts-ignore
 import axios from 'axios/dist/axios';
 
-import { BASE_URL, getToken } from './config';
-import { TOKEN_KEY_MAP } from '@/types/requestType';
+import { TOKEN_KEY_MAP, BASE_URL, isExpired, getToken } from './config';
 
-const refreshAPIUrl = `${BASE_URL}/refresh`;
 const request = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -15,34 +13,35 @@ const request = axios.create({
 });
 
 request.interceptors.request.use(
-  async (config: any) => {
-    const newConfig = { ...config };
-    let accessToken = getToken();
-    if (accessToken) {
-      let jwtToken = accessToken.substring(7);
-      let tokenArr = jwtToken.split('.');
-      let tokenObj = JSON.parse(atob(tokenArr[1]));
-      let accessExpiredAt = tokenObj.access_expired_at;
-      const dateTime = Date.now();
-      const timestamp = Math.floor(dateTime / 1000);
-      if (timestamp >= accessExpiredAt) {
-        // ready to refresh token
-        console.log('ready to refresh token');
-        const token = await axios.get(refreshAPIUrl, {
-          headers: {
-            Authorization: accessToken,
-          },
-        });
-        if (token.data.data.access_token) {
-          localStorage.setItem(
-            TOKEN_KEY_MAP.ACCESS_TOKEN,
-            token.data.data.access_token
-          );
-        }
+  (config: any) => {
+    return new Promise((resolve) => {
+      const newConfig = { ...config };
+      if (isExpired()) {
+        axios
+          .get(`${BASE_URL}/refresh`, {
+            headers: {
+              Authorization: getToken(),
+            },
+          })
+          .then((res: any) => {
+            const newToken = res.data.data.access_token || '';
+            if (newToken) {
+              localStorage.setItem(TOKEN_KEY_MAP.ACCESS_TOKEN, newToken);
+              newConfig.headers['Authorization'] = newToken;
+            }
+          })
+          .catch((err: any) => {
+            if (err) {
+              // 刷新失败，重新登陆
+            }
+          })
+          .finally(() => {
+            resolve(newConfig);
+          });
       }
       newConfig.headers['Authorization'] = getToken();
-    }
-    return newConfig;
+      resolve(newConfig);
+    });
   },
   (error: any) => {
     throw new Error(error);
@@ -60,7 +59,7 @@ request.interceptors.response.use(
   (error: any) => {
     const { status, data } = error.response;
     if (status !== 200) {
-      return data.message;
+      throw new Error(data.message);
     }
   }
 );
