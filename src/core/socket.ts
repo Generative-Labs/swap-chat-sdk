@@ -115,7 +115,7 @@ class Socket {
    * @param {*} message 接收到的消息
    */
   receive(message: any) {
-    var params = JSON.parse(message.data || '{}');
+    const params = JSON.parse(message.data || '{}');
 
     if (params.kind !== 0) {
       console.log('收到服务器内容：', params);
