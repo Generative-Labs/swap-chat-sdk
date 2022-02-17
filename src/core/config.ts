@@ -1,4 +1,5 @@
 export const BASE_URL = 'https://newbietown.com';
+export const BASE_SOCKET_URL = 'wss://newbietown.com/ws?token=';
 
 export const TOKEN_KEY_MAP = {
   ACCESS_TOKEN: 'ACCESS_TOKEN',

@@ -1,3 +1,5 @@
+import { BASE_SOCKET_URL } from './config';
+
 class Socket {
   // WebSocket实例
   ws: WebSocket | null;
@@ -34,12 +36,11 @@ class Socket {
     if (!('WebSocket' in window)) {
       throw new Error('Browser not supported WebSocket');
     }
-    console.log(this.ws, 13123123123);
-    if (this.ws) {
+
+    if (this.ws && this.ws.readyState === 1) {
       return this.ws;
     }
-    this.ws = new WebSocket(`wss://newbietown.com/ws?token=${this.token}`);
-
+    this.ws = new WebSocket(`${BASE_SOCKET_URL}${this.token}`);
     this.ws.onmessage = (e) => {
       this.receive(e);
     };
@@ -87,22 +88,9 @@ class Socket {
     if (!this.ws) {
       throw new Error('websocket Initialization failed');
     }
-    console.log(data);
-    console.log(this.ws);
-    console.log(this.ws.OPEN, 'OPEN');
-    console.log(this.ws.CONNECTING, 'CONNECTING');
-    console.log(this.ws.CLOSED, 'CLOSED');
     // 开启状态直接发送
     if (this.ws.readyState === this.ws.OPEN) {
-      this.ws.send(
-        JSON.stringify({
-          belong_to_thread_id: '',
-          from_uid: '61f1006d604cc5be5f7a3c2d',
-          msg_contents: 'test22',
-          msg_type: 'text',
-          reply_to_msg_id: '',
-          to: '61f1323bfa9373fc26460473',
-        }));
+      this.ws.send(JSON.stringify(data || '{}'));
       if (callback) {
         callback();
       }
@@ -118,7 +106,7 @@ class Socket {
       this.init();
       setTimeout(() => {
         this.send(data, callback);
-      }, 1000);
+      }, 5000);
     }
   }
 
@@ -129,11 +117,11 @@ class Socket {
   receive(message: any) {
     var params = JSON.parse(message.data || '{}');
 
-    if (params.kind != 0) {
-      console.log('收到服务器内容：', message.data);
+    if (params.kind !== 0) {
+      console.log('收到服务器内容：', params);
     }
 
-    if (params == undefined) {
+    if (Object.keys(params).length === 0) {
       console.log('收到服务器空内容');
       return false;
     }
@@ -145,7 +133,9 @@ class Socket {
   close() {
     console.log('主动断开连接');
     this.is_reonnect = false;
-    this.close();
+    if (this.ws) {
+      this.ws.close();
+    }
   }
 
   /**
