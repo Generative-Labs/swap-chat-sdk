@@ -94,7 +94,15 @@ class Socket {
     console.log(this.ws.CLOSED, 'CLOSED');
     // 开启状态直接发送
     if (this.ws.readyState === this.ws.OPEN) {
-      this.ws.send(JSON.stringify(data));
+      this.ws.send(
+        JSON.stringify({
+          belong_to_thread_id: '',
+          from_uid: '61f1006d604cc5be5f7a3c2d',
+          msg_contents: 'test22',
+          msg_type: 'text',
+          reply_to_msg_id: '',
+          to: '61f1323bfa9373fc26460473',
+        }));
       if (callback) {
         callback();
       }
