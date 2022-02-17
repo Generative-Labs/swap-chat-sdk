@@ -1,13 +1,4 @@
 export default class User {
-  edit() {
-        
-  }
-  register() {
-        
-  }
-    
-    
-    
-    
-
+  edit() {}
+  register() {}
 }

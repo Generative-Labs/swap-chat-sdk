@@ -1,12 +1,6 @@
 export default class Message {
-  delete () {
-        
-  }
-  reply () {
-        
-  }
+  delete() {}
+  reply() {}
 
-  createThread() {
-        
-  }
+  createThread() {}
 }

@@ -6,25 +6,11 @@ export default class Room {
     this._client = client;
   }
 
-  join() {
+  join() {}
+  leave() {}
 
-  }
-  leave () {
+  addMember() {}
 
-  }
-
-  addMember() {
-  }
-
-  onMessage() {
-
-  }
-  getMessages() {
-
-  }
-
-
-
-
-  
+  onMessage() {}
+  getMessages() {}
 }

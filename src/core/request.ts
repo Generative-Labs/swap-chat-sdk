@@ -1,4 +1,4 @@
-//@ts-ignore
+// @ts-ignore
 import axios from 'axios/dist/axios';
 
 import { TOKEN_KEY_MAP, BASE_URL, isExpired, getToken } from './config';
@@ -45,7 +45,7 @@ request.interceptors.request.use(
   },
   (error: any) => {
     throw new Error(error);
-  }
+  },
 );
 
 request.interceptors.response.use(
@@ -61,7 +61,7 @@ request.interceptors.response.use(
     if (status !== 200) {
       throw new Error(data.message);
     }
-  }
+  },
 );
 
 export default request;
