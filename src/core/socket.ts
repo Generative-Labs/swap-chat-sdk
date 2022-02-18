@@ -32,7 +32,7 @@ class Socket {
   /**
    * 初始化连接
    */
-  init = () => {
+  init() {
     if (!('WebSocket' in window)) {
       throw new Error('Browser not supported WebSocket');
     }
@@ -77,7 +77,7 @@ class Socket {
     this.ws.onerror = function () {
       throw new Error('WebSocket Connection error');
     };
-  };
+  }
 
   /**
    * 发送消息
