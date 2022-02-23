@@ -1,9 +1,11 @@
 // @ts-ignore
 import axios from 'axios/dist/axios';
+import { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
 
 import { TOKEN_KEY_MAP, BASE_URL, isExpired, getToken } from './config';
+import { ServiceResponse } from '../types';
 
-const request = axios.create({
+const request: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
@@ -13,7 +15,7 @@ const request = axios.create({
 });
 
 request.interceptors.request.use(
-  (config: any) => {
+  (config: AxiosRequestConfig) => {
     return new Promise((resolve) => {
       const newConfig = { ...config };
       if (isExpired()) {
@@ -27,7 +29,9 @@ request.interceptors.request.use(
             const newToken = res.data.data.access_token || '';
             if (newToken) {
               localStorage.setItem(TOKEN_KEY_MAP.ACCESS_TOKEN, newToken);
-              newConfig.headers['Authorization'] = newToken;
+              if (newConfig.headers) {
+                newConfig.headers['Authorization'] = newToken;
+              }
             }
           })
           .catch((err: any) => {
@@ -39,7 +43,9 @@ request.interceptors.request.use(
             resolve(newConfig);
           });
       }
-      newConfig.headers['Authorization'] = getToken();
+      if (newConfig.headers) {
+        newConfig.headers['Authorization'] = getToken();
+      }
       resolve(newConfig);
     });
   },
@@ -49,7 +55,7 @@ request.interceptors.request.use(
 );
 
 request.interceptors.response.use(
-  (response: any) => {
+  (response: AxiosResponse<ServiceResponse>) => {
     const { data } = response;
     if (data.code !== 0) {
       throw new Error(data.msg);

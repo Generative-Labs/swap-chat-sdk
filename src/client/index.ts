@@ -1,30 +1,24 @@
+import { LoginParams } from '../types/user';
 import socket from '../core/socket';
-import Room from '../room';
 
-export default class Client {
-  ws: socket;
-  room: Room;
+export class Client {
+  token: string | undefined;
+  options: LoginParams | undefined;
+  ws: socket | undefined;
 
-  constructor(appId: string, token: string) {
-    this.ws = new socket(token);
-    this.room = new Room(this);
+  constructor(token: LoginParams | string) {
+    if (typeof token === 'object') {
+      this.options = token;
+    } else {
+      this.token = token;
+      this.ws = new socket(token);
+    }
   }
 
-  receive(msg: string) {
+  receive = (msg: string) => {
+    if (!this.ws) {
+      throw new Error('Websocket is not initialized');
+    }
     return this.ws.receive(msg);
-  }
-
-  createRoom() {
-      
-  }
-
-  getRooms() {
-
-  }
-
-  getMessages(room: Room) {
-    return room.getMessages();
-  }
-  
-  
+  };
 }

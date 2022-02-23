@@ -1,16 +1,33 @@
-import Client from '@/client';
+import request from '../core/request';
+import {
+  AddMemberToRoomParams,
+  DelMemberFromRoomParams,
+  GetChatsByUserIdParams,
+  GetRoomInfoParams,
+  GetRoomsParams,
+  roomRes,
+} from '../types/room';
 
-export default class Room {
-  _client: Client;
-  constructor(client: Client) {
-    this._client = client;
-  }
+export class Room {
+  constructor() {}
 
-  join() {}
-  leave() {}
+  getRooms = (params: GetRoomsParams): Promise<any> => {
+    return request.post('/rooms', params);
+  };
 
-  addMember() {}
+  getRoomInfo = (params: GetRoomInfoParams): Promise<any> => {
+    return request.get<roomRes>(`/rooms/${params.room_id}`);
+  };
 
-  onMessage() {}
-  getMessages() {}
+  addMemberToRoom = (params: AddMemberToRoomParams): Promise<any> => {
+    return request.post<roomRes>(`/rooms/${params.room_id}/members`, params);
+  };
+
+  delMemberFromRoom = (params: DelMemberFromRoomParams): Promise<any> => {
+    return request.delete(`/rooms/${params.room_id}/members/${params.member_id}`);
+  };
+
+  getChatsByUserId = (params: GetChatsByUserIdParams): Promise<any> => {
+    return request.post('/my_chats', params);
+  };
 }

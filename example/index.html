@@ -41,45 +41,45 @@
   </body>
   <script src="../dist/index.js"></script>
   <script>
-    ws.init();
-    const btn1 = document.getElementById('user1btn');
-    const btn2 = document.getElementById('user2btn');
-    const text1 = document.getElementById('user1input');
-    const text2 = document.getElementById('user2input');
-    const show1 = document.getElementById('show1');
-    const show2 = document.getElementById('show2');
-    text1.onchange = function (e) {
-      show1.innerText = e.target.value;
-    };
-    text2.onchange = function (e) {
-      show2.innerText = e.target.value;
-    };
+    // ws.init();
+    // const btn1 = document.getElementById('user1btn');
+    // const btn2 = document.getElementById('user2btn');
+    // const text1 = document.getElementById('user1input');
+    // const text2 = document.getElementById('user2input');
+    // const show1 = document.getElementById('show1');
+    // const show2 = document.getElementById('show2');
+    // text1.onchange = function (e) {
+    //   show1.innerText = e.target.value;
+    // };
+    // text2.onchange = function (e) {
+    //   show2.innerText = e.target.value;
+    // };
 
-    // box1
-    btn1.onclick = function () {
-      const text = show1.innerText;
-      ws.send(
-        {
-          belong_to_thread_id: '',
-          from_uid: '61f1006d604cc5be5f7a3c2d',
-          msg_contents: text,
-          msg_type: 'text',
-          reply_to_msg_id: '',
-          to: '61f1323bfa9373fc26460473',
-        },
-        () => {
-          console.log(`这是回调函数，发送${text}后执行`);
-        },
-      );
-    };
+    // // box1
+    // btn1.onclick = function () {
+    //   const text = show1.innerText;
+    //   ws.send(
+    //     {
+    //       belong_to_thread_id: '',
+    //       from_uid: '61f1006d604cc5be5f7a3c2d',
+    //       msg_contents: text,
+    //       msg_type: 'text',
+    //       reply_to_msg_id: '',
+    //       to: '61f1323bfa9373fc26460473',
+    //     },
+    //     () => {
+    //       console.log(`这是回调函数，发送${text}后执行`);
+    //     },
+    //   );
+    // };
 
-    // box2
-    btn2.onclick = function () {
-      const text = show2.innerText;
-      console.log('btn2', text);
-    };
-    ws.receive = (msg) => {
-      show2.innerText = JSON.parse(msg.data).msg_contents;
-    };
+    // // box2
+    // btn2.onclick = function () {
+    //   const text = show2.innerText;
+    //   console.log('btn2', text);
+    // };
+    // ws.receive = (msg) => {
+    //   show2.innerText = JSON.parse(msg.data).msg_contents;
+    // };
   </script>
 </html>

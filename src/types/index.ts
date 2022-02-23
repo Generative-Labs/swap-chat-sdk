@@ -1,3 +1,10 @@
-const type = '123';
+export interface ServiceResponse {
+  data: any;
+  msg: string;
+  code: number;
+}
 
-export { type };
+export interface PageParams {
+  page: number;
+  size: number;
+}
