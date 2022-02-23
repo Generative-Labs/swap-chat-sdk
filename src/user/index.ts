@@ -16,6 +16,7 @@ import { PageParams } from '../types';
 export class User {
   constructor() {}
 
+  // 移出去
   register = (params: RegisterParams): Promise<any> => {
     return request.post('/register', params);
   };
