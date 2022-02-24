@@ -60,7 +60,7 @@ request.interceptors.response.use(
     if (data.code !== 0) {
       throw new Error(data.msg);
     }
-    return data.data;
+    return data;
   },
   (error: any) => {
     const { status, data } = error.response;

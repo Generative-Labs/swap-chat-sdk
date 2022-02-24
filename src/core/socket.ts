@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { BASE_SOCKET_URL } from './config';
 
 class Socket {
@@ -27,6 +28,7 @@ class Socket {
     this.reconnect_current = 1;
     this.reconnect_timer = null;
     this.reconnect_interval = 3000;
+    this.init();
   }
 
   /**
@@ -35,6 +37,10 @@ class Socket {
   init() {
     if (!('WebSocket' in window)) {
       throw new Error('Browser not supported WebSocket');
+    }
+
+    if (!this.token) {
+      throw new Error('The Token is required!');
     }
 
     if (this.ws && this.ws.readyState === 1) {
@@ -115,15 +121,12 @@ class Socket {
    * @param {*} message 接收到的消息
    */
   receive(message: any) {
-    const params = JSON.parse(message.data || '{}');
-
-    if (params.kind !== 0) {
-      console.log('收到服务器内容：', params);
+    if (message.kind !== 0) {
+      console.log('收到服务器内容：', message);
     }
 
-    if (Object.keys(params).length === 0) {
+    if (Object.keys(message).length === 0) {
       console.log('收到服务器空内容');
-      return false;
     }
   }
 

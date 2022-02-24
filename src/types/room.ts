@@ -43,13 +43,7 @@ export interface DelMemberFromRoomParams {
   member_id: string;
 }
 
-export interface GetChatsByUserIdParams extends PageParams {
-  user_id: string;
+export interface GetMessageParams extends PageParams {
+  room_id: string;
 }
 
-export interface GetRoomsParams {
-  user_id?: string;
-  is_opensea_coll?: boolean;
-  opensea_coll_slug?: string;
-  item_contract_address?: string;
-}

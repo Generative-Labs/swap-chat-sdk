@@ -1,9 +1,5 @@
 import { PageParams } from './';
 
-export interface GetMessageParams extends PageParams {
-  room_id: string;
-}
-
 export interface GetMessageByIdParams {
   msg_id: string;
 }
@@ -17,5 +13,5 @@ export interface CreateThreadsParams {
 
 export interface GetThreadsParams extends PageParams {
   room_id: string;
-  belong_to_thread_id?: string;
+  belong_to_thread_id: string;
 }

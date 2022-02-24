@@ -1,8 +1,5 @@
 import {
-  LoginRandomSecret,
-  LoginParams,
   LoginResponse,
-  LoginRandomSecretParams,
   PlatformType,
   RegisterParams,
   CreateContractsParams,
@@ -15,19 +12,6 @@ import { PageParams } from '../types';
 
 export class User {
   constructor() {}
-
-  // 移出去
-  register = (params: RegisterParams): Promise<any> => {
-    return request.post('/register', params);
-  };
-
-  login = (params: LoginParams): Promise<any> => {
-    return request.post<LoginResponse>('/login', params);
-  };
-
-  getLoginRandomSecret = (params: LoginRandomSecretParams): Promise<any> => {
-    return request.post<LoginRandomSecret>('/login_random_secret', params);
-  };
 
   submitInvitedCode = (params: string, platform: PlatformType): Promise<any> => {
     return request.post<LoginResponse>('/verify_platform', {

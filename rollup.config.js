@@ -4,6 +4,7 @@ import commonjs from 'rollup-plugin-commonjs'; // commonjs模块转换插件
 import ts from 'rollup-plugin-typescript2';
 import { eslint } from 'rollup-plugin-eslint';
 import packageJSON from './package.json';
+import { terser } from 'rollup-plugin-terser';
 
 const getPath = (_path) => path.resolve(__dirname, _path);
 
@@ -25,12 +26,7 @@ const esPlugin = eslint({
 // 基础配置
 const commonConf = {
   input: getPath('./src/index.ts'),
-  plugins: [
-    resolve({ browser: true }, extensions),
-    commonjs(),
-    esPlugin,
-    tsPlugin,
-  ],
+  plugins: [resolve({ browser: true }, extensions), commonjs(), esPlugin, tsPlugin, terser()],
   external: ['axios'],
 };
 
@@ -55,5 +51,5 @@ const outputMap = [
 const buildConf = (options) => Object.assign({}, commonConf, options);
 
 export default outputMap.map((output) =>
-  buildConf({ output: { name: packageJSON.name, ...output } })
+  buildConf({ output: { name: packageJSON.name, ...output } }),
 );
