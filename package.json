@@ -1,6 +1,6 @@
 {
   "name": "house-chat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "module": "lib/index.esm.js",
   "repository": "git@github.com:Generative-Labs/house_chat_SDK.git",
