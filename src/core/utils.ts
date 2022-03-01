@@ -6,7 +6,7 @@ import {
   LoginRandomSecretParams,
   LoginResponse,
   RegisterParams,
-} from '../types/user';
+} from '../types';
 
 export const register = (params: RegisterParams): Promise<any> => {
   return request.post('/register', params);

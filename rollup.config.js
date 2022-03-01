@@ -20,7 +20,7 @@ const tsPlugin = ts({
 const esPlugin = eslint({
   throwOnError: true,
   include: ['src/**/*.ts'],
-  exclude: ['node_modules/**', 'lib/**'],
+  exclude: ['node_modules/**', 'lib/**', 'dist/**'],
 });
 
 // 基础配置

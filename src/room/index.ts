@@ -5,7 +5,7 @@ import {
   GetMessageParams,
   GetRoomInfoParams,
   roomRes,
-} from '../types/room';
+} from '../types';
 
 export class Room {
   constructor() {}

@@ -1,4 +1,4 @@
-import { LoginParams } from '../types/user';
+import { LoginParams } from '../types';
 import socket from '../core/socket';
 import request from '../core/request';
 import event from '../core/eventEmitter';

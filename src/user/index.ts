@@ -6,7 +6,7 @@ import {
   UpdateWalletAddressParams,
   GetOpenSeaAssetParams,
   GetOpenSeaAssetResponse,
-} from '../types/user';
+} from '../types';
 import request from '../core/request';
 import { PageParams } from '../types';
 

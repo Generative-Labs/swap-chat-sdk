@@ -1,5 +1,5 @@
 import request from '../core/request';
-import { CreateThreadsParams, GetMessageByIdParams, GetThreadsParams } from '../types/message';
+import { CreateThreadsParams, GetMessageByIdParams, GetThreadsParams } from '../types';
 
 export class Message {
   constructor() {}
