@@ -12,6 +12,7 @@ module.exports = {
     tsconfigRootDir: resolve('./'),
     sourceType: 'module',
   },
+  plugins: ['@typescript-eslint/eslint-plugin'],
   ignorePatterns: ['.eslintrc.js', 'rollup.config.js'],
   // plugins: ['prettier'],
   rules: {

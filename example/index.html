@@ -73,28 +73,27 @@
     };
 
     client.receive((message) => {
-      console.log(message);
-      show2.innerText = JSON.parse(message.data).msg_contents;
+      show2.innerText = message.msg_contents;
     });
 
-    client
-      .getRooms({
-        user_id: '61f1006d604cc5be5f7a3c2d',
-        // is_opensea_coll: false,
-        // opensea_coll_slug: '123',
-        // item_contract_address: '123',
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    // client
+    //   .getRooms({
+    //     user_id: '61f1006d604cc5be5f7a3c2d',
+    //     // is_opensea_coll: false,
+    //     // opensea_coll_slug: '123',
+    //     // item_contract_address: '123',
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
 
-    client
-      .getChatsByUserId({
-        user_id: '61f1006d604cc5be5f7a3c2d',
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    // client
+    //   .getChatsByUserId({
+    //     user_id: '61f1006d604cc5be5f7a3c2d',
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
 
     // box2
     btn2.onclick = function () {

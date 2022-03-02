@@ -27,7 +27,7 @@ const esPlugin = eslint({
 const commonConf = {
   input: getPath('./src/index.ts'),
   plugins: [resolve({ browser: true }, extensions), commonjs(), esPlugin, tsPlugin, terser()],
-  external: ['axios'],
+  external: ['axios', 'mqtt'],
 };
 
 // 需要导出的模块类型
@@ -37,6 +37,7 @@ const outputMap = [
     format: 'umd',
     globals: {
       axios: 'Axios',
+      mqtt: 'mqtt',
     },
   },
   {
@@ -44,6 +45,7 @@ const outputMap = [
     format: 'es',
     globals: {
       axios: 'Axios',
+      mqtt: 'mqtt',
     },
   },
 ];
