@@ -20,6 +20,24 @@ export interface GetChatsByUserIdParams extends PageParams {
   user_id: string;
 }
 
+export interface GetChatsByUserIdResponse {
+  data: {
+    created_at: string;
+    creator: UserInfoInterface;
+    creator_id: string;
+    description: string;
+    is_1v1: boolean;
+    is_opensea_coll: boolean;
+    latest_msg: MessageResponse;
+    members: UserInfoInterface[];
+    name: string;
+    opensea_coll_cover: string;
+    opensea_coll_name:string;
+    opensea_coll_slug: string;
+    room_id: string
+  }[]
+}
+
 export interface GetMessageByIdParams {
   msg_id: string;
 }
@@ -141,3 +159,28 @@ export interface GetOpenSeaAssetParams {
 export interface GetOpenSeaAssetResponse {
   assets: any[];
 }
+
+export interface MessageResponse {
+  at_user_ids:any[];
+  belong_to_thread_id: string;
+  created_at: number;
+  from_uid: string;
+  id: string;
+  is_opensea_item_thread: boolean,
+  is_thread: boolean;
+  msg_contents: string;
+  msg_type: 'text' | 'video';
+  opensea_item_contract_address: string;
+  opensea_item_description: string;
+  opensea_item_image_url: string;
+  opensea_item_name: string;
+  opensea_item_token_id: string;
+  reply_to_msg_id: string;
+  to_room_id: string;
+}
+
+export interface ChannelData {
+  latest_msg: MessageResponse;
+  members: UserInfoInterface[];
+}
+

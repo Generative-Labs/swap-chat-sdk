@@ -8,12 +8,15 @@ import { Room } from '../room';
 import { User } from '../user';
 import MQTT from '../core/mqtt';
 import { getUserInfoFromToken } from 'src/core/config';
+import { Channel } from '../channel';
+
 export class HouseChat {
   private static _instance?: unknown | HouseChat;
   token: string | undefined;
   // ws: socket | undefined;
   mqtt: any | undefined;
   _eventEmitter: event;
+  channel: Channel | null;
 
   constructor(props: LoginParams | string) {
     if (typeof props === 'object') {
@@ -28,6 +31,7 @@ export class HouseChat {
     }
     this.subscribe();
     this._eventEmitter = new event();
+    this.channel = null;
   }
 
   public static getInstance = (props: LoginParams | string) => {
