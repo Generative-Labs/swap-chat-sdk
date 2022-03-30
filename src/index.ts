@@ -1,7 +1,7 @@
 export * from './client';
 export * from './message';
 export * from './user';
-export * from './room';
+export * from './channel';
 export { login, register, getLoginRandomSecret } from './core/utils';
 
 import { HouseChat } from './client';
@@ -9,8 +9,8 @@ import { HouseChat } from './client';
 // import { User } from './user';
 // import { Room } from './room';
 
-const client = HouseChat.getInstance(
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNjFmMTMyM2JmYTkzNzNmYzI2NDYwNDcxIiwibmlja19uYW1lIjoiemhhb3dlaTYyNTgzODM2IiwidHdpdHRlcl91c2VybmFtZSI6InpoYW93ZWk2MjU4MzgzNiIsInR3aXR0ZXJfYXZhdGFyIjoiaHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE0NzM1NzA5NTQzNDUzOTAwODAvWWtROEF1SHVfNDAweDQwMC5wbmciLCJpbnN0YWdyYW1fdXNlcm5hbWUiOiIiLCJpbnN0YWdyYW1fYXZhdGFyIjoiIiwiZmFjZWJvb2tfdXNlcm5hbWUiOiIiLCJmYWNlYm9va19hdmF0YXIiOiIiLCJkaXNjb3JkX3VzZXJuYW1lIjoiIiwiZGlzY29yZF9hdmF0YXIiOiIiLCJvcGVuc2VhX3VzZXJuYW1lIjoiIiwib3BlbnNlYV9hdmF0YXIiOiIiLCJldGhfd2FsbGV0X2FkZHJlc3MiOiIweDliNmE1YTFkZDU1ZWE0ODFmNzZiNzgyODYyZTdkZjI5NzdkZmZlNmMiLCJzdGF0dXMiOiIwMTAwMDAxIiwiY3JlYXRlZF9hdCI6MCwiYWNjZXNzX2V4cGlyZWRfYXQiOjE2NDYyMTMzMTgsInJlZnJlc2hfZXhwaXJlZF9hdCI6MTY0ODIwMDUxOH0.5pJkd-jdwcWy_HsF2KvZJWvxrDiWOrHjVRYEL2H7U_0',
+const client = HouseChat.getInstance(''
+  // 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNjIyODQ4ZjkyZGFiNTk4NzQ3MjVmN2UwIiwibmlja19uYW1lIjoiWGlhbmd5dUZhbjMiLCJ0d2l0dGVyX3VzZXJuYW1lIjoiWGlhbmd5dUZhbjMiLCJ0d2l0dGVyX2F2YXRhciI6Imh0dHBzOi8vcGJzLnR3aW1nLmNvbS9wcm9maWxlX2ltYWdlcy8xNDg1OTk2NjIyMzg3NTg1MDM5Ly1QVHhxZHp1XzQwMHg0MDAucG5nIiwiaW5zdGFncmFtX3VzZXJuYW1lIjoiIiwiaW5zdGFncmFtX2F2YXRhciI6IiIsImZhY2Vib29rX3VzZXJuYW1lIjoiIiwiZmFjZWJvb2tfYXZhdGFyIjoiIiwiZGlzY29yZF91c2VybmFtZSI6IiIsImRpc2NvcmRfYXZhdGFyIjoiIiwib3BlbnNlYV91c2VybmFtZSI6IiIsIm9wZW5zZWFfYXZhdGFyIjoiIiwiZXRoX3dhbGxldF9hZGRyZXNzIjoiMHhkMWJkNTcwOGIxMDI0MzJkODA0NDg1MjJkNWZlNDQ1NmQ5YjY0MGQ1Iiwic3RhdHVzIjoiMDEwMDAwMSIsImNyZWF0ZWRfYXQiOjE2NDY4MDcyODkwMDk5OTgwMDAsImFjY2Vzc19leHBpcmVkX2F0IjoxNjQ4NzEyMjcwLCJyZWZyZXNoX2V4cGlyZWRfYXQiOjE2NTA2OTk0NzB9.pDK8V50_AyGbKbxkdOSGxEETw2gwckwwWxD85ecUnl8',
 );
 
 // @ts-ignore

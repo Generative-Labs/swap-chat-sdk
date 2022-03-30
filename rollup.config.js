@@ -40,14 +40,14 @@ const outputMap = [
       mqtt: 'mqtt',
     },
   },
-  {
-    file: packageJSON.module, // es6模块
-    format: 'es',
-    globals: {
-      axios: 'Axios',
-      mqtt: 'mqtt',
-    },
-  },
+  // {
+  //   file: packageJSON.module, // es6模块
+  //   format: 'es',
+  //   globals: {
+  //     axios: 'Axios',
+  //     mqtt: 'mqtt',
+  //   },
+  // },
 ];
 
 const buildConf = (options) => Object.assign({}, commonConf, options);

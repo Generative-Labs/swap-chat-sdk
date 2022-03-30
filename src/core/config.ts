@@ -1,6 +1,6 @@
 export const BASE_URL = 'https://newbietown.com';
-export const BASE_SOCKET_URL = 'wss://newbietown.com/ws?token=';
-export const BASE_MQTT_URL = 'ws://54.188.184.32:8083/mqtt';
+// export const BASE_SOCKET_URL = 'wss://newbietown.com/ws?token=';
+export const BASE_MQTT_URL = 'wss://msg.web3messaging.online/mqtt';
 
 export const TOKEN_KEY_MAP = {
   ACCESS_TOKEN: 'ACCESS_TOKEN',

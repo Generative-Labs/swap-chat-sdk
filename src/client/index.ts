@@ -3,12 +3,14 @@ import request from '../core/request';
 import event from '../core/eventEmitter';
 import { GetChatsByUserIdParams, GetRoomsParams } from '../types';
 import { login } from '../core/utils';
-import { Message } from '../message';
-import { Room } from '../room';
-import { User } from '../user';
 import MQTT from '../core/mqtt';
-import { getUserInfoFromToken } from 'src/core/config';
+import { getUserInfoFromToken } from '../core/config';
+
+import { Message } from '../message';
 import { Channel } from '../channel';
+import { User } from '../user';
+import { Chats } from '../chats';
+import { Thread } from '../thread';
 
 export class HouseChat {
   private static _instance?: unknown | HouseChat;
@@ -16,7 +18,11 @@ export class HouseChat {
   // ws: socket | undefined;
   mqtt: any | undefined;
   _eventEmitter: event;
-  channel: Channel | null;
+  channel: Channel;
+  messages: Message;
+  users: User;
+  chats: Chats;
+  threads: Thread;
 
   constructor(props: LoginParams | string) {
     if (typeof props === 'object') {
@@ -31,7 +37,12 @@ export class HouseChat {
     }
     this.subscribe();
     this._eventEmitter = new event();
-    this.channel = null;
+    this.channel = new Channel();
+    this.messages = new Message();
+    this.users = new User();
+    this.messages = new Message();
+    this.chats = new Chats();
+    this.threads = new Thread();
   }
 
   public static getInstance = (props: LoginParams | string) => {
@@ -39,18 +50,6 @@ export class HouseChat {
       HouseChat._instance = new HouseChat(props);
     }
     return HouseChat._instance as HouseChat;
-  };
-
-  createMessage = () => {
-    return new Message();
-  };
-
-  createRoom = () => {
-    return new Room();
-  };
-
-  createUser = () => {
-    return new User();
   };
 
   subscribe = async () => {
