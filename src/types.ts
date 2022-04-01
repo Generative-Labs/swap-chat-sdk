@@ -1,3 +1,7 @@
+import { EVENT_MAP } from './core/events';
+
+export type EventTypes = 'all' | keyof typeof EVENT_MAP;
+
 export interface ServiceResponse {
   data: any;
   msg: string;
@@ -32,10 +36,10 @@ export interface GetChatsByUserIdResponse {
     members: UserInfoInterface[];
     name: string;
     opensea_coll_cover: string;
-    opensea_coll_name:string;
+    opensea_coll_name: string;
     opensea_coll_slug: string;
-    room_id: string
-  }[]
+    room_id: string;
+  }[];
 }
 
 export interface GetMessageByIdParams {
@@ -161,12 +165,12 @@ export interface GetOpenSeaAssetResponse {
 }
 
 export interface MessageResponse {
-  at_user_ids:any[];
+  at_user_ids: any[];
   belong_to_thread_id: string;
   created_at: number;
   from_uid: string;
   id: string;
-  is_opensea_item_thread: boolean,
+  is_opensea_item_thread: boolean;
   is_thread: boolean;
   msg_contents: string;
   msg_type: 'text' | 'video';
@@ -183,4 +187,3 @@ export interface ChannelData {
   latest_msg: MessageResponse;
   members: UserInfoInterface[];
 }
-

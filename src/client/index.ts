@@ -5,6 +5,7 @@ import { GetChatsByUserIdParams, GetRoomsParams } from '../types';
 import { login } from '../core/utils';
 import MQTT from '../core/mqtt';
 import { getUserInfoFromToken } from '../core/config';
+import { EventTypes } from '../types';
 
 import { Message } from '../message';
 import { Channel } from '../channel';
@@ -17,7 +18,8 @@ export class HouseChat {
   token: string | undefined;
   // ws: socket | undefined;
   mqtt: any | undefined;
-  _eventEmitter: event;
+  listeners: event;
+  _listeners: event;
   channel: Channel;
   messages: Message;
   users: User;
@@ -36,7 +38,8 @@ export class HouseChat {
       this.mqtt = new MQTT(props);
     }
     this.subscribe();
-    this._eventEmitter = new event();
+    this.listeners = new event();
+    this._listeners = new event();
     this.channel = new Channel();
     this.messages = new Message();
     this.users = new User();
@@ -83,12 +86,15 @@ export class HouseChat {
     this.mqtt.receive = fn;
   };
 
-  on = (eventName: string | number, callback: any) => this._eventEmitter.on(eventName, callback);
-  emit = (eventName: string | number, ...args: any[]) =>
-    this._eventEmitter.emit(eventName, ...args);
-  off = (eventName: string | number, callback: any) => this._eventEmitter.off(eventName, callback);
-  once = (eventName: string | number, callback: any) =>
-    this._eventEmitter.once(eventName, callback);
+  on = (eventName: EventTypes, callback: any) => this.listeners.on(eventName, callback);
+  emit = (eventName: EventTypes, ...args: any[]) => this.listeners.emit(eventName, ...args);
+  off = (eventName: EventTypes, callback: any) => this.listeners.off(eventName, callback);
+  once = (eventName: EventTypes, callback: any) => this.listeners.once(eventName, callback);
+
+  _on = (eventName: EventTypes, callback: any) => this._listeners.on(eventName, callback);
+  _emit = (eventName: EventTypes, ...args: any[]) => this._listeners.emit(eventName, ...args);
+  // _off = (eventName: EventTypes, callback: any) => this._listeners.off(eventName, callback);
+  // _once = (eventName: EventTypes, callback: any) => this._listeners.once(eventName, callback);
 
   getRooms = (params: GetRoomsParams): Promise<any> => {
     return request.post('/rooms', params);
