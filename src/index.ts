@@ -1,7 +1,9 @@
 export * from './client';
 export * from './message';
 export * from './user';
-export * from './channel';
+export * from './channelManage';
+export * from './contactManage';
+export * from './types';
 export { login, register, getLoginRandomSecret } from './core/utils';
 
 // import { HouseChat } from './client';

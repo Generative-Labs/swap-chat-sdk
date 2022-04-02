@@ -21,25 +21,25 @@ export interface GetRoomsParams {
 }
 
 export interface GetChatsByUserIdParams extends PageParams {
-  user_id: string;
+  page: number;
+  size: number;
+  user_id?: number;
 }
 
 export interface GetChatsByUserIdResponse {
-  data: {
-    created_at: string;
-    creator: UserInfoInterface;
-    creator_id: string;
-    description: string;
-    is_1v1: boolean;
-    is_opensea_coll: boolean;
-    latest_msg: MessageResponse;
-    members: UserInfoInterface[];
-    name: string;
-    opensea_coll_cover: string;
-    opensea_coll_name: string;
-    opensea_coll_slug: string;
-    room_id: string;
-  }[];
+  created_at: string;
+  creator: UserInfoInterface;
+  creator_id: string;
+  description: string;
+  is_1v1: boolean;
+  is_opensea_coll: boolean;
+  latest_msg: MessageResponse;
+  members: UserInfoInterface[];
+  name: string;
+  opensea_coll_cover: string;
+  opensea_coll_name: string;
+  opensea_coll_slug: string;
+  room_id: string;
 }
 
 export interface GetMessageByIdParams {
@@ -139,6 +139,33 @@ export interface RegisterParams {
   user_name: string;
 }
 
+export interface UserInfo {
+  access_expired_at: number;
+  created_at: number;
+  discord_avatar: string;
+  discord_username: string;
+  eth_wallet_address: string;
+  facebook_avatar: string;
+  facebook_username: string;
+  instagram_avatar: string;
+  instagram_username: string;
+  nick_name: string;
+  opensea_avatar: string;
+  opensea_username: string;
+  refresh_expired_at: number;
+  status: string;
+  twitter_avatar: string;
+  twitter_username: string;
+  user_id: string;
+}
+
+export interface SearchFormatUserInfo {
+  avatar: string;
+  userId: string;
+  userName: string;
+  createdAt: number;
+}
+
 export interface CreateContractsParams {
   contract_id?: string;
   erc20s: string[];
@@ -183,7 +210,8 @@ export interface MessageResponse {
   to_room_id: string;
 }
 
-export interface ChannelData {
+export interface ChannelType {
   latest_msg: MessageResponse;
-  members: UserInfoInterface[];
+  members?: UserInfoInterface[];
+  room_id: string;
 }

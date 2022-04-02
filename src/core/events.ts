@@ -16,6 +16,7 @@ export const EVENT_MAP = {
   'message.new': true,
   'message.read': true,
   'message.updated': true,
+  'notification.channel_active_change': true,
   // 获取message list
   'message.getList': true,
   'notification.added_to_channel': true,

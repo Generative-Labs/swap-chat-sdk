@@ -53,9 +53,10 @@ class MQTT {
     }
     this.mqtt.publish('msg/hub', JSON.stringify(data));
   }
-
   // eslint-disable-next-line no-unused-vars
-  receive(message: any) {}
+  receive(message: any) {
+
+  }
 }
 
 export default MQTT;

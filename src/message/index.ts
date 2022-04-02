@@ -11,7 +11,7 @@ export class Message {
   _client: HouseChat;
   messageList: MessageResponse[] | null;
   message: MessageResponse | null;
-  threadList: MessageResponse[] | null;;
+  threadList: MessageResponse[] | null;
 
   constructor(client: HouseChat) {
     this._client = client;

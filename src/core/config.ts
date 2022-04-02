@@ -15,6 +15,11 @@ export const getToken = () => {
   return '';
 };
 
+export const setToken = (token: string) => {
+  let key = LOCALSTORAGE_KEY_MAP.ACCESS_TOKEN;
+  localStorage.setItem(key, token);
+};
+
 export const getUserInfoFromToken = (token: string) => {
   const tokenArr = token.substring(7).split('.');
   const userInfo = atob(tokenArr[1]);
