@@ -46,12 +46,12 @@ export interface GetMessageByIdParams {
   msg_id: string;
 }
 
-export interface CreateThreadsParams {
+export type CreateThreadsParams = {
   msg_id?: string;
   is_opensea_item_thread?: boolean;
   opensea_item_contract_address?: string;
   opensea_item_token_id?: string;
-}
+};
 
 export interface GetThreadsParams extends PageParams {
   room_id: string;
@@ -87,7 +87,7 @@ export interface roomRes {
   is_1v1: boolean;
 }
 
-export interface GetRoomInfoParams {
+export interface GetRoomInfoParams extends PageParams {
   room_id: string;
 }
 

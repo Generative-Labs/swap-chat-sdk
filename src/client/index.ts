@@ -4,7 +4,7 @@ import event from '../core/eventEmitter';
 import { GetChatsByUserIdParams, GetRoomsParams } from '../types';
 import { login } from '../core/utils';
 import MQTT from '../core/mqtt';
-import { getUserInfoFromToken } from '../core/config';
+import { getUserInfoFromToken, LOCALSTORAGE_KEY_MAP } from '../core/config';
 import { EventTypes } from '../types';
 
 import { Message } from '../message';
@@ -35,15 +35,15 @@ export class HouseChat {
     }
     if (typeof props === 'string') {
       this.token = props;
+      localStorage.setItem(LOCALSTORAGE_KEY_MAP.ACCESS_TOKEN, props);
       this.mqtt = new MQTT(props);
     }
     this.subscribe();
     this.listeners = new event();
     this._listeners = new event();
     this.channel = new Channel();
-    this.messages = new Message();
     this.users = new User();
-    this.messages = new Message();
+    this.messages = new Message(this);
     this.chats = new Chats();
     this.threads = new Thread();
   }

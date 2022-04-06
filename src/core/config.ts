@@ -1,13 +1,14 @@
-export const BASE_URL = 'https://newbietown.com';
+export const BASE_URL = 'https://chat.web3messaging.online';
 // export const BASE_SOCKET_URL = 'wss://newbietown.com/ws?token=';
 export const BASE_MQTT_URL = 'wss://msg.web3messaging.online/mqtt';
 
-export const TOKEN_KEY_MAP = {
+export const LOCALSTORAGE_KEY_MAP = {
   ACCESS_TOKEN: 'ACCESS_TOKEN',
+  USER_INFO: 'USER_INFO',
 };
 
 export const getToken = () => {
-  let key = TOKEN_KEY_MAP.ACCESS_TOKEN;
+  let key = LOCALSTORAGE_KEY_MAP.ACCESS_TOKEN;
   if (localStorage.getItem(key)) {
     return `Bearer ${localStorage.getItem(key)}`;
   }
@@ -16,11 +17,13 @@ export const getToken = () => {
 
 export const getUserInfoFromToken = (token: string) => {
   const tokenArr = token.substring(7).split('.');
-  return JSON.parse(atob(tokenArr[1]) || '{}');
+  const userInfo = atob(tokenArr[1]);
+  localStorage.setItem(LOCALSTORAGE_KEY_MAP.USER_INFO, userInfo);
+  return JSON.parse(userInfo || '{}');
 };
 
 export const isExpired = () => {
-  const token = localStorage.getItem(TOKEN_KEY_MAP.ACCESS_TOKEN) || '';
+  const token = localStorage.getItem(LOCALSTORAGE_KEY_MAP.ACCESS_TOKEN) || '';
   if (token === '') {
     return false;
   }

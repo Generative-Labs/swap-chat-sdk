@@ -1,4 +1,4 @@
-import { TOKEN_KEY_MAP } from './config';
+import { LOCALSTORAGE_KEY_MAP } from './config';
 import request from './request';
 import {
   LoginParams,
@@ -14,7 +14,7 @@ export const register = (params: RegisterParams): Promise<any> => {
 
 export const login = async (params: LoginParams): Promise<LoginResponse> => {
   const { data } = await request.post<LoginResponse>('/login', params);
-  localStorage.setItem(TOKEN_KEY_MAP.ACCESS_TOKEN, data.access_token);
+  localStorage.setItem(LOCALSTORAGE_KEY_MAP.ACCESS_TOKEN, data.access_token);
   return data;
 };
 

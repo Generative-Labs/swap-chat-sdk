@@ -2,7 +2,7 @@
 import axios from 'axios/dist/axios';
 import { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
 
-import { TOKEN_KEY_MAP, BASE_URL, isExpired, getToken } from './config';
+import { LOCALSTORAGE_KEY_MAP, BASE_URL, isExpired, getToken } from './config';
 import { ServiceResponse } from '../types';
 
 const request: AxiosInstance = axios.create({
@@ -28,7 +28,7 @@ request.interceptors.request.use(
           .then((res: any) => {
             const newToken = res.data.data.access_token || '';
             if (newToken) {
-              localStorage.setItem(TOKEN_KEY_MAP.ACCESS_TOKEN, newToken);
+              localStorage.setItem(LOCALSTORAGE_KEY_MAP.ACCESS_TOKEN, newToken);
               if (newConfig.headers) {
                 newConfig.headers['Authorization'] = newToken;
               }

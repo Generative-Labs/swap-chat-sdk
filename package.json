@@ -2,12 +2,10 @@
   "name": "house-chat",
   "version": "1.1.0",
   "main": "dist/index.js",
-  "module": "lib/index.esm.js",
   "repository": "git@github.com:Generative-Labs/house_chat_SDK.git",
   "author": "<fanxiangyu66@163.com>",
   "files": [
     "dist",
-    "lib",
     "readme.md"
   ],
   "keywords": [
@@ -17,7 +15,7 @@
   ],
   "scripts": {
     "dev": "set NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
-    "build": "rm -fr lib && rm -fr dist && set NODE_ENV=production&& rollup -c rollup.config.js"
+    "build": "rm -fr dist && set NODE_ENV=production&& rollup -c rollup.config.js"
   },
   "husky": {
     "hooks": {
