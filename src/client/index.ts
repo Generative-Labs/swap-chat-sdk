@@ -1,4 +1,4 @@
-import { GetChatsByUserIdParams, LoginParams, PageParams, RegisterParams } from '../types';
+import { LoginParams, PageParams, RegisterParams } from '../types';
 import request from '../core/request';
 import event from '../core/eventEmitter';
 import { GetRoomsParams, UserInfo } from '../types';
@@ -7,7 +7,7 @@ import MQTT from '../core/mqtt';
 import { EventTypes } from '../types';
 
 import { Message } from '../message';
-import { ChannelManage, Channel } from '../channelManage';
+import { Channel } from '../channel';
 import { User } from '../user';
 import { ContactManage } from '../contactManage';
 import { setToken } from '../core/config';
@@ -19,7 +19,7 @@ export class HouseChat {
   mqtt: any | undefined;
   listeners: event;
   _listeners: event;
-  channelManage: ChannelManage;
+  channel: Channel;
   messages: Message;
   user: User;
   contactManage: ContactManage;
@@ -38,10 +38,11 @@ export class HouseChat {
     }
     this.listeners = new event();
     this._listeners = new event();
-    this.channelManage = new ChannelManage(this);
+    this.channel = new Channel(this);
     this.messages = new Message(this);
     this.user = new User(this);
     this.contactManage = new ContactManage(this);
+    // this.subscribe();
   }
 
   public static getInstance = (props: LoginParams | string) => {
@@ -54,10 +55,9 @@ export class HouseChat {
   /**
    * 查询所有channels
    */
-  async queryChannels(options: GetChatsByUserIdParams) {
-    const channels = await this.channelManage.queryChannels(options);
-    channels.forEach((channelItem: Channel) => this.mqtt.subscribe(channelItem.room_id));
-    return channels;
+  async subscribe(params?: GetRoomsParams) {
+    const { data } = await this.getMyRooms(params);
+    data.forEach(channelItem => this.mqtt.subscribe(channelItem));
   }
 
   /**
@@ -118,7 +118,7 @@ export class HouseChat {
   // _off = (eventName: EventTypes, callback: any) => this._listeners.off(eventName, callback);
   // _once = (eventName: EventTypes, callback: any) => this._listeners.once(eventName, callback);
 
-  getRooms = (params: GetRoomsParams): Promise<any> => {
-    return request.post('/rooms', params);
+  getMyRooms = (params?: GetRoomsParams): Promise<{data: string[]}> => {
+    return request.get('/my_rooms', params as any);
   };
 }

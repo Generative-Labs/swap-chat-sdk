@@ -1,49 +1,50 @@
 import request from '../core/request';
 import { HouseChat } from '../client';
-import { Channel } from './channel';
 import {
   AddMemberToRoomParams,
-  ChannelType,
   DelMemberFromRoomParams,
   GetChatsByUserIdParams,
-  GetChatsByUserIdResponse,
   GetMessageParams,
   GetRoomInfoParams,
-  MessageResponse,
   roomRes,
+  ChannelResponse
 } from '../types';
 import { getUserInfoFromToken } from '../core/config';
+// import {dateFormat} from '../core/utils';
 
-export class ChannelManage {
-  public _client: HouseChat;
-  public channels?: Channel[];
-  public activeChannel?: ChannelType;
+export class Channel {
+  private readonly _client: HouseChat;
+  channelList: ChannelResponse[] | null;
+  activeChannel: ChannelResponse | null;
 
   constructor(client: HouseChat) {
     this._client = client;
-    this._client._on('notification.message_new', this.onNewMessage);
+    this.channelList = null;
+    this.activeChannel = null;
   }
 
   /**
    * 新消息
    * @param message 消息内容
    */
-  onNewMessage = (message: MessageResponse) => {
-    const { to_room_id } = message;
-    const _channels =
-      this.channels?.filter((ChannelType) => ChannelType.room_id !== message.to_room_id) || [];
-    const newChannelData = new Channel(to_room_id, message);
-    _channels.unshift(newChannelData);
-    this._client.emit('channel.updated', _channels);
-  };
+  // onNewMessage = (message: MessageResponse) => {
+  //   const { to_room_id } = message;
+  //   const _channels =
+  //     this.channels?.filter((ChannelType) => ChannelType.room_id !== message.to_room_id) || [];
+  //   const newChannelData = new Channel(to_room_id, message);
+  //   _channels.unshift(newChannelData);
+  //   this._client.emit('channel.updated', _channels);
+  // };
 
   /**
    * 用户改变焦点channel
    * @param channel 焦点channel
    */
-  setActiveChannel = (channel: GetChatsByUserIdResponse) => {
+  setActiveChannel = (channel: ChannelResponse) => {
     this.activeChannel = channel;
+
     this._client.messages.getMessageList({ room_id: channel.room_id, page: 1, size: 30 });
+    this._client.emit('channel.activeChange', { type: 'channel.activeChange', data: channel });
   };
 
   /**
@@ -55,21 +56,18 @@ export class ChannelManage {
       throw new Error('The Token is required!');
     }
     const userId = getUserInfoFromToken(token).user_id;
-    const { data: chats } = await this.getChatsByUserId({
+    const { data = [] } = await this.getChatsByUserId({
       ...option,
       user_id: userId,
     });
-    const _channels: Channel[] = [];
-    chats.forEach((chatItem) =>
-      _channels.push(new Channel(chatItem.room_id, chatItem.latest_msg, chatItem.members)),
-    );
-    this.channels = _channels;
-    return _channels;
+    this.channelList = data;
+    this._client.emit('channel.getList', { type: 'channel.getList', data });
   };
+
 
   getChatsByUserId = (
     params: GetChatsByUserIdParams,
-  ): Promise<{ data: GetChatsByUserIdResponse[] }> => {
+  ): Promise<{ data: ChannelResponse[] }> => {
     return request.post('/my_chats', params);
   };
 

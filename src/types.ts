@@ -210,8 +210,18 @@ export interface MessageResponse {
   to_room_id: string;
 }
 
-export interface ChannelType {
+export interface ChannelResponse {
+  created_at: number;
+  creator: UserInfoInterface[];
+  creator_id: number;
+  description: string;
+  is_1v1: boolean;
+  is_opensea_coll: boolean;
   latest_msg: MessageResponse;
   members?: UserInfoInterface[];
+  name: string;
+  opensea_coll_cover: string;
+  opensea_coll_name: string;
+  opensea_coll_slug: string;
   room_id: string;
 }
