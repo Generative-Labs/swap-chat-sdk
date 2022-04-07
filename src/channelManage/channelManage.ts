@@ -43,8 +43,7 @@ export class ChannelManage {
    */
   setActiveChannel = (channel: GetChatsByUserIdResponse) => {
     this.activeChannel = channel;
-    // 通知事件
-    this._client.emit('notification.channel_active_change', channel);
+    this._client.messages.getMessageList({ room_id: channel.room_id, page: 1, size: 30 });
   };
 
   /**

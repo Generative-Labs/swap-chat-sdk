@@ -10,7 +10,6 @@ import { Message } from '../message';
 import { ChannelManage, Channel } from '../channelManage';
 import { User } from '../user';
 import { ContactManage } from '../contactManage';
-import { Thread } from '../thread';
 import { setToken } from '../core/config';
 
 export class HouseChat {
@@ -24,7 +23,6 @@ export class HouseChat {
   messages: Message;
   user: User;
   contactManage: ContactManage;
-  threads: Thread;
 
   constructor(props: LoginParams | string) {
     if (typeof props === 'object') {
@@ -44,7 +42,6 @@ export class HouseChat {
     this.messages = new Message(this);
     this.user = new User(this);
     this.contactManage = new ContactManage(this);
-    this.threads = new Thread();
   }
 
   public static getInstance = (props: LoginParams | string) => {
@@ -113,7 +110,7 @@ export class HouseChat {
 
   on = (eventName: EventTypes, callback: any) => this.listeners.on(eventName, callback);
   emit = (eventName: EventTypes, ...args: any[]) => this.listeners.emit(eventName, ...args);
-  off = (eventName: EventTypes, callback: any) => this.listeners.off(eventName, callback);
+  off = (eventName: EventTypes, callback?: any) => this.listeners.off(eventName, callback);
   once = (eventName: EventTypes, callback: any) => this.listeners.once(eventName, callback);
 
   _on = (eventName: EventTypes, callback: any) => this._listeners.on(eventName, callback);

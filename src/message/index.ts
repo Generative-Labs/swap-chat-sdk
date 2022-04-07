@@ -49,6 +49,7 @@ export class Message {
       this.threadList = data.reverse();
       return data;
     }
+
   };
 
   getMessageListByThread = (params: GetThreadsParams): Promise<any> => {

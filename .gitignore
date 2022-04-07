@@ -106,4 +106,5 @@ lib
 
 #webstorm
 .idea/
+.history
 .DS_Store
