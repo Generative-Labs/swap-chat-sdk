@@ -13,6 +13,10 @@ export const EVENT_MAP = {
   // 更新channel
   'channel.updated': true,
   'channel.visible': true,
+  // 改变contact
+  'contact.activeChange': true,
+  // 获取contactlist
+  'contact.getList': true,
   'health.check': true,
   'member.added': true,
   'member.removed': true,

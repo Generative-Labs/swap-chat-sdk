@@ -9,7 +9,7 @@ import { EventTypes } from '../types';
 import { Message } from '../message';
 import { Channel } from '../channel';
 import { User } from '../user';
-import { ContactManage } from '../contactManage';
+import { Contact } from '../contact';
 import { getUserInfoFromToken, setToken } from '../core/config';
 
 export class HouseChat {
@@ -22,7 +22,7 @@ export class HouseChat {
   channel: Channel;
   messages: Message;
   user: User;
-  contactManage: ContactManage;
+  contact: Contact;
 
   constructor(props: LoginParams | string) {
     if (typeof props === 'object') {
@@ -41,7 +41,7 @@ export class HouseChat {
     this.channel = new Channel(this);
     this.messages = new Message(this);
     this.user = new User(this);
-    this.contactManage = new ContactManage(this);
+    this.contact = new Contact(this);
     this.subscribe();
   }
 
@@ -66,7 +66,7 @@ export class HouseChat {
    * @param {PageParams}
    */
   async queryContacts(options?: PageParams) {
-    return this.contactManage.queryContacts(options);
+    return this.contact.queryContacts(options);
   }
 
   /**
