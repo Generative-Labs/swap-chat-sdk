@@ -2,6 +2,7 @@
 import mqtt from 'mqtt/dist';
 import { MqttClient } from 'mqtt';
 import { BASE_MQTT_URL, getUserInfoFromToken } from './config';
+import type { SendMessageData } from '../types';
 
 class MQTT {
   token: string;
@@ -28,13 +29,15 @@ class MQTT {
       reconnectPeriod: 3000,
     });
 
-    this.mqtt?.on('connect', function () {
-      console.log('连接成功');
-    });
+    if (this.mqtt) {
+      this.mqtt.on('connect', function () {
+        console.log('连接成功');
+      });
 
-    this.mqtt?.on('message', (topic: string, message: string) => {
-      this.receive(JSON.parse(message.toString() || '{}'));
-    });
+      this.mqtt.on('message', (topic: string, message: string) => {
+        this.receive(JSON.parse(message.toString() || '{}'));
+      });
+    }
   }
 
   subscribe(id: string) {
@@ -44,7 +47,7 @@ class MQTT {
     this.mqtt.subscribe(`msg/${id}`);
   }
 
-  send(data: any, callback?: (() => void) | undefined) {
+  send(data: SendMessageData, callback?: (() => void) | undefined) {
     if (!this.mqtt) {
       throw new Error('websocket Initialization failed');
     }
@@ -54,9 +57,7 @@ class MQTT {
     this.mqtt.publish('msg/hub', JSON.stringify(data));
   }
   // eslint-disable-next-line no-unused-vars
-  receive(message: any) {
-
-  }
+  receive(message: any) {}
 }
 
 export default MQTT;

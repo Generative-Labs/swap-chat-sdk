@@ -225,3 +225,27 @@ export interface ChannelResponse {
   opensea_coll_slug: string;
   room_id: string;
 }
+
+export type MsgType = 'text';
+
+export type SendMessageData = {
+  from_uid: string;
+  to: string;
+  msg_contents: string;
+  msg_type: MsgType;
+  is_thread?: boolean;
+  is_opensea_item_thread: boolean;
+  opensea_item_contract_address: string;
+  opensea_item_token_id: string;
+  opensea_item_name: string;
+  opensea_item_description: string;
+  opensea_item_image_url: string;
+  belong_to_thread_id: string;
+  reply_to_msg_id: string;
+  created_at: number;
+  at_user_ids: any[];
+};
+
+export type MembersItem = Record<string, UserInfoInterface[] | undefined>
+
+export type ActiveMemberItem = Record<string, UserInfoInterface>

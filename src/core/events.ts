@@ -10,6 +10,7 @@ export const EVENT_MAP = {
   'channel.muted': true,
   'channel.truncated': true,
   'channel.unmuted': true,
+  // 更新channel
   'channel.updated': true,
   'channel.visible': true,
   'health.check': true,
@@ -23,6 +24,8 @@ export const EVENT_MAP = {
   'notification.channel_active_change': true,
   // 获取message list
   'message.getList': true,
+  // 获取message thread list
+  'message.getThreadList': true,
   'notification.added_to_channel': true,
   'notification.channel_deleted': true,
   'notification.channel_mutes_updated': true,

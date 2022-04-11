@@ -1,4 +1,4 @@
-import { LoginParams, PageParams, RegisterParams } from '../types';
+import { LoginParams, PageParams, RegisterParams, SendMessageData } from '../types';
 import request from '../core/request';
 import event from '../core/eventEmitter';
 import { GetRoomsParams, UserInfo } from '../types';
@@ -10,7 +10,7 @@ import { Message } from '../message';
 import { Channel } from '../channel';
 import { User } from '../user';
 import { ContactManage } from '../contactManage';
-import { setToken } from '../core/config';
+import { getUserInfoFromToken, setToken } from '../core/config';
 
 export class HouseChat {
   private static _instance?: unknown | HouseChat;
@@ -42,7 +42,7 @@ export class HouseChat {
     this.messages = new Message(this);
     this.user = new User(this);
     this.contactManage = new ContactManage(this);
-    // this.subscribe();
+    this.subscribe();
   }
 
   public static getInstance = (props: LoginParams | string) => {
@@ -53,16 +53,17 @@ export class HouseChat {
   };
 
   /**
-   * 查询所有channels
+   * Subscribe per room
+   * @param {GetRoomsParams}
    */
   async subscribe(params?: GetRoomsParams) {
     const { data } = await this.getMyRooms(params);
-    data.forEach(channelItem => this.mqtt.subscribe(channelItem));
+    data.forEach((channelItem) => this.mqtt.subscribe(channelItem));
   }
 
   /**
    * 查询所有联系人
-   * @param options
+   * @param {PageParams}
    */
   async queryContacts(options?: PageParams) {
     return this.contactManage.queryContacts(options);
@@ -93,11 +94,33 @@ export class HouseChat {
     return _searchResults;
   }
 
-  send = (data: any, callback?: () => void | undefined) => {
+  send = (text: string, callback?: () => void | undefined) => {
     if (!this.mqtt) {
       throw new Error('Websocket is not initialized');
     }
-    return this.mqtt.send(data, callback);
+    if (!this.token) {
+      throw new Error('The Token is required!');
+    }
+
+    const roomId = this.channel.activeChannel?.room_id || '';
+    const { id: messageId = '' } = this.messages.activeMessage || {};
+    const messageData: SendMessageData = {
+      from_uid: getUserInfoFromToken(this.token).user_id,
+      to: roomId,
+      msg_contents: text,
+      msg_type: 'text',
+      is_opensea_item_thread: false,
+      opensea_item_contract_address: '',
+      opensea_item_token_id: '',
+      opensea_item_name: '',
+      opensea_item_description: '',
+      opensea_item_image_url: '',
+      belong_to_thread_id: messageId,
+      reply_to_msg_id: '',
+      created_at: Date.now() * 1000000,
+      at_user_ids: [],
+    };
+    return this.mqtt.send(messageData, callback);
   };
 
   // eslint-disable-next-line no-unused-vars
@@ -118,7 +141,7 @@ export class HouseChat {
   // _off = (eventName: EventTypes, callback: any) => this._listeners.off(eventName, callback);
   // _once = (eventName: EventTypes, callback: any) => this._listeners.once(eventName, callback);
 
-  getMyRooms = (params?: GetRoomsParams): Promise<{data: string[]}> => {
+  getMyRooms = (params?: GetRoomsParams): Promise<{ data: string[] }> => {
     return request.get('/my_rooms', params as any);
   };
 }
