@@ -94,7 +94,7 @@ export class HouseChat {
     return _searchResults;
   }
 
-  send = (text: string, callback?: () => void | undefined) => {
+  send = (text: string, isThread: boolean, callback?: () => void | undefined) => {
     if (!this.mqtt) {
       throw new Error('Websocket is not initialized');
     }
@@ -115,7 +115,7 @@ export class HouseChat {
       opensea_item_name: '',
       opensea_item_description: '',
       opensea_item_image_url: '',
-      belong_to_thread_id: messageId,
+      belong_to_thread_id: isThread ? messageId : '',
       reply_to_msg_id: '',
       created_at: Date.now() * 1000000,
       at_user_ids: [],

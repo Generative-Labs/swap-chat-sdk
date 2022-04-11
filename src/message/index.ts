@@ -54,7 +54,7 @@ export class Message {
   receiveMessage = (message: any) => {
     const { belong_to_thread_id, to } = message;
     const newMessage: MessageResponse = { ...message, to_room_id: to };
-
+    console.log('接受消息-------', newMessage);
     if (belong_to_thread_id && this.activeMessage) {
       if (this.activeMessage.id === newMessage.belong_to_thread_id) {
         this.threadList?.push(newMessage);
