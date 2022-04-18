@@ -1,4 +1,4 @@
-import { web3MQ } from '../client';
+import { Web3MQ } from '../client';
 import {
   LoginResponse,
   PlatformType,
@@ -17,8 +17,8 @@ export class User {
   userInfo?: UserInfo;
   avatar?: string;
   userName?: string;
-  _client: web3MQ;
-  constructor(client: web3MQ) {
+  _client: Web3MQ;
+  constructor(client: Web3MQ) {
     this._client = client;
     this._initialization(this._client.token as string);
   }

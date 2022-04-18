@@ -1,19 +1,19 @@
-# Web3MQ JS
+# web3-mq JS
 
-web3MQ-js is the official JavaScript client for House Studio, a service for building chat applications.
+web3-mq-js is the official JavaScript client for House Studio, a service for building chat applications.
 
 ## Installation
 
 ### Install with NPM
 
 ```bash
-npm install web3MQ
+npm install web3-mq
 ```
 
 ### Install with Yarn
 
 ```bash
-yarn add web3MQ
+yarn add web3-mq
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ yarn add web3MQ
 ### create client
 
 ```typescript
-import { web3MQ } from 'web3MQ';
+import { Web3MQ } from 'web3-mq';
 
 const loginParams = {
   login_random_secret: 'YOUR_LOGIN_RANDOM_SECRET',
@@ -31,9 +31,9 @@ const loginParams = {
 };
 
 // create client
-const client = web3MQ.getInstance(loginParams);
+const client = Web3MQ.getInstance(loginParams);
 // or
-const client = web3MQ.getInstance('YOUR_ACCESS_TOKEN');
+const client = Web3MQ.getInstance('YOUR_ACCESS_TOKEN');
 ```
 
 ### create room
@@ -57,7 +57,7 @@ const user = client.createUser();
 ### utils function
 
 ```typescript
-import { login, register, getLoginRandomSecret } from 'web3MQ';
+import { login, register, getLoginRandomSecret } from 'web3-mq';
 
 const data = await register();
 

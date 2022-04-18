@@ -1,13 +1,13 @@
-import { web3MQ } from '../client';
+import { Web3MQ } from '../client';
 import {PageParams, UserInfo} from '../types';
 import request from '../core/request';
 
 export class Contact {
-  private _client: web3MQ;
+  private _client: Web3MQ;
   public contactList?: UserInfo[] | null;
   public activeContact: UserInfo | null;
 
-  constructor(client: web3MQ) {
+  constructor(client: Web3MQ) {
     this._client = client;
     this.activeContact = null;
     this.contactList = null;

@@ -12,8 +12,8 @@ import { User } from '../user';
 import { Contact } from '../contact';
 import { getUserInfoFromToken, setToken } from '../core/config';
 
-export class web3MQ {
-  private static _instance?: unknown | web3MQ;
+export class Web3MQ {
+  private static _instance?: unknown | Web3MQ;
   token: string | undefined;
   // ws: socket | undefined;
   mqtt: any | undefined;
@@ -46,10 +46,10 @@ export class web3MQ {
   }
 
   public static getInstance = (props: LoginParams | string) => {
-    if (!web3MQ._instance) {
-      web3MQ._instance = new web3MQ(props);
+    if (!Web3MQ._instance) {
+      Web3MQ._instance = new Web3MQ(props);
     }
-    return web3MQ._instance as web3MQ;
+    return Web3MQ._instance as Web3MQ;
   };
 
   /**
