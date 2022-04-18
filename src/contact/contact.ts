@@ -1,13 +1,13 @@
-import { HouseChat } from '../client';
+import { web3MQ } from '../client';
 import {PageParams, UserInfo} from '../types';
 import request from '../core/request';
 
 export class Contact {
-  private _client: HouseChat;
+  private _client: web3MQ;
   public contactList?: UserInfo[] | null;
   public activeContact: UserInfo | null;
 
-  constructor(client: HouseChat) {
+  constructor(client: web3MQ) {
     this._client = client;
     this.activeContact = null;
     this.contactList = null;

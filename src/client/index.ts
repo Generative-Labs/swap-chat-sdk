@@ -12,8 +12,8 @@ import { User } from '../user';
 import { Contact } from '../contact';
 import { getUserInfoFromToken, setToken } from '../core/config';
 
-export class HouseChat {
-  private static _instance?: unknown | HouseChat;
+export class web3MQ {
+  private static _instance?: unknown | web3MQ;
   token: string | undefined;
   // ws: socket | undefined;
   mqtt: any | undefined;
@@ -46,10 +46,10 @@ export class HouseChat {
   }
 
   public static getInstance = (props: LoginParams | string) => {
-    if (!HouseChat._instance) {
-      HouseChat._instance = new HouseChat(props);
+    if (!web3MQ._instance) {
+      web3MQ._instance = new web3MQ(props);
     }
-    return HouseChat._instance as HouseChat;
+    return web3MQ._instance as web3MQ;
   };
 
   /**

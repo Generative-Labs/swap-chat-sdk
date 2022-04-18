@@ -5,15 +5,15 @@ import {
   GetThreadsParams,
   MessageResponse,
 } from '../types';
-import { HouseChat } from '../client';
+import { web3MQ } from '../client';
 
 export class Message {
-  _client: HouseChat;
+  _client: web3MQ;
   activeMessage: MessageResponse | null;
   messageList: MessageResponse[] | null;
   threadList: MessageResponse[] | null;
 
-  constructor(client: HouseChat) {
+  constructor(client: web3MQ) {
     this._client = client;
     this.messageList = null;
     this.threadList = null;

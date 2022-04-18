@@ -1,5 +1,5 @@
 import request from '../core/request';
-import { HouseChat } from '../client';
+import { web3MQ } from '../client';
 import {
   // AddMemberToRoomParams,
   // DelMemberFromRoomParams,
@@ -16,13 +16,13 @@ import { getUserInfoFromToken } from '../core/config';
 // import {dateFormat} from '../core/utils';
 
 export class Channel {
-  private readonly _client: HouseChat;
+  private readonly _client: web3MQ;
   channelList: ChannelResponse[] | null;
   activeChannel: ChannelResponse | null;
   members: MembersItem | null;
   activeMember: ActiveMemberItem;
 
-  constructor(client: HouseChat) {
+  constructor(client: web3MQ) {
     this._client = client;
     this.channelList = null;
     this.activeChannel = null;

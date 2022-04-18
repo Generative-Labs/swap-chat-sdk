@@ -1,19 +1,19 @@
-# House Chat JS
+# Web3MQ JS
 
-house-chat-js is the official JavaScript client for House Studio, a service for building chat applications.
+web3MQ-js is the official JavaScript client for House Studio, a service for building chat applications.
 
 ## Installation
 
 ### Install with NPM
 
 ```bash
-npm install house-chat
+npm install web3MQ
 ```
 
 ### Install with Yarn
 
 ```bash
-yarn add house-chat
+yarn add web3MQ
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ yarn add house-chat
 ### create client
 
 ```typescript
-import { HouseChat } from 'house-chat';
+import { web3MQ } from 'web3MQ';
 
 const loginParams = {
   login_random_secret: 'YOUR_LOGIN_RANDOM_SECRET',
@@ -31,9 +31,9 @@ const loginParams = {
 };
 
 // create client
-const client = HouseChat.getInstance(loginParams);
+const client = web3MQ.getInstance(loginParams);
 // or
-const client = HouseChat.getInstance('YOUR_ACCESS_TOKEN');
+const client = web3MQ.getInstance('YOUR_ACCESS_TOKEN');
 ```
 
 ### create room
@@ -57,7 +57,7 @@ const user = client.createUser();
 ### utils function
 
 ```typescript
-import { login, register, getLoginRandomSecret } from 'house-chat';
+import { login, register, getLoginRandomSecret } from 'web3MQ';
 
 const data = await register();
 
