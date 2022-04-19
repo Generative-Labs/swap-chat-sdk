@@ -9,8 +9,8 @@ export interface ServiceResponse {
 }
 
 export interface PageParams {
-  page: number;
-  size: number;
+  page?: number;
+  size?: number;
 }
 
 export interface GetRoomsParams {
@@ -76,7 +76,7 @@ export interface UserInfoInterface {
   user_id: string;
 }
 
-export interface roomRes {
+export interface RoomResponse {
   created_at: number;
   creator: UserInfoInterface;
   description: string;

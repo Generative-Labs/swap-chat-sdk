@@ -6,7 +6,7 @@ import {
   GetChatsByUserIdParams,
   // GetMessageParams,
   // GetRoomInfoParams,
-  // roomRes,
+  // RoomResponse,
   ChannelResponse,
   MessageResponse,
   MembersItem,
@@ -53,7 +53,7 @@ export class Channel {
   setActiveChannel = (channel: ChannelResponse) => {
     this.activeChannel = channel;
     this.getActiveMember(channel);
-    this._client.messages.getMessageList({ room_id: channel.room_id, page: 1, size: 30 });
+    this._client.messages.getMessageList({ room_id: channel.room_id });
     this._client.emit('channel.activeChange', { type: 'channel.activeChange', data: channel });
   };
 
@@ -99,19 +99,15 @@ export class Channel {
   };
 
   // getRoomInfo = (params: GetRoomInfoParams): Promise<any> => {
-  //   return request.get<roomRes>(`/rooms/${params.room_id}`);
+  //   return request.get<RoomResponse>(`/rooms/${params.room_id}`);
   // };
 
   // addMemberToRoom = (params: AddMemberToRoomParams): Promise<any> => {
-  //   return request.post<roomRes>(`/rooms/${params.room_id}/members`, params);
+  //   return request.post<RoomResponse>(`/rooms/${params.room_id}/members`, params);
   // };
 
   // delMemberFromRoom = (params: DelMemberFromRoomParams): Promise<any> => {
   //   return request.delete(`/rooms/${params.room_id}/members/${params.member_id}`);
-  // };
-
-  // getMessages = (params: GetMessageParams): Promise<any> => {
-  //   return request.post('/messages', params);
   // };
 
   // threadsList = (params: GetMessageParams): Promise<any> => {

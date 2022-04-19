@@ -36,3 +36,5 @@ export const isExpired = () => {
   const timestamp = Math.floor(Date.now() / 1000);
   return timestamp >= accessExpiredAt;
 };
+
+export const PAGE_SIZE = 30;
