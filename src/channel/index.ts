@@ -3,16 +3,16 @@ import { Web3MQ } from '../client';
 import {
   // AddMemberToRoomParams,
   // DelMemberFromRoomParams,
-  GetChatsByUserIdParams,
   // GetMessageParams,
   // GetRoomInfoParams,
   // RoomResponse,
+  PageParams,
   ChannelResponse,
   MessageResponse,
   MembersItem,
   ActiveMemberItem,
 } from '../types';
-import { getUserInfoFromToken } from '../core/config';
+import { getUserAvatar } from '../core/config';
 // import {dateFormat} from '../core/utils';
 
 export class Channel {
@@ -75,26 +75,28 @@ export class Channel {
   /**
    * 查询所有channel数据
    */
-  queryChannels = async (option: GetChatsByUserIdParams) => {
+  queryChannels = async (option: PageParams) => {
     const { token } = this._client;
     if (!token) {
       throw new Error('The Token is required!');
     }
-    const userId = getUserInfoFromToken(token).user_id;
     const { data = [] } = await this.getChatsByUserId({
       ...option,
-      user_id: userId,
     });
     this.channelList = data;
     const cacheObj: MembersItem = {};
     data.forEach((item) => {
-      cacheObj[item.room_id] = item.members;
+      cacheObj[item.room_id] = item.members.map((member) => {
+        member.avatar = getUserAvatar(member).avatar;
+        member.user_name = getUserAvatar(member).userName;
+        return member;
+      });
     });
     this.members = cacheObj;
     this._client.emit('channel.getList', { type: 'channel.getList', data });
   };
 
-  getChatsByUserId = (params: GetChatsByUserIdParams): Promise<{ data: ChannelResponse[] }> => {
+  getChatsByUserId = (params: PageParams): Promise<{ data: ChannelResponse[] }> => {
     return request.post('/my_chats', params);
   };
 

@@ -20,21 +20,15 @@ export interface GetRoomsParams {
   item_contract_address?: string;
 }
 
-export interface GetChatsByUserIdParams extends PageParams {
-  page: number;
-  size: number;
-  user_id?: number;
-}
-
 export interface GetChatsByUserIdResponse {
   created_at: string;
-  creator: UserInfoInterface;
+  creator: MemberUserInfo;
   creator_id: string;
   description: string;
   is_1v1: boolean;
   is_opensea_coll: boolean;
   latest_msg: MessageResponse;
-  members: UserInfoInterface[];
+  members: MemberUserInfo[];
   name: string;
   opensea_coll_cover: string;
   opensea_coll_name: string;
@@ -58,29 +52,11 @@ export interface GetThreadsParams extends PageParams {
   belong_to_thread_id: string;
 }
 
-export interface UserInfoInterface {
-  created_at: number;
-  eth_wallet_address: string;
-  discord_username: string;
-  facebook_username: string;
-  instagram_username: string;
-  opensea_username: string;
-  twitter_username: string;
-  twitter_avatar?: string;
-  discord_avatar?: string;
-  facebook_avatar?: string;
-  instagram_avatar?: string;
-  opensea_avatar?: string;
-  nick_name: string;
-  status: number;
-  user_id: string;
-}
-
 export interface RoomResponse {
   created_at: number;
-  creator: UserInfoInterface;
+  creator: MemberUserInfo;
   description: string;
-  members: UserInfoInterface[];
+  members: MemberUserInfo[];
   name: string;
   room_id: string;
   opensea_coll_cover?: string;
@@ -157,13 +133,8 @@ export interface UserInfo {
   twitter_avatar: string;
   twitter_username: string;
   user_id: string;
-}
-
-export interface SearchFormatUserInfo {
-  avatar: string;
-  userId: string;
-  userName: string;
-  createdAt: number;
+  avatar?: string;
+  user_name?: string;
 }
 
 export interface CreateContractsParams {
@@ -212,13 +183,13 @@ export interface MessageResponse {
 
 export interface ChannelResponse {
   created_at: number;
-  creator: UserInfoInterface[];
+  creator: MemberUserInfo[];
   creator_id: number;
   description: string;
   is_1v1: boolean;
   is_opensea_coll: boolean;
   latest_msg: MessageResponse;
-  members?: UserInfoInterface[];
+  members: MemberUserInfo[];
   name: string;
   opensea_coll_cover: string;
   opensea_coll_name: string;
@@ -246,6 +217,8 @@ export type SendMessageData = {
   at_user_ids: any[];
 };
 
-export type MembersItem = Record<string, UserInfoInterface[] | undefined>
+export type MembersItem = Record<string, MemberUserInfo[] | undefined>;
 
-export type ActiveMemberItem = Record<string, UserInfoInterface>
+export type ActiveMemberItem = Record<string, MemberUserInfo>;
+
+export type MemberUserInfo = Omit<UserInfo, 'access_expired_at'>;

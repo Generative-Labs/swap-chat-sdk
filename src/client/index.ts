@@ -1,24 +1,21 @@
 import { LoginParams, PageParams, RegisterParams, SendMessageData } from '../types';
 import request from '../core/request';
 import event from '../core/eventEmitter';
-import { GetRoomsParams, UserInfo } from '../types';
+import { EventTypes, GetRoomsParams, UserInfo } from '../types';
 import { login } from '../core/utils';
 import MQTT from '../core/mqtt';
-import { EventTypes } from '../types';
 
 import { Message } from '../message';
 import { Channel } from '../channel';
 import { User } from '../user';
 import { Contact } from '../contact';
-import { getUserInfoFromToken, setToken } from '../core/config';
+import { setToken } from '../core/config';
 
 export class Web3MQ {
-  private static _instance?: unknown | Web3MQ;
-  token: string | undefined;
-  // ws: socket | undefined;
+  private static _instance: Web3MQ | null;
+  token?: string;
   mqtt: any | undefined;
   listeners: event;
-  _listeners: event;
   channel: Channel;
   messages: Message;
   user: User;
@@ -37,7 +34,6 @@ export class Web3MQ {
       this.mqtt = new MQTT(props);
     }
     this.listeners = new event();
-    this._listeners = new event();
     this.channel = new Channel(this);
     this.messages = new Message(this);
     this.user = new User(this);
@@ -105,7 +101,7 @@ export class Web3MQ {
     const roomId = this.channel.activeChannel?.room_id || '';
     const { id: messageId = '' } = this.messages.activeMessage || {};
     const messageData: SendMessageData = {
-      from_uid: getUserInfoFromToken(this.token).user_id,
+      from_uid: this.user.userInfo.user_id,
       to: roomId,
       msg_contents: text,
       msg_type: 'text',
@@ -135,11 +131,6 @@ export class Web3MQ {
   emit = (eventName: EventTypes, ...args: any[]) => this.listeners.emit(eventName, ...args);
   off = (eventName: EventTypes, callback?: any) => this.listeners.off(eventName, callback);
   once = (eventName: EventTypes, callback: any) => this.listeners.once(eventName, callback);
-
-  _on = (eventName: EventTypes, callback: any) => this._listeners.on(eventName, callback);
-  _emit = (eventName: EventTypes, ...args: any[]) => this._listeners.emit(eventName, ...args);
-  // _off = (eventName: EventTypes, callback: any) => this._listeners.off(eventName, callback);
-  // _once = (eventName: EventTypes, callback: any) => this._listeners.once(eventName, callback);
 
   getMyRooms = (params?: GetRoomsParams): Promise<{ data: string[] }> => {
     return request.get('/my_rooms', params as any);
