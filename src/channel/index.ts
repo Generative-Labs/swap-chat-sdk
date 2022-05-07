@@ -12,7 +12,7 @@ import {
   MembersItem,
   ActiveMemberItem,
 } from '../types';
-import { getUserAvatar } from '../core/config';
+import { getUserAvatar } from '../core/utils';
 // import {dateFormat} from '../core/utils';
 
 export class Channel {

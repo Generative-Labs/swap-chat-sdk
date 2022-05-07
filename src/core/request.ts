@@ -2,7 +2,8 @@
 import axios from 'axios/dist/axios';
 import { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
 
-import { LOCALSTORAGE_KEY_MAP, BASE_URL, isExpired, getToken } from './config';
+import { LOCALSTORAGE_KEY_MAP, BASE_URL } from './config';
+import { isExpired, getToken } from './utils';
 import { ServiceResponse } from '../types';
 
 const request: AxiosInstance = axios.create({

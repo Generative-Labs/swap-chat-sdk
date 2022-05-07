@@ -9,7 +9,7 @@ import { Message } from '../message';
 import { Channel } from '../channel';
 import { User } from '../user';
 import { Contact } from '../contact';
-import { setToken } from '../core/config';
+import { setToken } from '../core/utils';
 
 export class Web3MQ {
   private static _instance: Web3MQ | null;

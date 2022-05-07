@@ -1,7 +1,8 @@
 // @ts-ignore
 import mqtt from 'mqtt/dist';
 import { MqttClient } from 'mqtt';
-import { BASE_MQTT_URL, getUserInfoFromToken } from './config';
+import { BASE_MQTT_URL } from './config';
+import { getUserInfoFromToken } from './utils';
 import type { SendMessageData } from '../types';
 
 class MQTT {

@@ -1,4 +1,5 @@
 import { LOCALSTORAGE_KEY_MAP } from './config';
+import { PLATFORM_ENUM, MemberUserInfo } from '../types';
 import request from './request';
 import {
   LoginParams,
@@ -55,3 +56,53 @@ export function dateFormat(time: number, format?: string) {
     return rt > 10 || !isAddZero(o) ? rt : `0${rt}`;
   });
 }
+
+export const getToken = () => {
+  let key = LOCALSTORAGE_KEY_MAP.ACCESS_TOKEN;
+  if (localStorage.getItem(key)) {
+    return `Bearer ${localStorage.getItem(key)}`;
+  }
+  return '';
+};
+
+export const setToken = (token: string) => {
+  let key = LOCALSTORAGE_KEY_MAP.ACCESS_TOKEN;
+  localStorage.setItem(key, token);
+};
+
+export const parseJwt = (str: string) => {
+  return JSON.parse(
+    decodeURIComponent(escape(window.atob(str.replace(/-/g, '+').replace(/_/g, '/')))) || '{}',
+  );
+};
+
+export const getUserInfoFromToken = (token: string) => {
+  const tokenArr = token.substring(7).split('.');
+  const userInfo = parseJwt(tokenArr[1]);
+  userInfo.avatar = getUserAvatar(userInfo).avatar;
+  userInfo.user_name = getUserAvatar(userInfo).userName;
+  localStorage.setItem(LOCALSTORAGE_KEY_MAP.USER_INFO, JSON.stringify(userInfo));
+  return userInfo;
+};
+
+export const isExpired = () => {
+  const token = localStorage.getItem(LOCALSTORAGE_KEY_MAP.ACCESS_TOKEN) || '';
+  if (token === '') {
+    return false;
+  }
+  const accessExpiredAt = getUserInfoFromToken(token).access_expired_at || 0;
+  const timestamp = Math.floor(Date.now() / 1000);
+  return timestamp >= accessExpiredAt;
+};
+
+export const getUserAvatar = (userInfo: MemberUserInfo) => {
+  let platforms = [PLATFORM_ENUM.TWITTER, PLATFORM_ENUM.OPENSEA, PLATFORM_ENUM.DISCORD];
+  let platform = platforms.find((item) => !!userInfo[`${item}_avatar`]);
+  if (platform) {
+    return {
+      avatar: userInfo[`${platform}_avatar`],
+      userName: userInfo[`${platform}_username`],
+    };
+  }
+  return {};
+};

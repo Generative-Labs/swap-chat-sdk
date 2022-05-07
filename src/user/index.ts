@@ -10,7 +10,7 @@ import {
   UserInfo,
 } from '../types';
 import request from '../core/request';
-import { getUserInfoFromToken } from '../core/config';
+import { getUserInfoFromToken } from '../core/utils';
 
 export class User {
   _client: Web3MQ;

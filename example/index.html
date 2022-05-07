@@ -44,23 +44,23 @@
 </body>
 <script src="../dist/index.js"></script>
 <script>
-  const btn1 = document.getElementById('user1btn');
-  const btn2 = document.getElementById('user2btn');
-  const text1 = document.getElementById('user1input');
-  const text2 = document.getElementById('user2input');
-  const show1 = document.getElementById('show1');
-  const show2 = document.getElementById('show2');
-  text1.onchange = function (e) {
-    show1.innerText = e.target.value;
-  };
-  text2.onchange = function (e) {
-    show2.innerText = e.target.value;
-  };
+  // const btn1 = document.getElementById('user1btn');
+  // const btn2 = document.getElementById('user2btn');
+  // const text1 = document.getElementById('user1input');
+  // const text2 = document.getElementById('user2input');
+  // const show1 = document.getElementById('show1');
+  // const show2 = document.getElementById('show2');
+  // text1.onchange = function (e) {
+  //   show1.innerText = e.target.value;
+  // };
+  // text2.onchange = function (e) {
+  //   show2.innerText = e.target.value;
+  // };
 
   // box1
-  btn1.onclick = function () {
-    const text = show1.innerText;
-    client.queryUserName('KyivIndependent').then(data => console.log(data))
+  // btn1.onclick = function () {
+  //   const text = show1.innerText;
+  //   client.queryUserName('KyivIndependent').then(data => console.log(data))
     // client.send(
     //   {
     //     belong_to_thread_id: '',
@@ -74,11 +74,11 @@
     //     console.log(`这是回调函数，发送${text}后执行`);
     //   },
     // );
-  };
+  // };
 
-  client.receive((message) => {
-    show2.innerText = message.msg_contents;
-  });
+  // client.receive((message) => {
+  //   show2.innerText = message.msg_contents;
+  // });
 
   // client
   //   .getRooms({
@@ -100,9 +100,9 @@
   //   });
 
   // box2
-  btn2.onclick = function () {
-    const text = show2.innerText;
-    console.log('btn2', text);
-  };
+  // btn2.onclick = function () {
+  //   const text = show2.innerText;
+  //   console.log('btn2', text);
+  // };
 </script>
 </html>
