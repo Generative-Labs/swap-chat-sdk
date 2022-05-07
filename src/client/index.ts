@@ -1,4 +1,4 @@
-import { LoginParams, PageParams, RegisterParams, SendMessageData } from '../types';
+import { LoginParams, MsgTypeEnum, PageParams, RegisterParams, SendMessageData } from '../types';
 import request from '../core/request';
 import event from '../core/eventEmitter';
 import { EventTypes, GetRoomsParams, UserInfo } from '../types';
@@ -104,7 +104,7 @@ export class Web3MQ {
       from_uid: this.user.userInfo.user_id,
       to: roomId,
       msg_contents: text,
-      msg_type: 'text',
+      msg_type: MsgTypeEnum.text,
       is_opensea_item_thread: false,
       opensea_item_contract_address: '',
       opensea_item_token_id: '',

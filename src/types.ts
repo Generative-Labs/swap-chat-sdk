@@ -162,6 +162,35 @@ export interface GetOpenSeaAssetResponse {
   assets: any[];
 }
 
+export enum MsgTypeEnum {
+  text = 'text',
+  sudoSwapCard = 'sudo_swap_card',
+}
+
+export enum AssetDataTypeEnum {
+  ERC20 = '1',
+  ERC721 = '2',
+  ERC1155 = '3',
+}
+export interface MsgContentsAssetData {
+  address: string;
+  amount: string;
+  imgURL: string;
+  name: string;
+  symbol: string;
+  type: AssetDataTypeEnum;
+  id?: string;
+}
+
+export interface MsgContents {
+  asset1Data: MsgContentsAssetData[];
+  asset2Data: MsgContentsAssetData[];
+  creatorAddress: string;
+  expiryDate: string;
+  jumpUrl: string;
+  orderStatus: string;
+  recipientAddress: string;
+}
 export interface MessageResponse {
   at_user_ids: any[];
   belong_to_thread_id: string;
@@ -170,8 +199,8 @@ export interface MessageResponse {
   id: string;
   is_opensea_item_thread: boolean;
   is_thread: boolean;
-  msg_contents: string;
-  msg_type: 'text' | 'video';
+  msg_contents: string | MsgContents;
+  msg_type: MsgTypeEnum;
   opensea_item_contract_address: string;
   opensea_item_description: string;
   opensea_item_image_url: string;
@@ -197,13 +226,11 @@ export interface ChannelResponse {
   room_id: string;
 }
 
-export type MsgType = 'text';
-
 export type SendMessageData = {
   from_uid: string;
   to: string;
   msg_contents: string;
-  msg_type: MsgType;
+  msg_type: MsgTypeEnum;
   is_thread?: boolean;
   is_opensea_item_thread: boolean;
   opensea_item_contract_address: string;
