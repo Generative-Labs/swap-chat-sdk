@@ -83,7 +83,6 @@ export class Channel {
     const { data = [] } = await this.getChatsByUserId({
       ...option,
     });
-    this.channelList = data;
     const cacheObj: MembersItem = {};
     data.forEach((item) => {
       cacheObj[item.room_id] = item.members.map((member) => {
@@ -92,6 +91,7 @@ export class Channel {
         return member;
       });
     });
+    this.channelList = data;
     this.members = cacheObj;
     this._client.emit('channel.getList', { type: 'channel.getList', data });
   };

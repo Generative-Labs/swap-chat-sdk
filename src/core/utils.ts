@@ -97,7 +97,7 @@ export const isExpired = () => {
 
 export const getUserAvatar = (userInfo: MemberUserInfo) => {
   let platforms = [PLATFORM_ENUM.TWITTER, PLATFORM_ENUM.OPENSEA, PLATFORM_ENUM.DISCORD];
-  let platform = platforms.find((item) => !!userInfo[`${item}_avatar`]);
+  let platform = platforms.find((item) => !!userInfo[`${item}_username`]);
   if (platform) {
     return {
       avatar: userInfo[`${platform}_avatar`],
