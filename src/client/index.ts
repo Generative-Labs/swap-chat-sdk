@@ -1,15 +1,23 @@
-import { LoginParams, MsgTypeEnum, PageParams, RegisterParams, SendMessageData } from '../types';
 import request from '../core/request';
 import event from '../core/eventEmitter';
-import { EventTypes, GetRoomsParams, UserInfo } from '../types';
-import { login } from '../core/utils';
+import { login, setToken } from '../core/utils';
 import MQTT from '../core/mqtt';
+
+import {
+  LoginParams,
+  MsgTypeEnum,
+  PageParams,
+  RegisterParams,
+  SendMessageData,
+  EventTypes,
+  GetRoomsParams,
+  UserInfo,
+} from '../types';
 
 import { Message } from '../message';
 import { Channel } from '../channel';
 import { User } from '../user';
 import { Contact } from '../contact';
-import { setToken } from '../core/utils';
 
 export class Web3MQ {
   private static _instance: Web3MQ | null;

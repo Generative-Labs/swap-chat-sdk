@@ -98,7 +98,9 @@ export class Message {
       }
       return;
     }
-    this.messageList?.push(newMessage);
+    if (this._client.channel.activeChannel?.room_id === to) {
+      this.messageList?.push(newMessage);
+    }
     this._client.channel.onNewMessage(newMessage);
     this._client.emit('message.getList', {
       type: 'message.getList',

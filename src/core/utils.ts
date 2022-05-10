@@ -1,12 +1,15 @@
 import { LOCALSTORAGE_KEY_MAP } from './config';
-import { PLATFORM_ENUM, MemberUserInfo } from '../types';
 import request from './request';
 import {
+  PLATFORM_ENUM,
+  MemberUserInfo,
+  MessageResponse,
   LoginParams,
   LoginRandomSecret,
   LoginRandomSecretParams,
   LoginResponse,
   RegisterParams,
+  MsgTypeEnum,
 } from '../types';
 
 export const register = (params: RegisterParams): Promise<any> => {
@@ -105,4 +108,36 @@ export const getUserAvatar = (userInfo: MemberUserInfo) => {
     };
   }
   return {};
+};
+
+export const hasNotifyPermission = async () => {
+  if (!('Notification' in window)) {
+    alert('This browser does not support desktop notification');
+  }
+  if (Notification.permission === 'granted') {
+    return true;
+  }
+  if (Notification.permission !== 'denied') {
+    const permission = await Notification.requestPermission();
+    if (permission === 'granted') {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const isCurrentWindow = () => {
+  return document.visibilityState === 'visible';
+};
+
+export const notifyMessage = (message: MessageResponse) => {
+  const { msg_type, msg_contents } = message;
+  switch (msg_type) {
+  case MsgTypeEnum.text:
+    return msg_contents;
+  case MsgTypeEnum.sudoSwapCard:
+    return 'You receive a sudoSwap message';
+  default:
+    return '';
+  }
 };

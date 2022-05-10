@@ -42,8 +42,7 @@ export class Channel {
       }
       return item;
     });
-
-    this._client.emit('channel.updated', _channels);
+    this._client.emit('channel.updated', { type: 'channel.updated', data: _channels });
   };
 
   /**
