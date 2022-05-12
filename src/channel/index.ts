@@ -52,7 +52,6 @@ export class Channel {
   setActiveChannel = (channel: ChannelResponse) => {
     this.activeChannel = channel;
     this.getActiveMember(channel);
-    this._client.messages.getMessageList({ room_id: channel.room_id });
     this._client.emit('channel.activeChange', { type: 'channel.activeChange', data: channel });
   };
 

@@ -53,11 +53,11 @@ class MQTT {
     }
   }
 
-  subscribe(id: string) {
+  subscribe(room_id: string) {
     if (!this.mqtt) {
       throw new Error('websocket Initialization failed');
     }
-    this.mqtt.subscribe(`msg/${id}`);
+    this.mqtt.subscribe(`chat/${room_id}`);
   }
 
   send(data: SendMessageData, callback?: (() => void) | undefined) {
@@ -67,7 +67,7 @@ class MQTT {
     if (callback) {
       callback();
     }
-    this.mqtt.publish('msg/hub', JSON.stringify(data));
+    this.mqtt.publish(`msg/${getUserInfoFromToken(this.token).user_id}`, JSON.stringify(data));
   }
   // eslint-disable-next-line no-unused-vars
   receive(message: any) {}
