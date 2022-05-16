@@ -5,7 +5,6 @@ import {
   // DelMemberFromRoomParams,
   // GetMessageParams,
   // GetRoomInfoParams,
-  // RoomResponse,
   PageParams,
   ChannelResponse,
   MessageResponse,
@@ -97,10 +96,6 @@ export class Channel {
   getChatsByUserId = (params: PageParams): Promise<{ data: ChannelResponse[] }> => {
     return request.post('/my_chats', params);
   };
-
-  // getRoomInfo = (params: GetRoomInfoParams): Promise<any> => {
-  //   return request.get<RoomResponse>(`/rooms/${params.room_id}`);
-  // };
 
   // addMemberToRoom = (params: AddMemberToRoomParams): Promise<any> => {
   //   return request.post<RoomResponse>(`/rooms/${params.room_id}/members`, params);

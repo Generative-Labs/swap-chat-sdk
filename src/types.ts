@@ -67,6 +67,10 @@ export interface GetRoomInfoParams extends PageParams {
   room_id: string;
 }
 
+export interface GetRoomInfoByTargetUserIdParams {
+  user_id: string;
+}
+
 export interface AddMemberToRoomParams {
   room_id: string;
   target_user_id: string;
