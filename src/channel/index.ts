@@ -10,8 +10,10 @@ import {
   MessageResponse,
   MembersItem,
   ActiveMemberItem,
+  GetRoomInfoByTargetUserIdParams,
 } from '../types';
 import { getUserAvatar } from '../core/utils';
+
 // import {dateFormat} from '../core/utils';
 
 export class Channel {
@@ -57,7 +59,6 @@ export class Channel {
   /**
    * 获取当前成员对象
    */
-
   getActiveMember = (current: ChannelResponse) => {
     const chcheObj: ActiveMemberItem = {};
     if (this.members) {
@@ -88,13 +89,54 @@ export class Channel {
         return member;
       });
     });
-    this.channelList = data;
+    if (this.channelList && option.page !== 1) {
+      this.channelList = [...this.channelList, ...data];
+    } else {
+      this.channelList = data;
+    }
     this.members = cacheObj;
     this._client.emit('channel.getList', { type: 'channel.getList', data });
   };
 
   getChatsByUserId = (params: PageParams): Promise<{ data: ChannelResponse[] }> => {
     return request.post('/my_chats', params);
+  };
+
+  /**
+   * 创建新的聊天室
+   * @param params
+   */
+  createRoom = async (params: GetRoomInfoByTargetUserIdParams) => {
+    const { data: roomId } = await this.getRoomInfoByTargetUserIdApi(params);
+    if (!roomId) {
+      throw new Error('Get room info error!');
+    }
+    let existRoomInfo = this.channelList?.find((item) => item.room_id === roomId);
+    if (!existRoomInfo) {
+      const { data } = await this.getRoomInfoByRoomIdApi(roomId);
+      data.members.map((item) => {
+        item.avatar = getUserAvatar(item).avatar;
+        item.user_name = getUserAvatar(item).userName;
+      });
+      existRoomInfo = data;
+    }
+    // 推送当前room到第一条 设置active room
+    if (this.channelList) {
+      this.channelList = this.channelList.filter((item) => item.room_id !== existRoomInfo?.room_id);
+    }
+    this.channelList?.unshift(existRoomInfo);
+    // set active room
+    this.activeChannel = existRoomInfo;
+    this._client.emit('channel.created', { type: 'channel.created', existRoomInfo });
+    this._client.emit('channel.activeChange', { type: 'channel.activeChange', existRoomInfo });
+  };
+
+  getRoomInfoByRoomIdApi = (roomId: string): Promise<{ data: ChannelResponse }> => {
+    return request.get(`/rooms/${roomId}`);
+  };
+
+  getRoomInfoByTargetUserIdApi = (params: GetRoomInfoByTargetUserIdParams): Promise<any> => {
+    return request.post<string>('/rooms', params);
   };
 
   // addMemberToRoom = (params: AddMemberToRoomParams): Promise<any> => {
