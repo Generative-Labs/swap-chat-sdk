@@ -1,5 +1,5 @@
 import { Web3MQ } from '../client';
-import { GetRoomInfoByTargetUserIdParams, PageParams, UserInfo } from '../types';
+import { PageParams, UserInfo } from '../types';
 import request from '../core/request';
 
 export class Contact {
@@ -19,12 +19,7 @@ export class Contact {
    */
   setActiveContact = async (contact: UserInfo) => {
     this.activeContact = contact;
-    const { data } = await this.getRoomInfoByTargetUserIdApi({ user_id: contact.user_id });
-    const newObj = this._client.channel.channelList?.find((item) => item.room_id === data);
-    if (newObj) {
-      this._client.channel.activeChannel = newObj;
-      this._client.channel.getActiveMember(newObj);
-    }
+    await this._client.channel.createRoom({user_id: contact.user_id});
     this._client.emit('contact.activeChange', { type: 'contact.activeChange', data: contact });
   };
 
@@ -38,7 +33,4 @@ export class Contact {
     return request.get(`/contacts/${params.page}/${params.size}`);
   };
 
-  getRoomInfoByTargetUserIdApi = (params: GetRoomInfoByTargetUserIdParams): Promise<any> => {
-    return request.post<string>('/rooms', params);
-  };
 }

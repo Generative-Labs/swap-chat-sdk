@@ -1,13 +1,12 @@
 import request from '../core/request';
 import event from '../core/eventEmitter';
-import { login, setToken } from '../core/utils';
+import { getUserAvatar, login, setToken } from '../core/utils';
 import MQTT from '../core/mqtt';
 
 import {
   LoginParams,
   MsgTypeEnum,
   PageParams,
-  RegisterParams,
   SendMessageData,
   EventTypes,
   GetRoomsParams,
@@ -79,23 +78,16 @@ export class Web3MQ {
    */
 
   async queryUsers(userName: string) {
-    const platforms = ['twitter', 'discord', 'facebook', 'instagram', 'opensea'];
-    const promiseAll = platforms.map((platform) =>
-      this.user.getUserInfoForPlatform(<RegisterParams>{
-        platform: platform,
-        user_name: userName,
-      }),
-    );
-    const promiseResults = await Promise.allSettled(promiseAll);
-    const _searchResults: UserInfo[] = [];
-    promiseResults.forEach((resultItem) => {
-      const { status } = resultItem;
-      if (status === 'fulfilled' && resultItem.value) {
-        const { data } = resultItem.value;
-        _searchResults.push(data);
-      }
+    const { data: users } = await this.user.searchUsersByName({
+      keyword: userName,
     });
-    return _searchResults;
+    return users.map((user: UserInfo) => {
+      return {
+        ...user,
+        ...getUserAvatar(user),
+        userId: user.user_id,
+      };
+    });
   }
 
   send = (text: string, isThread: boolean, callback?: () => void | undefined) => {

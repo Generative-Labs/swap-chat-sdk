@@ -31,6 +31,10 @@ export class User {
   getUserInfoForPlatform = (params: RegisterParams): Promise<any> => {
     return request.post<any>('/info', params);
   };
+  
+  searchUsersByName = (params: { keyword: string}):Promise<any> => {
+    return request.post('/search', params);
+  };
 
   getMyInviteCodes = (): Promise<any> => {
     return request.get('/my_invite_codes');

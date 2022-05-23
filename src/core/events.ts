@@ -1,5 +1,5 @@
 export const EVENT_MAP = {
-  // 'channel.created': true,
+  'channel.created': true,
   // 获取channel list
   'channel.getList': true,
   // 改变active channel
