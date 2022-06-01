@@ -1,6 +1,4 @@
-// @ts-ignore
-import mqtt from 'mqtt/dist/mqtt.js';
-import { MqttClient } from 'mqtt';
+import mqtt, { MqttClient } from 'mqtt';
 import { BASE_MQTT_URL } from './config';
 import { getUserInfoFromToken, hasNotifyPermission, isCurrentWindow, notifyMessage } from './utils';
 import type { SendMessageData } from '../types';

@@ -1,6 +1,4 @@
-// @ts-ignore
-import axios from 'axios/dist/axios';
-import { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
 
 import { LOCALSTORAGE_KEY_MAP, BASE_URL } from './config';
 import { isExpired, getToken } from './utils';

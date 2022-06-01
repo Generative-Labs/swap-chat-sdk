@@ -28,7 +28,7 @@ const commonConf = {
   input: getPath('./src/index.ts'),
   plugins: [resolve({ browser: true }, extensions), commonjs(), esPlugin, tsPlugin, terser()],
   // external: ['axios', 'mqtt'],
-  external: (id) => /axios/.test(id) || /^mqtt\/*/.test(id) || /@walletconnect/.test(id),
+  external: (id) => /axios/.test(id) || id === 'mqtt' || /@walletconnect/.test(id),
 };
 
 // 需要导出的模块类型
@@ -37,10 +37,10 @@ const outputMap = [
     file: packageJSON.main,
     format: 'umd',
     globals: {
-      'axios/dist/axios': 'axios',
-      'mqtt/dist/mqtt.js': 'mqtt',
-      '@walletconnect/client/dist/umd/index.min.js': 'WalletConnect',
-      '@walletconnect/qrcode-modal/dist/umd/index.min.js': 'QRCodeModal',
+      axios: 'axios',
+      mqtt: 'mqtt',
+      '@walletconnect/client': 'WalletConnect',
+      '@walletconnect/qrcode-modal': 'QRCodeModal',
     },
   },
   // {

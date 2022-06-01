@@ -1,7 +1,5 @@
-// @ts-ignore
-import WalletConnect from '@walletconnect/client/dist/umd/index.min.js';
-// @ts-ignore
-import QRCodeModal from '@walletconnect/qrcode-modal/dist/umd/index.min.js';
+import WalletConnect from '@walletconnect/client';
+import QRCodeModal from '@walletconnect/qrcode-modal';
 
 export class Walletconnect {
   static signWalletconnect = async () => {
