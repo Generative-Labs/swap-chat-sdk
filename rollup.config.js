@@ -27,8 +27,7 @@ const esPlugin = eslint({
 const commonConf = {
   input: getPath('./src/index.ts'),
   plugins: [resolve({ browser: true }, extensions), commonjs(), esPlugin, tsPlugin, terser()],
-  // external: ['axios', 'mqtt'],
-  external: (id) => /axios/.test(id) || id === 'mqtt' || /@walletconnect/.test(id),
+  external: ['axios', 'mqtt', '@walletconnect/client', '@walletconnect/qrcode-modal'],
 };
 
 // 需要导出的模块类型
