@@ -1,6 +1,6 @@
 import path from 'path';
-import resolve from 'rollup-plugin-node-resolve'; // 依赖引用插件
-import commonjs from 'rollup-plugin-commonjs'; // commonjs模块转换插件
+import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
 import ts from 'rollup-plugin-typescript2';
 import { eslint } from 'rollup-plugin-eslint';
 import packageJSON from './package.json';
@@ -12,7 +12,7 @@ const extensions = ['.js', '.ts', '.tsx'];
 
 // ts
 const tsPlugin = ts({
-  tsconfig: getPath('./tsconfig.json'), // 导入本地ts配置
+  tsconfig: getPath('./tsconfig.json'),
   extensions,
 });
 
@@ -27,21 +27,24 @@ const esPlugin = eslint({
 const commonConf = {
   input: getPath('./src/index.ts'),
   plugins: [resolve({ browser: true }, extensions), commonjs(), esPlugin, tsPlugin, terser()],
-  external: ['axios', 'mqtt'],
+  // external: ['axios', 'mqtt'],
+  external: (id) => /axios/.test(id) || /^mqtt\/*/.test(id) || /@walletconnect/.test(id),
 };
 
 // 需要导出的模块类型
 const outputMap = [
   {
-    file: packageJSON.main, // 通用模块
+    file: packageJSON.main,
     format: 'umd',
     globals: {
-      axios: 'Axios',
-      mqtt: 'mqtt',
+      'axios/dist/axios': 'axios',
+      'mqtt/dist/mqtt.js': 'mqtt',
+      '@walletconnect/client/dist/umd/index.min.js': 'WalletConnect',
+      '@walletconnect/qrcode-modal/dist/umd/index.min.js': 'QRCodeModal',
     },
   },
   // {
-  //   file: packageJSON.module, // es6模块
+  //   file: packageJSON.module,
   //   format: 'es',
   //   globals: {
   //     axios: 'Axios',
