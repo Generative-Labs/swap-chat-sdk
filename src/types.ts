@@ -94,6 +94,7 @@ export interface LoginParams {
   signature: string;
   wallet_address: string;
   appid?: string;
+  user_avatar?: string
 }
 
 export interface LoginResponse {
@@ -139,6 +140,7 @@ export interface UserInfo {
   user_id: string;
   avatar?: string;
   user_name?: string;
+  ens_name?: string
 }
 
 export interface CreateContractsParams {
@@ -176,6 +178,7 @@ export enum AssetDataTypeEnum {
   ERC721 = '2',
   ERC1155 = '3',
 }
+
 export interface MsgContentsAssetData {
   address: string;
   amount: string;
@@ -195,6 +198,7 @@ export interface MsgContents {
   orderStatus: string;
   recipientAddress: string;
 }
+
 export interface MessageResponse {
   at_user_ids: any[];
   belong_to_thread_id: string;
@@ -253,3 +257,36 @@ export type MembersItem = Record<string, MemberUserInfo[] | undefined>;
 export type ActiveMemberItem = Record<string, MemberUserInfo>;
 
 export type MemberUserInfo = Omit<UserInfo, 'access_expired_at'>;
+
+export type GetTwitterUserInfoParams = {
+  twitter_user_name: string;
+};
+export type GetOpenseaUserInfoParams = {
+  opensea_user_id: string;
+};
+export type GetNextIdUserInfoParams = {
+  platform: string;
+  identity: string;
+};
+
+export type SignToPubKeyParams = {
+  sig: string;
+  msg: string;
+};
+
+export type getNextIdSignPayloadParams = {
+  action: string;
+  platform: string;
+  identity: string;
+  public_key: string;
+}
+export type CreateNextIdUserParams = {
+  action: string;
+  platform: string;
+  identity: string;
+  proof_location: string;
+  public_key: string;
+  extra?: any;
+  uuid: string;
+  created_at: string;
+}

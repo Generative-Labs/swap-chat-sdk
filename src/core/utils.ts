@@ -9,7 +9,7 @@ import {
   LoginRandomSecretParams,
   LoginResponse,
   RegisterParams,
-  MsgTypeEnum,
+  MsgTypeEnum, SignToPubKeyParams, getNextIdSignPayloadParams,
 } from '../types';
 
 export const register = (params: RegisterParams): Promise<any> => {
@@ -140,4 +140,12 @@ export const notifyMessage = (message: MessageResponse) => {
   default:
     return '';
   }
+};
+
+export const sigToPubkey = (params: SignToPubKeyParams): Promise<any> => {
+  return request.post('/sig2pubkey', params);
+};
+
+export const getNextIdSignPayload = (params: getNextIdSignPayloadParams) => {
+  return request.post('https://proof-service.next.id/v1/proof/payload', params);
 };
