@@ -10,10 +10,12 @@ import {
   UserInfo,
   GetOpenseaUserInfoParams,
   GetNextIdUserInfoParams,
-  GetTwitterUserInfoParams, CreateNextIdUserParams,
+  GetTwitterUserInfoParams,
+  CreateNextIdUserParams,
 } from '../types';
 import request from '../core/request';
 import { getUserInfoFromToken } from '../core/utils';
+import { NEXT_ID_HOST } from '../core/config';
 
 export class User {
   _client: Web3MQ;
@@ -81,7 +83,7 @@ export class User {
    */
   getNextIdUserInfo(params: GetNextIdUserInfoParams) {
     return request.get(
-      `https://proof-service.next.id/v1/proof?platform=${params.platform}&identity=${params.identity}`,
+      `${NEXT_ID_HOST}/v1/proof?platform=${params.platform}&identity=${params.identity}`,
     );
   }
 
@@ -90,7 +92,6 @@ export class User {
    * @param params
    */
   createNextIdUser(params: CreateNextIdUserParams) {
-    return request.post('https://proof-service.next.id/v1/proof', params);
-
+    return request.post(`${NEXT_ID_HOST}/v1/proof`, params);
   }
 }

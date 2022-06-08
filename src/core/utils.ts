@@ -1,4 +1,4 @@
-import { LOCALSTORAGE_KEY_MAP } from './config';
+import { LOCALSTORAGE_KEY_MAP, NEXT_ID_HOST } from './config';
 import request from './request';
 import {
   PLATFORM_ENUM,
@@ -149,5 +149,5 @@ export const sigToPubkey = (params: SignToPubKeyParams): Promise<any> => {
 };
 
 export const getNextIdSignPayload = (params: getNextIdSignPayloadParams) => {
-  return request.post('https://proof-service.next.id/v1/proof/payload', params);
+  return request.post(`${NEXT_ID_HOST}/v1/proof/payload`, params);
 };
