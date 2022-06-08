@@ -9,7 +9,9 @@ import {
   LoginRandomSecretParams,
   LoginResponse,
   RegisterParams,
-  MsgTypeEnum, SignToPubKeyParams, getNextIdSignPayloadParams,
+  MsgTypeEnum,
+  SignToPubKeyParams,
+  getNextIdSignPayloadParams,
 } from '../types';
 
 export const register = (params: RegisterParams): Promise<any> => {
