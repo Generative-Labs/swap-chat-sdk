@@ -34,7 +34,8 @@ class EventEmitter {
   // 取消订阅，
   off(eventName: EventTypes, callback: any) {
     if (callback === undefined) {
-      throw new Error('The callback function is required');
+      this.events[eventName] = [];
+      // throw new Error('The callback function is required');
     }
     const callbacks = this.events[eventName] || [];
     const newCallbacks = callbacks.filter(

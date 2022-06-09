@@ -11,4 +11,4 @@ export const LOCALSTORAGE_KEY_MAP = {
   USER_INFO: 'USER_INFO',
 };
 
-export const PAGE_SIZE = 30;
+export const PAGE_SIZE = 20;

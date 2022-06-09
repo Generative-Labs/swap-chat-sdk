@@ -1,4 +1,4 @@
-import mqtt, { MqttClient } from 'mqtt';
+import mqtt, { MqttClient, PacketCallback } from 'mqtt';
 import { BASE_MQTT_URL } from './config';
 import { getUserInfoFromToken, hasNotifyPermission, isCurrentWindow, notifyMessage } from './utils';
 import type { SendMessageData } from '../types';
@@ -16,7 +16,6 @@ class MQTT {
 
   init() {
     if (!('WebSocket' in window)) {
-      
       throw new Error('Browser not supported WebSocket');
     }
 
@@ -58,14 +57,15 @@ class MQTT {
     this.mqtt.subscribe(`chat/${room_id}`);
   }
 
-  send(data: SendMessageData, callback?: (() => void) | undefined) {
+  send(data: SendMessageData, callback?: PacketCallback) {
     if (!this.mqtt) {
       throw new Error('websocket Initialization failed');
     }
-    if (callback) {
-      callback();
-    }
-    this.mqtt.publish(`msg/${getUserInfoFromToken(this.token).user_id}`, JSON.stringify(data));
+    this.mqtt.publish(
+      `msg/${getUserInfoFromToken(this.token).user_id}`,
+      JSON.stringify(data),
+      callback,
+    );
   }
   // eslint-disable-next-line no-unused-vars
   receive(message: any) {}

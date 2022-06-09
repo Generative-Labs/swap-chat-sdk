@@ -22,14 +22,17 @@ export const EVENT_MAP = {
   // 'member.removed': true,
   // 'member.updated': true,
   // 'message.deleted': true,
-  // 'message.new': true,
-  // 'message.read': true,
-  // 'message.updated': true,
-  // 'notification.channel_active_change': true,
+  // 接收到新消息
+  'message.new': true,
+  // 发送更新消息
+  'message.updated': true,
   // 获取message list
   'message.getList': true,
   // 获取message thread list
   'message.getThreadList': true,
+  // 'message.read': true,
+  // 'notification.channel_active_change': true,
+
   // 'notification.added_to_channel': true,
   // 'notification.channel_deleted': true,
   // 'notification.channel_mutes_updated': true,

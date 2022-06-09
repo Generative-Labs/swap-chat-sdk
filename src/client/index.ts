@@ -1,17 +1,10 @@
+import type { PacketCallback } from 'mqtt';
 import request from '../core/request';
 import event from '../core/eventEmitter';
 import { getUserAvatar, login, setToken } from '../core/utils';
 import MQTT from '../core/mqtt';
 
-import {
-  LoginParams,
-  MsgTypeEnum,
-  PageParams,
-  SendMessageData,
-  EventTypes,
-  GetRoomsParams,
-  UserInfo,
-} from '../types';
+import { LoginParams, PageParams, EventTypes, GetRoomsParams, UserInfo } from '../types';
 
 import { Message } from '../message';
 import { Channel } from '../channel';
@@ -90,32 +83,13 @@ export class Web3MQ {
     });
   }
 
-  send = (text: string, isThread: boolean, callback?: () => void | undefined) => {
+  send = (messageData: any, callback?: PacketCallback) => {
     if (!this.mqtt) {
       throw new Error('Websocket is not initialized');
     }
     if (!this.token) {
       throw new Error('The Token is required!');
     }
-
-    const roomId = this.channel.activeChannel?.room_id || '';
-    const { id: messageId = '' } = this.messages.activeMessage || {};
-    const messageData: SendMessageData = {
-      from_uid: this.user.userInfo.user_id,
-      to: roomId,
-      msg_contents: text,
-      msg_type: MsgTypeEnum.text,
-      is_opensea_item_thread: false,
-      opensea_item_contract_address: '',
-      opensea_item_token_id: '',
-      opensea_item_name: '',
-      opensea_item_description: '',
-      opensea_item_image_url: '',
-      belong_to_thread_id: isThread ? messageId : '',
-      reply_to_msg_id: '',
-      created_at: Date.now() * 1000000,
-      at_user_ids: [],
-    };
     return this.mqtt.send(messageData, callback);
   };
 
@@ -128,7 +102,8 @@ export class Web3MQ {
   };
 
   on = (eventName: EventTypes, callback: any) => this.listeners.on(eventName, callback);
-  emit = (eventName: EventTypes, ...args: any[]) => this.listeners.emit(eventName, ...args);
+  emit = (eventName: EventTypes, data: { type: EventTypes; data?: any }) =>
+    this.listeners.emit(eventName, data);
   off = (eventName: EventTypes, callback?: any) => this.listeners.off(eventName, callback);
   once = (eventName: EventTypes, callback: any) => this.listeners.once(eventName, callback);
 

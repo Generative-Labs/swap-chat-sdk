@@ -50,9 +50,11 @@ export class Channel {
    * 用户改变焦点channel
    * @param channel 焦点channel
    */
-  setActiveChannel = (channel: ChannelResponse) => {
+  setActiveChannel = (channel: ChannelResponse | null) => {
     this.activeChannel = channel;
-    this.getActiveMember(channel);
+    if (channel) {
+      this.getActiveMember(channel);
+    }
     this._client.emit('channel.activeChange', { type: 'channel.activeChange', data: channel });
   };
 
@@ -127,8 +129,12 @@ export class Channel {
     this.channelList?.unshift(existRoomInfo);
     // set active room
     this.activeChannel = existRoomInfo;
-    this._client.emit('channel.created', { type: 'channel.created', existRoomInfo });
-    this._client.emit('channel.activeChange', { type: 'channel.activeChange', existRoomInfo });
+    this.getActiveMember(existRoomInfo);
+    this._client.emit('channel.created', { type: 'channel.created', data: existRoomInfo });
+    this._client.emit('channel.activeChange', {
+      type: 'channel.activeChange',
+      data: existRoomInfo,
+    });
   };
 
   getRoomInfoByRoomIdApi = (roomId: string): Promise<{ data: ChannelResponse }> => {
