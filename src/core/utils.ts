@@ -1,4 +1,4 @@
-import { LOCALSTORAGE_KEY_MAP } from './config';
+import { LOCALSTORAGE_KEY_MAP, NEXT_ID_HOST } from './config';
 import request from './request';
 import {
   PLATFORM_ENUM,
@@ -10,6 +10,8 @@ import {
   LoginResponse,
   RegisterParams,
   MsgTypeEnum,
+  SignToPubKeyParams,
+  getNextIdSignPayloadParams,
 } from '../types';
 
 export const register = (params: RegisterParams): Promise<any> => {
@@ -140,4 +142,12 @@ export const notifyMessage = (message: MessageResponse) => {
   default:
     return '';
   }
+};
+
+export const sigToPubkey = (params: SignToPubKeyParams): Promise<any> => {
+  return request.post('/sig2pubkey', params);
+};
+
+export const getNextIdSignPayload = (params: getNextIdSignPayloadParams) => {
+  return request.post(`${NEXT_ID_HOST}/v1/proof/payload`, params);
 };

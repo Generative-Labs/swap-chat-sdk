@@ -112,6 +112,10 @@ export class Message {
     return request.post('/messages', { ...params, size: PAGE_SIZE });
   };
 
+  getMessageById = (msgId: string): Promise<MessageResponse> => {
+    return request.get(`/messages/${msgId}`);
+  };
+
   getMessageListByThread = (params: GetThreadsParams): Promise<any> => {
     const { room_id, page = 1, size = PAGE_SIZE, belong_to_thread_id } = params;
     return request.get(
