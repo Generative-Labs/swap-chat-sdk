@@ -68,7 +68,15 @@ export interface GetRoomInfoParams extends PageParams {
 }
 
 export interface GetRoomInfoByTargetUserIdParams {
-  user_id: string;
+  user_id?: string,
+  user_ids?: string[],
+  is_opensea_coll?: boolean,
+  opensea_coll_slug?: string
+  item_contract_address?: string,
+  is_twitter_space?: boolean
+  space_id?: string
+  space_title?: string,
+  target_user_avatar?: string
 }
 
 export interface AddMemberToRoomParams {
