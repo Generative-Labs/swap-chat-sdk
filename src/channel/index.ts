@@ -37,9 +37,17 @@ export class Channel {
    */
   onNewMessage = (message: MessageResponse) => {
     const { to_room_id } = message;
+    const { room_id: currentRoomId = '' } = this.activeChannel || {};
     const _channels = this.channelList?.map((item) => {
       if (item.room_id === to_room_id) {
         item.latest_msg = message;
+      }
+      if (currentRoomId !== to_room_id && item.room_id === to_room_id) {
+        if (item.unreadCount) {
+          item.unreadCount++;
+        } else {
+          item.unreadCount = 1;
+        }
       }
       return item;
     });
@@ -53,6 +61,7 @@ export class Channel {
   setActiveChannel = (channel: ChannelResponse | null) => {
     this.activeChannel = channel;
     if (channel) {
+      delete channel.unreadCount;
       this.getActiveMember(channel);
     }
     this._client.emit('channel.activeChange', { type: 'channel.activeChange', data: channel });

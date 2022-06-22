@@ -227,6 +227,7 @@ export interface MessageResponse {
 }
 
 export interface ChannelResponse {
+  unreadCount?: number;
   created_at: number;
   creator: MemberUserInfo[];
   creator_id: number;

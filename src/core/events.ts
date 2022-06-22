@@ -40,7 +40,7 @@ export const EVENT_MAP = {
   // 'notification.invite_accepted': true,
   // 'notification.invite_rejected': true,
   // 'notification.invited': true,
-  'notification.mark_read': true,
+  // 'notification.markRead': true,
   // 'notification.message_new': true,
   // 'notification.mutes_updated': true,
   // 'notification.removed_from_channel': true,
