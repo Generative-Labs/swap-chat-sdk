@@ -161,8 +161,4 @@ export class Channel {
   // delMemberFromRoom = (params: DelMemberFromRoomParams): Promise<any> => {
   //   return request.delete(`/rooms/${params.room_id}/members/${params.member_id}`);
   // };
-
-  // threadsList = (params: GetMessageParams): Promise<any> => {
-  //   return request.get(`/threads/${params.room_id}/${params.page}/${params.size}`);
-  // };
 }

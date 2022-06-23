@@ -30,6 +30,8 @@ export const EVENT_MAP = {
   'message.getList': true,
   // 获取message thread list
   'message.getThreadList': true,
+  // 打开当前romm下的thread列表
+  'message.openAllThread': true,
   // 'message.read': true,
   // 'notification.channel_active_change': true,
 

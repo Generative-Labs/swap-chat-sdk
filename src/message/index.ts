@@ -19,10 +19,12 @@ export class Message {
   activeMessage: MessageResponse | null;
   messageList: MessageResponse[] | null;
   threadList: MessageResponse[] | null;
+  allThreadList: MessageResponse[] | null;
 
   constructor(client: Web3MQ) {
     this.messageList = null;
     this.threadList = null;
+    this.allThreadList = null;
     this.activeMessage = null;
     this._client = client;
     this._messagePage = 1;
@@ -96,6 +98,21 @@ export class Message {
     this._client.emit('message.getThreadList', { type: 'message.getThreadList', data });
   };
 
+  openAllThread = async (params?: null) => {
+    if (params === null) {
+      this.allThreadList = null;
+      this._client.emit('message.openAllThread', { type: 'message.openAllThread', data: null });
+      return;
+    }
+    const { data = [] } = await this.getAllThreadsList({
+      room_id: this._roomId,
+      page: 1,
+      size: 500,
+    });
+    this.allThreadList = data;
+    this._client.emit('message.openAllThread', { type: 'message.openAllThread', data });
+  };
+
   receiveMessage = (message: any) => {
     const { channel, emit } = this._client;
     const { belong_to_thread_id, to } = message;
@@ -162,5 +179,9 @@ export class Message {
     return request.get(
       `/threads/${room_id}/${page}/${size}?belong_to_thread_id=${belong_to_thread_id}&page=${page}&size=${size}`,
     );
+  };
+
+  getAllThreadsList = (params: GetMessageParams): Promise<any> => {
+    return request.get(`/threads/${params.room_id}/${params.page}/${params.size}`);
   };
 }
