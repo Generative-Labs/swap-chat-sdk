@@ -7,6 +7,8 @@ import {
   GetMessageParams,
   GetThreadsParams,
   MessageResponse,
+  GetMessageByIdParams,
+  ServiceResponse,
 } from '../types';
 import { Web3MQ } from '../client';
 import { PAGE_SIZE } from '../core/config';
@@ -33,6 +35,32 @@ export class Message {
     this._client.receive(this.receiveMessage);
   }
 
+  private getReplyInfo = async (message: MessageResponse) => {
+    const { user } = this._client;
+    if (message.reply_to_msg_id) {
+      // 当前消息是回复消息
+      let replyMsgInfo: MessageResponse | null | undefined =
+        this.messageList?.find((m) => m.id === message.reply_to_msg_id) ||
+        (
+          await this.getMessageById({
+            msg_id: message.reply_to_msg_id,
+          })
+        ).data;
+
+      if (replyMsgInfo) {
+        message.replyMsgInfo = {
+          user_name: user.getUserName(replyMsgInfo),
+          msg_contents: replyMsgInfo.msg_contents || '',
+        };
+      }
+
+      this._client.emit('message.getList', {
+        type: 'message.getList',
+        data: this.messageList,
+      });
+    }
+  };
+
   getMessageList = async (props: { room_id: string }) => {
     this._messagePage = 1;
     this._roomId = props.room_id;
@@ -40,7 +68,10 @@ export class Message {
       ...props,
       page: this._messagePage,
     });
-    this.messageList = data ? data.reverse() : [];
+    this.messageList = data?.reverse() ?? [];
+
+    this.messageList?.forEach((m: MessageResponse) => this.getReplyInfo(m));
+
     this._client.emit('message.getList', { type: 'message.getList', data });
   };
 
@@ -51,7 +82,11 @@ export class Message {
         room_id: this._roomId,
         page: this._messagePage,
       });
+
+      data.forEach((m: MessageResponse) => this.getReplyInfo(m));
+
       this.messageList = [...data.reverse(), ...(this.messageList as [])];
+
       this._client.emit('message.getList', { type: 'message.getList', data });
       return data;
     } catch (error) {
@@ -142,10 +177,22 @@ export class Message {
     }
   };
 
-  sendMessage = (text: string, isThread: boolean, callback?: PacketCallback) => {
+  sendMessage = (
+    text: string,
+    isThread: boolean,
+    message?: MessageResponse | null,
+    callback?: PacketCallback,
+  ) => {
     const { channel, user, send } = this._client;
     const roomId = channel.activeChannel?.room_id || '';
     const { id: messageId = '' } = this.activeMessage || {};
+    const replyMsgInfo = {
+      id: message?.id,
+      from_uid: message?.from_uid,
+      msg_contents: message?.msg_contents,
+      user_name: user.getUserName(message),
+    };
+
     const messageData: SendMessageData = {
       from_uid: user.userInfo.user_id,
       to: roomId,
@@ -158,9 +205,12 @@ export class Message {
       opensea_item_description: '',
       opensea_item_image_url: '',
       belong_to_thread_id: isThread ? messageId : '',
-      reply_to_msg_id: '',
+      reply_to_msg_id: message?.id ?? '',
       created_at: Date.now() * 1000000,
       at_user_ids: [],
+
+      /*****  Used to retrieve data immediately, the database does not store data  *****/
+      replyMsgInfo: message && !isThread ? replyMsgInfo : null,
     };
     send(messageData, callback);
     // emit('message.updated', { type: 'message.updated' });
@@ -170,8 +220,8 @@ export class Message {
     return request.post('/messages', { ...params, size: PAGE_SIZE });
   };
 
-  getMessageById = (msgId: string): Promise<MessageResponse> => {
-    return request.get(`/messages/${msgId}`);
+  getMessageById = (params: GetMessageByIdParams): Promise<ServiceResponse> => {
+    return request.get(`/messages/${params.msg_id}`);
   };
 
   getMessageListByThread = (params: GetThreadsParams): Promise<any> => {

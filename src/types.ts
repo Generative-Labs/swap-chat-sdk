@@ -68,15 +68,15 @@ export interface GetRoomInfoParams extends PageParams {
 }
 
 export interface GetRoomInfoByTargetUserIdParams {
-  user_id?: string,
-  user_ids?: string[],
-  is_opensea_coll?: boolean,
-  opensea_coll_slug?: string
-  item_contract_address?: string,
-  is_twitter_space?: boolean
-  space_id?: string
-  space_title?: string,
-  target_user_avatar?: string
+  user_id?: string;
+  user_ids?: string[];
+  is_opensea_coll?: boolean;
+  opensea_coll_slug?: string;
+  item_contract_address?: string;
+  is_twitter_space?: boolean;
+  space_id?: string;
+  space_title?: string;
+  target_user_avatar?: string;
 }
 
 export interface AddMemberToRoomParams {
@@ -102,7 +102,7 @@ export interface LoginParams {
   signature: string;
   wallet_address: string;
   appid?: string;
-  user_avatar?: string
+  user_avatar?: string;
 }
 
 export interface LoginResponse {
@@ -123,8 +123,12 @@ export enum PLATFORM_ENUM {
   OPENSEA = 'opensea',
 }
 
+export enum PLATFORM_OTHER {
+  USER_ID = 'user_id',
+}
+
 export interface RegisterParams {
-  platform: PLATFORM_ENUM;
+  platform: PLATFORM_ENUM | PLATFORM_OTHER;
   user_name: string;
 }
 
@@ -148,7 +152,7 @@ export interface UserInfo {
   user_id: string;
   avatar?: string;
   user_name?: string;
-  ens_name?: string
+  ens_name?: string;
 }
 
 export interface CreateContractsParams {
@@ -207,6 +211,13 @@ export interface MsgContents {
   recipientAddress: string;
 }
 
+export interface ReplyMsgInfo {
+  id?: string;
+  from_uid?: string;
+  user_name?: string;
+  msg_contents?: string | MsgContents;
+}
+
 export interface MessageResponse {
   at_user_ids: any[];
   belong_to_thread_id: string;
@@ -224,6 +235,7 @@ export interface MessageResponse {
   opensea_item_token_id: string;
   reply_to_msg_id: string;
   to_room_id: string;
+  replyMsgInfo: ReplyMsgInfo;
 }
 
 export interface ChannelResponse {
@@ -259,6 +271,7 @@ export type SendMessageData = {
   reply_to_msg_id: string;
   created_at: number;
   at_user_ids: any[];
+  replyMsgInfo: ReplyMsgInfo | null | undefined;
 };
 
 export type MembersItem = Record<string, MemberUserInfo[] | undefined>;
@@ -288,7 +301,7 @@ export type getNextIdSignPayloadParams = {
   platform: string;
   identity: string;
   public_key: string;
-}
+};
 export type CreateNextIdUserParams = {
   action: string;
   platform: string;
@@ -298,4 +311,4 @@ export type CreateNextIdUserParams = {
   extra?: any;
   uuid: string;
   created_at: string;
-}
+};
