@@ -28,7 +28,8 @@ export class User {
     this.userInfo = getUserInfoFromToken(client.token as string);
   }
 
-  getUserName = (message: ReplyMsgInfo | undefined | null) => {
+  getUserName = (message?: ReplyMsgInfo | null) => {
+    if (!message) return;
     const { channel } = this._client;
     const members = channel.activeChannel?.members.concat(this.userInfo);
     const member = members?.find((m: MemberUserInfo) => m.user_id === message?.from_uid);

@@ -163,7 +163,7 @@ export class Message {
   sendMessage = (
     text: string,
     isThread: boolean,
-    message?: MessageResponse,
+    message?: MessageResponse | null,
     callback?: PacketCallback,
   ) => {
     const { channel, user, send } = this._client;
