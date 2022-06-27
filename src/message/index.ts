@@ -81,9 +81,9 @@ export class Message {
         page: this._messagePage,
       });
 
-      this.messageList = [...data.reverse(), ...(this.messageList as [])];
-
       data.forEach((m: MessageResponse) => this.getReplyInfo(m));
+
+      this.messageList = [...data.reverse(), ...(this.messageList as [])];
 
       this._client.emit('message.getList', { type: 'message.getList', data });
       return data;
