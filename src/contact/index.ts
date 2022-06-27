@@ -1,6 +1,7 @@
 import { Web3MQ } from '../client';
 import { PageParams, UserInfo } from '../types';
 import request from '../core/request';
+import { getUserAvatar } from '../core/utils';
 
 export class Contact {
   private _client: Web3MQ;
@@ -19,18 +20,21 @@ export class Contact {
    */
   setActiveContact = async (contact: UserInfo) => {
     this.activeContact = contact;
-    await this._client.channel.createRoom({user_id: contact.user_id});
+    await this._client.channel.createRoom({ user_id: contact.user_id });
     this._client.emit('contact.activeChange', { type: 'contact.activeChange', data: contact });
   };
 
   async queryContacts(option?: PageParams) {
-    const { data } = await this.getContacts(option || { page: 1, size: 10 });
-    this.contactList = data;
+    const { data = [] } = await this.getContacts(option || { page: 1, size: 10 });
+    this.contactList = data.map((item) => {
+      item.avatar = getUserAvatar(item).avatar;
+      item.user_name = getUserAvatar(item).userName;
+      return item;
+    });
     this._client.emit('contact.getList', { type: 'contact.getList', data });
   }
 
   getContacts = (params: PageParams): Promise<{ data: UserInfo[] }> => {
     return request.get(`/contacts/${params.page}/${params.size}`);
   };
-
 }

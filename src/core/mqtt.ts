@@ -41,7 +41,7 @@ class MQTT {
 
       this.mqtt.on('message', (topic: string, message: string) => {
         const messageObj = JSON.parse(message.toString() || '{}');
-        if (this.hasNotifyPermission && !isCurrentWindow()) {
+        if (window && this.hasNotifyPermission && !isCurrentWindow()) {
           const notifyMsg = notifyMessage(messageObj);
           new Notification(notifyMsg as string);
         }

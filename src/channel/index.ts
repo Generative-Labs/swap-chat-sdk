@@ -1,16 +1,17 @@
 import request from '../core/request';
 import { Web3MQ } from '../client';
 import {
-  // AddMemberToRoomParams,
   // DelMemberFromRoomParams,
   // GetMessageParams,
   // GetRoomInfoParams,
+  AddMemberToRoomParams,
   PageParams,
   ChannelResponse,
   MessageResponse,
   MembersItem,
   ActiveMemberItem,
   GetRoomInfoByTargetUserIdParams,
+  RoomResponse,
 } from '../types';
 import { getUserAvatar } from '../core/utils';
 
@@ -109,10 +110,6 @@ export class Channel {
     this._client.emit('channel.getList', { type: 'channel.getList', data });
   };
 
-  getChatsByUserId = (params: PageParams): Promise<{ data: ChannelResponse[] }> => {
-    return request.post('/my_chats', params);
-  };
-
   /**
    * 创建新的聊天室
    * @param params
@@ -146,6 +143,14 @@ export class Channel {
     });
   };
 
+  addMembers = async () => {
+    // await this.addMemberToRoom({ room_id: '12' });
+  };
+
+  getChatsByUserId = (params: PageParams): Promise<{ data: ChannelResponse[] }> => {
+    return request.post('/my_chats', params);
+  };
+
   getRoomInfoByRoomIdApi = (roomId: string): Promise<{ data: ChannelResponse }> => {
     return request.get(`/rooms/${roomId}`);
   };
@@ -154,9 +159,9 @@ export class Channel {
     return request.post<string>('/rooms', params);
   };
 
-  // addMemberToRoom = (params: AddMemberToRoomParams): Promise<any> => {
-  //   return request.post<RoomResponse>(`/rooms/${params.room_id}/members`, params);
-  // };
+  addMemberToRoom = (params: AddMemberToRoomParams): Promise<any> => {
+    return request.post<RoomResponse>(`/rooms/${params.room_id}/members`, params);
+  };
 
   // delMemberFromRoom = (params: DelMemberFromRoomParams): Promise<any> => {
   //   return request.delete(`/rooms/${params.room_id}/members/${params.member_id}`);
