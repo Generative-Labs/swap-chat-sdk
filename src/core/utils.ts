@@ -114,7 +114,8 @@ export const getUserAvatar = (userInfo: MemberUserInfo) => {
 
 export const hasNotifyPermission = async () => {
   if (!('Notification' in window)) {
-    alert('This browser does not support desktop notification');
+    return false;
+    // alert('This browser does not support desktop notification');
   }
   if (Notification.permission === 'granted') {
     return true;

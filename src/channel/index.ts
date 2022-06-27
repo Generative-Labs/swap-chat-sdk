@@ -143,8 +143,24 @@ export class Channel {
     });
   };
 
-  addMembers = async () => {
-    // await this.addMemberToRoom({ room_id: '12' });
+  addMembers = async (targetUserIds: string[]) => {
+    if (this.activeChannel === null) {
+      return;
+    }
+    const { room_id } = this.activeChannel;
+    const { data: roomId } = await this.addMemberToRoom({
+      room_id,
+      target_user_ids: targetUserIds,
+    });
+    const { data } = await this.getRoomInfoByRoomIdApi(roomId);
+    data.members.map((item) => {
+      item.avatar = getUserAvatar(item).avatar;
+      item.user_name = getUserAvatar(item).userName;
+    });
+    this._client.emit('channel.activeChange', {
+      type: 'channel.activeChange',
+      data: data,
+    });
   };
 
   getChatsByUserId = (params: PageParams): Promise<{ data: ChannelResponse[] }> => {

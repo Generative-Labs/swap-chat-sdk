@@ -81,7 +81,7 @@ export interface GetRoomInfoByTargetUserIdParams {
 
 export interface AddMemberToRoomParams {
   room_id: string;
-  target_user_id: string;
+  target_user_ids: string[];
 }
 
 export interface DelMemberFromRoomParams {
