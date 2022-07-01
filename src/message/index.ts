@@ -36,10 +36,10 @@ export class Message {
   }
 
   private getReplyInfo = async (message: MessageResponse) => {
-    const { user } = this._client;
+    const { user, emit } = this._client;
     if (message.reply_to_msg_id) {
       // 当前消息是回复消息
-      let replyMsgInfo: MessageResponse | null | undefined =
+      let replyMsgInfo: MessageResponse | undefined =
         this.messageList?.find((m) => m.id === message.reply_to_msg_id) ||
         (
           await this.getMessageById({
@@ -48,13 +48,13 @@ export class Message {
         ).data;
 
       if (replyMsgInfo) {
-        message.replyMsgInfo = {
-          user_name: user.getUserName(replyMsgInfo),
+        message.reply_msg_info = {
+          user_name: user.getUserName(replyMsgInfo.from_uid),
           msg_contents: replyMsgInfo.msg_contents || '',
         };
       }
 
-      this._client.emit('message.getList', {
+      emit('message.getList', {
         type: 'message.getList',
         data: this.messageList,
       });
@@ -180,18 +180,12 @@ export class Message {
   sendMessage = (
     text: string,
     isThread: boolean,
-    message?: MessageResponse | null,
+    replyMsgInfo?: MessageResponse | null,
     callback?: PacketCallback,
   ) => {
     const { channel, user, send } = this._client;
     const roomId = channel.activeChannel?.room_id || '';
     const { id: messageId = '' } = this.activeMessage || {};
-    const replyMsgInfo = {
-      id: message?.id,
-      from_uid: message?.from_uid,
-      msg_contents: message?.msg_contents,
-      user_name: user.getUserName(message),
-    };
 
     const messageData: SendMessageData = {
       from_uid: user.userInfo.user_id,
@@ -205,13 +199,19 @@ export class Message {
       opensea_item_description: '',
       opensea_item_image_url: '',
       belong_to_thread_id: isThread ? messageId : '',
-      reply_to_msg_id: message?.id ?? '',
       created_at: Date.now() * 1000000,
       at_user_ids: [],
-
-      /*****  Used to retrieve data immediately, the database does not store data  *****/
-      replyMsgInfo: message && !isThread ? replyMsgInfo : null,
+      reply_to_msg_id: '',
     };
+
+    if (replyMsgInfo) {
+      messageData.reply_to_msg_id = replyMsgInfo.id;
+      messageData.reply_msg_info = {
+        msg_contents: replyMsgInfo.msg_contents,
+        user_name: user.getUserName(replyMsgInfo.from_uid),
+      };
+    }
+
     send(messageData, callback);
     // emit('message.updated', { type: 'message.updated' });
   };

@@ -234,8 +234,8 @@ export interface MessageResponse {
   opensea_item_name: string;
   opensea_item_token_id: string;
   reply_to_msg_id: string;
+  reply_msg_info: ReplyMsgInfo;
   to_room_id: string;
-  replyMsgInfo: ReplyMsgInfo;
 }
 
 export interface ChannelResponse {
@@ -268,10 +268,10 @@ export type SendMessageData = {
   opensea_item_description: string;
   opensea_item_image_url: string;
   belong_to_thread_id: string;
-  reply_to_msg_id: string;
+  reply_to_msg_id?: string;
   created_at: number;
   at_user_ids: any[];
-  replyMsgInfo: ReplyMsgInfo | null | undefined;
+  reply_msg_info?: ReplyMsgInfo | null;
 };
 
 export type MembersItem = Record<string, MemberUserInfo[] | undefined>;

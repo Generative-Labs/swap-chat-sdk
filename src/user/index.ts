@@ -13,7 +13,6 @@ import {
   GetNextIdUserInfoParams,
   GetTwitterUserInfoParams,
   CreateNextIdUserParams,
-  ReplyMsgInfo,
 } from '../types';
 import request from '../core/request';
 import { getUserInfoFromToken } from '../core/utils';
@@ -28,12 +27,11 @@ export class User {
     this.userInfo = getUserInfoFromToken(client.token as string);
   }
 
-  getUserName = (message?: ReplyMsgInfo | null) => {
-    if (!message) return;
+  getUserName = (from_uid: string) => {
     const { channel } = this._client;
     const members = channel.activeChannel?.members.concat(this.userInfo);
-    const member = members?.find((m: MemberUserInfo) => m.user_id === message?.from_uid);
-    return member?.user_name;
+    const member = members?.find((m: MemberUserInfo) => m.user_id === from_uid);
+    return member?.user_name || '';
   };
 
   submitInvitedCode = (params: string, platform: PlatformType): Promise<any> => {
