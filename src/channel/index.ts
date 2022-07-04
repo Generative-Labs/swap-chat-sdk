@@ -72,9 +72,10 @@ export class Channel {
    * 获取当前成员对象
    */
   getActiveMember = (current: ChannelResponse) => {
+    const { user } = this._client;
     const chcheObj: ActiveMemberItem = {};
     if (this.members) {
-      const arr = this.members[current.room_id] || [];
+      const arr = [...(this.members[current.room_id] ?? []), user.userInfo];
       arr.forEach((item) => {
         chcheObj[item.user_id] = item;
       });

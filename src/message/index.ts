@@ -36,7 +36,7 @@ export class Message {
   }
 
   private getReplyInfo = async (message: MessageResponse) => {
-    const { user, emit } = this._client;
+    const { emit, channel } = this._client;
     if (message.reply_to_msg_id) {
       // 当前消息是回复消息
       let replyMsgInfo: MessageResponse | undefined =
@@ -49,7 +49,7 @@ export class Message {
 
       if (replyMsgInfo) {
         message.reply_msg_info = {
-          user_name: user.getUserName(replyMsgInfo.from_uid),
+          user_name: channel.activeMember[replyMsgInfo.from_uid]?.user_name,
           msg_contents: replyMsgInfo.msg_contents || '',
         };
       }
@@ -208,7 +208,7 @@ export class Message {
       messageData.reply_to_msg_id = replyMsgInfo.id;
       messageData.reply_msg_info = {
         msg_contents: replyMsgInfo.msg_contents,
-        user_name: user.getUserName(replyMsgInfo.from_uid),
+        user_name: channel.activeMember[replyMsgInfo.from_uid]?.user_name,
       };
     }
 

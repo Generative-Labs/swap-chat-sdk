@@ -1,6 +1,5 @@
 import { Web3MQ } from '../client';
 import {
-  MemberUserInfo,
   LoginResponse,
   PlatformType,
   RegisterParams,
@@ -26,13 +25,6 @@ export class User {
     this._client = client;
     this.userInfo = getUserInfoFromToken(client.token as string);
   }
-
-  getUserName = (from_uid: string) => {
-    const { channel } = this._client;
-    const members = channel.activeChannel?.members.concat(this.userInfo);
-    const member = members?.find((m: MemberUserInfo) => m.user_id === from_uid);
-    return member?.user_name || '';
-  };
 
   submitInvitedCode = (params: string, platform: PlatformType): Promise<any> => {
     return request.post<LoginResponse>('/verify_platform', {
