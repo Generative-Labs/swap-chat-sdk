@@ -34,6 +34,19 @@ export class Contact {
     this._client.emit('contact.getList', { type: 'contact.getList', data });
   }
 
+  async addContact(contact: UserInfo) {
+    await this._client.channel.getRoomInfoByTargetUserIdApi({
+      user_id: contact.user_id,
+    });
+    if (!this.contactList?.some((c) => c.user_id === contact.user_id)) {
+      this.contactList = [contact, ...(this.contactList || [])];
+      this._client.emit('contact.updateList', {
+        type: 'contact.updateList',
+        data: this.contactList,
+      });
+    }
+  }
+
   getContacts = (params: PageParams): Promise<{ data: UserInfo[] }> => {
     return request.get(`/contacts/${params.page}/${params.size}`);
   };

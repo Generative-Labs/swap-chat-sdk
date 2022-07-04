@@ -17,6 +17,8 @@ export const EVENT_MAP = {
   'contact.activeChange': true,
   // 获取contactlist
   'contact.getList': true,
+  //更新contactlist
+  'contact.updateList': true,
   // 'health.check': true,
   // 'member.added': true,
   // 'member.removed': true,
