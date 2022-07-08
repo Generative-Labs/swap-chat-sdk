@@ -1,17 +1,22 @@
 import mqtt, { MqttClient, PacketCallback } from 'mqtt';
 import { BASE_MQTT_URL } from './config';
+import request from './request';
 import { getUserInfoFromToken, hasNotifyPermission, isCurrentWindow, notifyMessage } from './utils';
-import type { SendMessageData } from '../types';
+import type { SendMessageData, GetRoomsParams } from '../types';
 
-class MQTT {
+export class Web2Connect {
   token: string;
+  isNotify: boolean;
   hasNotifyPermission: boolean;
-  mqtt: MqttClient | undefined;
+  mqtt: MqttClient | null;
 
-  constructor(token: string) {
+  constructor(token: string, isNotify: boolean) {
     this.token = token;
     this.hasNotifyPermission = false;
+    this.mqtt = null;
+    this.isNotify = isNotify;
     this.init();
+    this.subscribe();
   }
 
   init() {
@@ -50,11 +55,12 @@ class MQTT {
     }
   }
 
-  subscribe(room_id: string) {
+  async subscribe() {
     if (!this.mqtt) {
       throw new Error('websocket Initialization failed');
     }
-    this.mqtt.subscribe(`chat/${room_id}`);
+    const { data } = await this.getMyRooms();
+    data.forEach((room_id) => this.mqtt?.subscribe(`chat/${room_id}`));
   }
 
   send(data: SendMessageData, callback?: PacketCallback) {
@@ -69,6 +75,13 @@ class MQTT {
   }
   // eslint-disable-next-line no-unused-vars
   receive(message: any) {}
-}
 
-export default MQTT;
+  /**
+   * 
+   * @param params 
+   * @returns 
+   */
+  getMyRooms = (params?: GetRoomsParams): Promise<{ data: string[] }> => {
+    return request.get('/my_rooms', params as any);
+  };
+}
