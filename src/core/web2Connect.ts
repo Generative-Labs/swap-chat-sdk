@@ -45,12 +45,13 @@ export class Web2Connect {
       });
 
       this.mqtt.on('message', (topic: string, message: string) => {
+        const topicType = topic.split('/')[0];
         const messageObj = JSON.parse(message.toString() || '{}');
         if (window && this.hasNotifyPermission && !isCurrentWindow()) {
           const notifyMsg = notifyMessage(messageObj);
           new Notification(notifyMsg as string);
         }
-        this.receive(messageObj);
+        this.receive(messageObj, topicType);
       });
     }
   }
@@ -59,8 +60,14 @@ export class Web2Connect {
     if (!this.mqtt) {
       throw new Error('websocket Initialization failed');
     }
+    const userId = getUserInfoFromToken(this.token).user_id;
+    this.mqtt?.subscribe(`chat/${userId}`);
+    this.mqtt?.subscribe(`notification/${userId}`);
     const { data } = await this.getMyRooms();
-    data.forEach((room_id) => this.mqtt?.subscribe(`chat/${room_id}`));
+    data.forEach((room_id) => {
+      this.mqtt?.subscribe(`chat/${room_id}`);
+      this.mqtt?.subscribe(`notification/${room_id}`);
+    });
   }
 
   send(data: SendMessageData, callback?: PacketCallback) {
@@ -74,12 +81,12 @@ export class Web2Connect {
     );
   }
   // eslint-disable-next-line no-unused-vars
-  receive(message: any) {}
+  receive(message: any, topicType: string) {}
 
   /**
-   * 
-   * @param params 
-   * @returns 
+   *
+   * @param params
+   * @returns
    */
   getMyRooms = (params?: GetRoomsParams): Promise<{ data: string[] }> => {
     return request.get('/my_rooms', params as any);

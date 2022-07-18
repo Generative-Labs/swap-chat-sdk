@@ -45,7 +45,8 @@ export const EVENT_MAP = {
   // 'notification.invite_rejected': true,
   // 'notification.invited': true,
   // 'notification.markRead': true,
-  // 'notification.message_new': true,
+  // 新消息通知
+  'notification.messageNew': true,
   // 'notification.mutes_updated': true,
   // 'notification.removed_from_channel': true,
   // 'reaction.deleted': true,

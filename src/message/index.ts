@@ -148,7 +148,10 @@ export class Message {
     this._client.emit('message.openAllThread', { type: 'message.openAllThread', data });
   };
 
-  receiveMessage = (message: any) => {
+  receiveMessage = (message: any, topicType: string) => {
+    if (topicType !== 'chat') {
+      return;
+    }
     const { channel, emit } = this._client;
     const { belong_to_thread_id, to } = message;
     const newMessage: MessageResponse = { ...message, to_room_id: to };

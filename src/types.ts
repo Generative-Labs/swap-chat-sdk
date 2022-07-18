@@ -318,3 +318,16 @@ export type CreateNextIdUserParams = {
   uuid: string;
   created_at: string;
 };
+
+export type SendNotifyParams = {
+  ids: string[];
+  text: string;
+};
+
+export type NotifyAPIParams = {
+  version: number;
+  sender_id: string;
+  to: string[];
+  notification_type: 'text';
+  notification_payload: string;
+};

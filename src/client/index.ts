@@ -11,6 +11,7 @@ import { Message } from '../message';
 import { Channel } from '../channel';
 import { User } from '../user';
 import { Contact } from '../contact';
+import { Notify } from '../notify';
 
 export class Web3MQ {
   private static _instance: Web3MQ | null;
@@ -22,6 +23,7 @@ export class Web3MQ {
   messages: Message;
   user: User;
   contact: Contact;
+  notify: Notify;
 
   /**
    *
@@ -48,6 +50,7 @@ export class Web3MQ {
     this.messages = new Message(this);
     this.user = new User(this);
     this.contact = new Contact(this);
+    this.notify = new Notify(this);
   }
 
   public static getInstance = (props: LoginParams | string, options?: OptionsType) => {
@@ -83,7 +86,7 @@ export class Web3MQ {
   };
 
   // eslint-disable-next-line no-unused-vars
-  receive = (fn: (message: any) => void) => {
+  receive = (fn: (message: any, topicType: string) => void) => {
     if (!this.mqtt) {
       throw new Error('Websocket is not initialized');
     }
