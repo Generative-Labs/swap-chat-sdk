@@ -46,11 +46,11 @@ export class Notify {
     this.notificationList?.unshift(newNotification);
     // 分页去重
     this.notificationList?.pop();
+    this._unReadCount++;
     this._client.emit('notification.getList', {
       type: 'notification.getList',
       data: this.notificationList,
     });
-    this._unReadCount++;
     this._client.emit('notification.messageNew', {
       type: 'notification.messageNew',
       data: newNotification,
@@ -75,9 +75,9 @@ export class Notify {
         page: this._notificationPage,
         size: PAGE_SIZE,
       });
-      let count = data.filter((item: NotificationResponse) => item.has_been_read === false).length;
+      // let count = data.filter((item: NotificationResponse) => item.has_been_read === false).length;
       this.notificationList = [...(this.notificationList as []), ...data];
-      this._unReadCount += count;
+      // this._unReadCount += count;
       this._client.emit('notification.getList', { type: 'notification.getList', data });
       return data;
     } catch (error) {
