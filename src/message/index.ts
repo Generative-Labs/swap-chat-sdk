@@ -149,7 +149,9 @@ export class Message {
   };
 
   receiveMessage = (message: any, topicType: string) => {
-    if (topicType !== 'chat') {
+    const { notify } = this._client;
+    if (topicType === 'notification') {
+      notify.receiveNotify(message, topicType);
       return;
     }
     const { channel, emit } = this._client;

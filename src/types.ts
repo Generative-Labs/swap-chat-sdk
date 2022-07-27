@@ -261,6 +261,16 @@ export interface ChannelResponse {
   room_id: string;
 }
 
+export interface NotificationResponse {
+  created_at: number;
+  has_been_read: boolean;
+  id: string;
+  notification_payload: string;
+  notification_type: string;
+  sender_id: string;
+  version: number;
+}
+
 export type SendMessageData = {
   from_uid: string;
   to: string;
@@ -331,3 +341,6 @@ export type NotifyAPIParams = {
   notification_type: 'text';
   notification_payload: string;
 };
+
+export type ActiveSenderItem = Record<string, SenderInfo>;
+export type SenderInfo = Pick<UserInfo, 'user_id' | 'avatar' | 'user_name'>;

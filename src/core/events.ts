@@ -47,6 +47,8 @@ export const EVENT_MAP = {
   // 'notification.markRead': true,
   // 新消息通知
   'notification.messageNew': true,
+  // 获取notification List
+  'notification.getList': true,
   // 'notification.mutes_updated': true,
   // 'notification.removed_from_channel': true,
   // 'reaction.deleted': true,
