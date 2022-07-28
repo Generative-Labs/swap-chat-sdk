@@ -221,6 +221,31 @@ export class Message {
     // emit('message.updated', { type: 'message.updated' });
   };
 
+  // 通过 Bulk messaging 进行发送消息
+  sendMessageByBulk = (text: string, room_id: string, callback?: PacketCallback) => {
+    const { user, send } = this._client;
+    const roomId = room_id;
+
+    const messageData: SendMessageData = {
+      from_uid: user.userInfo.user_id,
+      to: roomId,
+      msg_contents: text,
+      msg_type: MsgTypeEnum.text,
+      is_opensea_item_thread: false,
+      opensea_item_contract_address: '',
+      opensea_item_token_id: '',
+      opensea_item_name: '',
+      opensea_item_description: '',
+      opensea_item_image_url: '',
+      belong_to_thread_id: '',
+      created_at: Date.now() * 1000000,
+      at_user_ids: [],
+      reply_to_msg_id: '',
+    };
+
+    send(messageData, callback);
+  };
+
   getMessages = (params: GetMessageParams): Promise<any> => {
     return request.post('/messages', { ...params, size: PAGE_SIZE });
   };

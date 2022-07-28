@@ -142,6 +142,37 @@ export class Channel {
       type: 'channel.activeChange',
       data: existRoomInfo,
     });
+    return roomId;
+  };
+
+  /**
+   * 通过 Bulk messaging 创建聊天室
+   * @param params
+   */
+  getRoomByBulk = async (params: GetRoomInfoByTargetUserIdParams) => {
+    const { data: roomId } = await this.getRoomInfoByTargetUserIdApi(params);
+    if (!roomId) {
+      throw new Error('Get room info error!');
+    }
+    let existRoomInfo = this.channelList?.find((item) => item.room_id === roomId);
+    if (!existRoomInfo) {
+      const { data } = await this.getRoomInfoByRoomIdApi(roomId);
+      data.members.map((item) => {
+        item.avatar = getUserAvatar(item).avatar;
+        item.user_name = getUserAvatar(item).userName;
+      });
+      existRoomInfo = data;
+    }
+    // 推送当前room到第一条 设置active room
+    if (this.channelList) {
+      this.channelList = this.channelList.filter((item) => item.room_id !== existRoomInfo?.room_id);
+    }
+    this.channelList?.unshift(existRoomInfo);
+    this.getActiveMember(existRoomInfo);
+    return {
+      roomId,
+      existRoomInfo,
+    };
   };
 
   addMembers = async (targetUserIds: string[]) => {
