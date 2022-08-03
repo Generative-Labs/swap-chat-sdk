@@ -1,12 +1,15 @@
 import path from 'path';
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import { babel } from '@rollup/plugin-babel';
 import ts from 'rollup-plugin-typescript2';
 import { eslint } from 'rollup-plugin-eslint';
 import packageJSON from './package.json';
 import { terser } from 'rollup-plugin-terser';
 
 const getPath = (_path) => path.resolve(__dirname, _path);
+
+const isDev = process.env.ROLLUP_WATCH || false;
 
 const extensions = ['.js', '.ts', '.tsx'];
 
@@ -26,8 +29,28 @@ const esPlugin = eslint({
 // 基础配置
 const commonConf = {
   input: getPath('./src/index.ts'),
-  plugins: [resolve({ browser: true }, extensions), commonjs(), esPlugin, tsPlugin, terser()],
-  external: ['axios', 'mqtt', '@walletconnect/client', '@walletconnect/qrcode-modal'],
+  plugins: [
+    resolve({ browser: true }, extensions),
+    commonjs(),
+    esPlugin,
+    tsPlugin,
+    !isDev && terser(),
+    babel({
+      babelHelpers: 'bundled',
+      presets: ['@babel/preset-env'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss'],
+      exclude: '**/node_modules/**',
+    }),
+  ],
+  external: [
+    'axios',
+    'mqtt',
+    '@walletconnect/client',
+    '@walletconnect/qrcode-modal',
+    '@protobuf-ts/plugin',
+    'js-sha3',
+    '@noble/ed25519',
+  ],
 };
 
 // 需要导出的模块类型
@@ -40,6 +63,9 @@ const outputMap = [
       mqtt: 'mqtt',
       '@walletconnect/client': 'WalletConnect',
       '@walletconnect/qrcode-modal': 'QRCodeModal',
+      '@noble/ed25519': 'ed',
+      '@protobuf-ts/plugin': 'pb',
+      'js-sha3': 'js-sha3',
     },
   },
   // {

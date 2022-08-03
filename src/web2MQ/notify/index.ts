@@ -1,4 +1,4 @@
-import { Web3MQ } from '../client';
+import { Client } from '../client';
 import {
   SendNotifyParams,
   NotifyAPIParams,
@@ -11,13 +11,13 @@ import { PAGE_SIZE } from '../core/config';
 import request from '../core/request';
 
 export class Notify {
-  _client: Web3MQ;
+  _client: Client;
   notificationList: NotificationResponse[] | null;
   activeSender: ActiveSenderItem;
   _notificationPage: number;
   _unReadCount: number;
 
-  constructor(client: Web3MQ) {
+  constructor(client: Client) {
     this._client = client;
     this.notificationList = null;
     this.activeSender = {};

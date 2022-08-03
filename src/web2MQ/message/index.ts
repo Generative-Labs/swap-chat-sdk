@@ -10,11 +10,11 @@ import {
   GetMessageByIdParams,
   ServiceResponse,
 } from '../types';
-import { Web3MQ } from '../client';
+import { Client } from '../client';
 import { PAGE_SIZE } from '../core/config';
 
 export class Message {
-  _client: Web3MQ;
+  _client: Client;
   _messagePage: number;
   _threadPage: number;
   _roomId: string;
@@ -23,7 +23,7 @@ export class Message {
   threadList: MessageResponse[] | null;
   allThreadList: MessageResponse[] | null;
 
-  constructor(client: Web3MQ) {
+  constructor(client: Client) {
     this.messageList = null;
     this.threadList = null;
     this.allThreadList = null;

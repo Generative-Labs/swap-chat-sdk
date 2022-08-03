@@ -13,8 +13,8 @@ import { User } from '../user';
 import { Contact } from '../contact';
 import { Notify } from '../notify';
 
-export class Web3MQ {
-  private static _instance: Web3MQ | null;
+export class Client {
+  private static _instance: Client | null;
   token?: string;
   mqtt?: Web2Connect | Web3Connect | NotifyConnect;
   options: OptionsType;
@@ -54,10 +54,10 @@ export class Web3MQ {
   }
 
   public static getInstance = (props: LoginParams | string, options?: OptionsType) => {
-    if (!Web3MQ._instance) {
-      Web3MQ._instance = new Web3MQ(props, options);
+    if (!Client._instance) {
+      Client._instance = new Client(props, options);
     }
-    return Web3MQ._instance as Web3MQ;
+    return Client._instance as Client;
   };
 
   private initSDK = (token: string) => {

@@ -1,5 +1,5 @@
 import request from '../core/request';
-import { Web3MQ } from '../client';
+import { Client } from '../client';
 import {
   // DelMemberFromRoomParams,
   // GetMessageParams,
@@ -18,13 +18,13 @@ import { getUserAvatar } from '../core/utils';
 // import {dateFormat} from '../core/utils';
 
 export class Channel {
-  private readonly _client: Web3MQ;
+  private readonly _client: Client;
   channelList: ChannelResponse[] | null;
   activeChannel: ChannelResponse | null;
   members: MembersItem | null;
   activeMember: ActiveMemberItem;
 
-  constructor(client: Web3MQ) {
+  constructor(client: Client) {
     this._client = client;
     this.channelList = null;
     this.activeChannel = null;

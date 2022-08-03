@@ -1,4 +1,4 @@
-import type { Web3MQ } from '../client';
+import type { Client } from '../client';
 import {
   // LoginResponse,
   // PlatformType,
@@ -18,10 +18,10 @@ import { getUserAvatar, getUserInfoFromToken } from '../core/utils';
 // import { NEXT_ID_HOST } from '../core/config';
 
 export class User {
-  _client: Web3MQ;
+  _client: Client;
   userInfo: UserInfo;
 
-  constructor(client: Web3MQ) {
+  constructor(client: Client) {
     this._client = client;
     this.userInfo = getUserInfoFromToken(client.token as string);
   }
