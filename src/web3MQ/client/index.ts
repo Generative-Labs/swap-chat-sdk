@@ -3,6 +3,7 @@ import { Message } from '../message';
 import { User } from '../user';
 import { Contact } from '../contact';
 import { Connect } from '../core/connect';
+import { Notify } from '../notify';
 
 import event from '../core/eventEmitter';
 import { KeyPairsType, ClientKeyPaires, EventTypes } from '../types';
@@ -17,6 +18,7 @@ export class Client {
   message: Message;
   user: User;
   contact: Contact;
+  notify: Notify;
 
   constructor(keys: KeyPairsType, wsUrl: string) {
     this.keys = { ...keys, userid: `user:${keys.PublicKey}` };
@@ -27,6 +29,7 @@ export class Client {
     this.message = new Message(this);
     this.user = new User(this);
     this.contact = new Contact(this);
+    this.notify = new Notify(this);
   }
 
   public static getInstance = (keys: KeyPairsType, wsUrl: string) => {

@@ -13,11 +13,7 @@ export class Contact {
     this.activeContact = null;
     this.contactList = null;
   }
-
-  /**
-   * 用户改变焦点channel
-   * @param contact
-   */
+  
   setActiveContact = async (contact: UserInfo) => {
     this.activeContact = contact;
     await this._client.channel.createRoom({ user_id: contact.user_id });

@@ -18,6 +18,12 @@ export type KeyPairsType = {
   PublicKey: string;
 };
 
+export type EthAccountType = {
+  address: string;
+  balance: number;
+  shortAddress: string;
+};
+
 export interface ClientKeyPaires extends KeyPairsType {
   userid: string;
 }
@@ -70,6 +76,22 @@ export interface changeMessageStatusParams extends BaseParams {
   status: MessageStatus;
 }
 
+export type MessageListItem = {
+  cipher_suite: string;
+  from: string;
+  topic: string;
+  from_sign: string;
+  messageid: string;
+  payload_type: string;
+  timestamp: number;
+  message_status: {
+    status: MessageStatus;
+    timestamp: number;
+  };
+  payload: string;
+  version: number;
+};
+
 export interface searchParams extends BaseParams {
   keyword: string;
 }
@@ -89,3 +111,34 @@ export interface operationFriendParams extends BaseParams {
   target_userid: string;
   action: ActionType;
 }
+
+export type ContactListItemType = {
+  userid: string;
+};
+
+export type SearchUsersResponse = {
+  userid: string;
+  wallet_address: string;
+  wallet_type: string;
+};
+
+export type UpdateMyProfileResponse = {
+  userid: string;
+  wallet_address: string;
+  wallet_type: string;
+  nickname: string;
+  avatar_url: string;
+};
+
+export interface ChangeNotificationStatusParams extends BaseParams {
+  messages: string[];
+  status: MessageStatus;
+}
+
+export type NotifyResponse = {
+  title: string;
+  content: string;
+  type: string;
+  version: number;
+  timestamp: number;
+};

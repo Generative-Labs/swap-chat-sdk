@@ -12,6 +12,9 @@ import {
   profileParams,
   sendFriendParams,
   operationFriendParams,
+  SearchUsersResponse,
+  UpdateMyProfileResponse,
+  ChangeNotificationStatusParams,
 } from '../types';
 
 export const savePublicKeyRequest = async (payload: SavePublicKeyParams) => {
@@ -64,19 +67,21 @@ export const changeMessageStatusRequest = async (payload: changeMessageStatusPar
 /**
  * @API User
  */
-export const searchUsersRequest = async (payload: searchParams) => {
+export const searchUsersRequest = async (payload: searchParams): Promise<SearchUsersResponse> => {
   return await request.get('/api/users/search/', {
     params: payload,
   });
 };
 
-export const getMyProfileRequest = async (payload: BaseParams) => {
+export const getMyProfileRequest = async (payload: BaseParams): Promise<SearchUsersResponse> => {
   return await request.get('/api/my_profile/', {
     params: payload,
   });
 };
 
-export const updateMyProfileRequest = async (payload: profileParams) => {
+export const updateMyProfileRequest = async (
+  payload: profileParams,
+): Promise<UpdateMyProfileResponse> => {
   return await request.post('/api/my_profile/', payload);
 };
 
@@ -113,4 +118,11 @@ export const getRreceiveFriendListRequests = async (payload: createRoomParams) =
 
 export const operationFriendRequest = async (payload: operationFriendParams) => {
   return await request.post('/api/contacts/friend_requests/', payload);
+};
+
+/**
+ * @API Notification
+ */
+export const changeNotificationStatusRequest = async (payload: ChangeNotificationStatusParams) => {
+  return await request.post('/api/notification/status/', payload);
 };

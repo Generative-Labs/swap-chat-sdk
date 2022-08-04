@@ -1,5 +1,5 @@
 import { Client } from '../client';
-import { ActionType, ClientKeyPaires, PageParams } from '../types';
+import { ActionType, ClientKeyPaires, PageParams, ContactListItemType } from '../types';
 import { getParams } from '../core/utils';
 import {
   searchContactRequest,
@@ -13,9 +13,9 @@ import {
 export class Contact {
   private readonly _client: Client;
   private readonly _keys: ClientKeyPaires;
-  contactList: [] | null;
-  myFriendRequestList: [] | null;
-  receiveFriendRequestList: [] | null;
+  contactList: ContactListItemType[] | null;
+  myFriendRequestList: ContactListItemType[] | null;
+  receiveFriendRequestList: ContactListItemType[] | null;
 
   constructor(client: Client) {
     this._client = client;

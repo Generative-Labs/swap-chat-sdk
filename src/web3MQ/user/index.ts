@@ -1,5 +1,5 @@
 import { Client } from '../client';
-import { ClientKeyPaires } from '../types';
+import { ClientKeyPaires, SearchUsersResponse, UpdateMyProfileResponse } from '../types';
 import { searchUsersRequest, getMyProfileRequest, updateMyProfileRequest } from '../api';
 import { getParams } from '../core/utils';
 
@@ -11,19 +11,19 @@ export class User {
     this._keys = client.keys;
   }
 
-  async SearchUsers(walletAddress: string) {
+  async searchUsers(walletAddress: string): Promise<SearchUsersResponse> {
     const params = await getParams(this._keys);
     const data = await searchUsersRequest({ ...params, keyword: walletAddress });
     return data;
   }
 
-  async getMyProfile() {
+  async getMyProfile(): Promise<SearchUsersResponse> {
     const params = await getParams(this._keys);
     const data = await getMyProfileRequest(params);
     return data;
   }
 
-  async updateMyProfile(nickname: string, avatar_url: string) {
+  async updateMyProfile(nickname: string, avatar_url: string): Promise<UpdateMyProfileResponse> {
     const params = await getParams(this._keys);
     const data = await updateMyProfileRequest({ ...params, nickname, avatar_url });
     return data;

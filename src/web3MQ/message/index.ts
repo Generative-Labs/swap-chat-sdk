@@ -1,12 +1,20 @@
 import { Client } from '../client';
-import { ClientKeyPaires, PageParams, MessageStatus } from '../types';
+import {
+  ClientKeyPaires,
+  PageParams,
+  MessageStatus,
+  MessageListItem,
+  NotifyResponse,
+} from '../types';
 import { sendMessageCommand, getParams, renderMessagesList } from '../core/utils';
 import { getMessageListRequest, changeMessageStatusRequest } from '../api';
+import { PbTypeNotificationListResp } from '../core/pbType';
+import { Web3MQMessageListResponse } from '../pb/message';
 
 export class Message {
   private readonly _client: Client;
   private readonly _keys: ClientKeyPaires;
-  messageList: any;
+  messageList: MessageListItem[] | null;
 
   constructor(client: Client) {
     this._client = client;
@@ -46,14 +54,6 @@ export class Message {
       const { topic } = channel.activeChannel;
       const concatArray = await sendMessageCommand(keys, topic, msg);
       connect.send(concatArray);
-      const message = {
-        content: msg,
-        id: this.messageList.length + 1,
-        sender_id: keys.userid,
-        timestamp: new Date(),
-      };
-      this.messageList = [...this.messageList, message];
-      this._client.emit('message.new', { type: 'message.new' });
     }
   }
   receive(pbType: number, bytes: Uint8Array) {
@@ -70,6 +70,13 @@ export class Message {
     //   this.messageList.push(message);
     //   this._client.emit('message.new', { type: 'message.new', data: message });
     // }
+    if (pbType === PbTypeNotificationListResp) {
+      console.log('Receive notification');
+      const notificationList = Web3MQMessageListResponse.fromBinary(bytes);
+      console.log('Receive notification----------', notificationList);
+      this._client.notify.receiveNotify(notificationList as unknown as NotifyResponse);
+    }
     console.log(pbType, bytes);
+    // this._client.emit('message.new', { type: 'message.new' });
   }
 }
