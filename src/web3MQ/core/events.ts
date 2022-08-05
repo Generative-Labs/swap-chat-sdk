@@ -26,6 +26,10 @@ export const EVENT_MAP = {
   'message.getThreadList': true,
   // 打开当前romm下的thread列表
   'message.openAllThread': true,
+  // 新通知
+  'notification.messageNew': true,
+  // 获取notification List
+  'notification.getList': true,
 };
 
 const IS_VALID_EVENT_MAP_TYPE = { ...EVENT_MAP, all: true };

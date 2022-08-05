@@ -6,9 +6,11 @@ import { getParams } from '../core/utils';
 export class Notify {
   private readonly _client: Client;
   private readonly _keys: ClientKeyPaires;
+  notificationList: NotifyResponse | null;
   constructor(client: Client) {
     this._client = client;
     this._keys = client.keys;
+    this.notificationList = null;
   }
 
   async changeNotificationStatus(messages: string[], status: MessageStatus = 'delivered') {
@@ -19,5 +21,7 @@ export class Notify {
 
   receiveNotify(notificationList: NotifyResponse) {
     console.log('notify class -------', notificationList);
+    this.notificationList = notificationList;
+    this._client.emit('notification.getList', { type: 'notification.getList' });
   }
 }
