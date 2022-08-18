@@ -1,5 +1,5 @@
 import { sha3_224 } from 'js-sha3';
-import { GenerateEd25519KeyPair, getCurrentDate } from '../core/utils';
+import { GenerateEd25519KeyPair, getCurrentDate } from '../utils';
 import { savePublicKeyRequest } from '../api';
 import { SavePublicKeyParams, EthAccountType } from '../types';
 

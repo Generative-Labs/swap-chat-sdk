@@ -5,7 +5,7 @@ import {
   getGroupMemberListRequest,
   inviteGroupMemberRequest,
 } from '../api';
-import { getParams } from '../core/utils';
+import { getParams } from '../utils';
 import { PageParams, ActiveChannelType, ClientKeyPaires } from '../types';
 
 export class Channel {

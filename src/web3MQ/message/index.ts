@@ -6,7 +6,7 @@ import {
   MessageListItem,
   NotifyResponse,
 } from '../types';
-import { sendMessageCommand, getParams, renderMessagesList } from '../core/utils';
+import { sendMessageCommand, getParams, renderMessagesList } from '../utils';
 import { getMessageListRequest, changeMessageStatusRequest } from '../api';
 import { PbTypeNotificationListResp } from '../core/pbType';
 import { Web3MQMessageListResponse } from '../pb/message';

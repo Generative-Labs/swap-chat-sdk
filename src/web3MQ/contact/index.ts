@@ -1,6 +1,6 @@
 import { Client } from '../client';
 import { ActionType, ClientKeyPaires, PageParams, ContactListItemType } from '../types';
-import { getParams } from '../core/utils';
+import { getParams } from '../utils';
 import {
   searchContactRequest,
   getContactListRequest,

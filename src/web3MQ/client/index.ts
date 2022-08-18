@@ -1,11 +1,12 @@
 import { Channel } from '../channel';
+import { Connect } from '../connect';
 import { Message } from '../message';
 import { User } from '../user';
 import { Contact } from '../contact';
-import { Connect } from '../core/connect';
 import { Notify } from '../notify';
 
 import event from '../core/eventEmitter';
+import { selectUrl } from '../utils';
 import { KeyPairsType, ClientKeyPaires, EventTypes } from '../types';
 
 export class Client {
@@ -20,9 +21,9 @@ export class Client {
   contact: Contact;
   notify: Notify;
 
-  constructor(keys: KeyPairsType, wsUrl: string) {
+  constructor(keys: KeyPairsType, wsUrl?: string) {
     this.keys = { ...keys, userid: `user:${keys.PublicKey}` };
-    this.wsUrl = wsUrl;
+    this.wsUrl = wsUrl || selectUrl();
     this.listeners = new event();
     this.channel = new Channel(this);
     this.connect = new Connect(this);
@@ -32,7 +33,7 @@ export class Client {
     this.notify = new Notify(this);
   }
 
-  public static getInstance = (keys: KeyPairsType, wsUrl: string) => {
+  public static getInstance = (keys: KeyPairsType, wsUrl?: string) => {
     if (!keys) {
       throw new Error('The PrivateKey and PublicKey is required!');
     }

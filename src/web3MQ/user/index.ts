@@ -1,7 +1,7 @@
 import { Client } from '../client';
 import { ClientKeyPaires, SearchUsersResponse, UpdateMyProfileResponse } from '../types';
 import { searchUsersRequest, getMyProfileRequest, updateMyProfileRequest } from '../api';
-import { getParams } from '../core/utils';
+import { getParams } from '../utils';
 
 export class User {
   private readonly _client: Client;

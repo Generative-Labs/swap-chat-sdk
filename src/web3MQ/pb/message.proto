@@ -6,7 +6,7 @@ message Web3MQRequestMessage {
     bytes payload = 1;
     string contentTopic = 2;
     uint32 version = 3;
-    string from = 4;
+    string comeFrom = 4;
     string fromSign = 5;
     string payloadType = 6;
     string cipherSuite = 7;
@@ -22,7 +22,7 @@ message Web3MQMessageStatusResp {
     string contentTopic = 2;
     string messageStatus = 3; // received delivered read
     string version = 4;
-    string from = 5;
+    string comeFrom = 5;
     string fromSign = 6;
     uint64 timestamp = 7;
 }
@@ -32,7 +32,7 @@ message Web3MQChangeMessageStatus {
     string contentTopic = 2;
     string messageStatus = 3; // received delivered read
     string version = 4;
-    string from = 5;
+    string comeFrom = 5;
     string fromSign = 6;
     uint64 timestamp = 7;
 }
@@ -42,7 +42,7 @@ message MessageItem {
     uint32 version = 2;
     bytes payload = 3;
     string payloadType = 4;
-    string from = 5;
+    string comeFrom = 5;
     string fromSign = 6;
     string contentTopic = 7;
     string cipherSuite = 8;
@@ -56,7 +56,7 @@ message Web3MQMessageListResponse {
 }
 
 message GetHistoryMessagesRequest {
-    string from = 1;
+    string comeFrom = 1;
     string fromSign = 2;
     uint32 version = 3;
     uint64 timestamp = 4;

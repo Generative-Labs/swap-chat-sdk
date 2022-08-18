@@ -1,8 +1,9 @@
 import ed from '@noble/ed25519';
 import { sha3_224 } from 'js-sha3';
-import { ClientKeyPaires } from '../types';
-import { ConnectCommand, Web3MQRequestMessage } from '../pb';
-import { PbTypeConnectReqCommand, PbTypeMessage } from './pbType';
+import { ClientKeyPaires } from './types';
+import { ConnectCommand, Web3MQRequestMessage } from './pb';
+import { PbTypeConnectReqCommand, PbTypeMessage } from './core/pbType';
+import { BASE_URL, BASE_WS } from './core/config';
 
 const ByteArrayToHexString = (byteArray: Iterable<unknown> | ArrayLike<unknown>) => {
   return Array.from(byteArray, (byte: any) => ('0' + (byte & 0xff).toString(16)).slice(-2)).join(
@@ -132,7 +133,7 @@ export const sendMessageCommand = async (
     payload: byteData,
     contentTopic: topic,
     version: 1,
-    from: userid,
+    comeFrom: userid,
     fromSign: fromSign,
     payloadType: 'text/plain; charset=utf-8',
     cipherSuite: cipherSuite,
@@ -192,4 +193,11 @@ export const renderMessagesList = async (msglist: any) => {
     };
     return message;
   });
+};
+
+export const selectUrl = (type: string = 'ws') => {
+  if (type === 'ws') {
+    return BASE_WS;
+  }
+  return BASE_URL;
 };

@@ -1,6 +1,6 @@
 import { Client } from '../client';
-import { sendConnectCommand } from './utils';
-import { PbTypeConnectRespCommand } from './pbType';
+import { sendConnectCommand, selectUrl } from '../utils';
+import { PbTypeConnectRespCommand } from '../core/pbType';
 
 export class Connect {
   private _client: Client;
@@ -18,7 +18,7 @@ export class Connect {
     if (!this._client.wsUrl) {
       throw new Error('The url is required!');
     }
-    const wsconn = new WebSocket(`ws://${this._client.wsUrl}`);
+    const wsconn = new WebSocket(selectUrl('ws'));
     wsconn.binaryType = 'arraybuffer';
 
     wsconn.onopen = async () => {

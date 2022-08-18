@@ -1,7 +1,7 @@
 import { Client } from '../client';
 import { ClientKeyPaires, MessageStatus, NotifyResponse } from '../types';
 import { changeNotificationStatusRequest } from '../api';
-import { getParams } from '../core/utils';
+import { getParams } from '../utils';
 
 export class Notify {
   private readonly _client: Client;

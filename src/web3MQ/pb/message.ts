@@ -28,9 +28,9 @@ export interface Web3MQRequestMessage {
    */
   version: number;
   /**
-   * @generated from protobuf field: string from = 4;
+   * @generated from protobuf field: string comeFrom = 4;
    */
-  from: string;
+  comeFrom: string;
   /**
    * @generated from protobuf field: string fromSign = 5;
    */
@@ -85,9 +85,9 @@ export interface Web3MQMessageStatusResp {
    */
   version: string;
   /**
-   * @generated from protobuf field: string from = 5;
+   * @generated from protobuf field: string comeFrom = 5;
    */
-  from: string;
+  comeFrom: string;
   /**
    * @generated from protobuf field: string fromSign = 6;
    */
@@ -118,9 +118,9 @@ export interface Web3MQChangeMessageStatus {
    */
   version: string;
   /**
-   * @generated from protobuf field: string from = 5;
+   * @generated from protobuf field: string comeFrom = 5;
    */
-  from: string;
+  comeFrom: string;
   /**
    * @generated from protobuf field: string fromSign = 6;
    */
@@ -151,9 +151,9 @@ export interface MessageItem {
    */
   payloadType: string;
   /**
-   * @generated from protobuf field: string from = 5;
+   * @generated from protobuf field: string comeFrom = 5;
    */
-  from: string;
+  comeFrom: string;
   /**
    * @generated from protobuf field: string fromSign = 6;
    */
@@ -193,9 +193,9 @@ export interface Web3MQMessageListResponse {
  */
 export interface GetHistoryMessagesRequest {
   /**
-   * @generated from protobuf field: string from = 1;
+   * @generated from protobuf field: string comeFrom = 1;
    */
-  from: string;
+  comeFrom: string;
   /**
    * @generated from protobuf field: string fromSign = 2;
    */
@@ -216,7 +216,7 @@ class Web3MQRequestMessage$Type extends MessageType<Web3MQRequestMessage> {
       { no: 1, name: 'payload', kind: 'scalar', T: 12 /*ScalarType.BYTES*/ },
       { no: 2, name: 'contentTopic', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 3, name: 'version', kind: 'scalar', T: 13 /*ScalarType.UINT32*/ },
-      { no: 4, name: 'from', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: 'comeFrom', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 5, name: 'fromSign', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 6, name: 'payloadType', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 7, name: 'cipherSuite', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
@@ -238,7 +238,7 @@ class Web3MQRequestMessage$Type extends MessageType<Web3MQRequestMessage> {
       payload: new Uint8Array(0),
       contentTopic: '',
       version: 0,
-      from: '',
+      comeFrom: '',
       fromSign: '',
       payloadType: '',
       cipherSuite: '',
@@ -271,8 +271,8 @@ class Web3MQRequestMessage$Type extends MessageType<Web3MQRequestMessage> {
       case /* uint32 version */ 3:
         message.version = reader.uint32();
         break;
-      case /* string from */ 4:
-        message.from = reader.string();
+      case /* string comeFrom */ 4:
+        message.comeFrom = reader.string();
         break;
       case /* string fromSign */ 5:
         message.fromSign = reader.string();
@@ -329,8 +329,8 @@ class Web3MQRequestMessage$Type extends MessageType<Web3MQRequestMessage> {
       writer.tag(2, WireType.LengthDelimited).string(message.contentTopic);
     /* uint32 version = 3; */
     if (message.version !== 0) writer.tag(3, WireType.Varint).uint32(message.version);
-    /* string from = 4; */
-    if (message.from !== '') writer.tag(4, WireType.LengthDelimited).string(message.from);
+    /* string comeFrom = 4; */
+    if (message.comeFrom !== '') writer.tag(4, WireType.LengthDelimited).string(message.comeFrom);
     /* string fromSign = 5; */
     if (message.fromSign !== '') writer.tag(5, WireType.LengthDelimited).string(message.fromSign);
     /* string payloadType = 6; */
@@ -368,7 +368,7 @@ class Web3MQMessageStatusResp$Type extends MessageType<Web3MQMessageStatusResp> 
       { no: 2, name: 'contentTopic', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 3, name: 'messageStatus', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 4, name: 'version', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
-      { no: 5, name: 'from', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+      { no: 5, name: 'comeFrom', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 6, name: 'fromSign', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       {
         no: 7,
@@ -385,7 +385,7 @@ class Web3MQMessageStatusResp$Type extends MessageType<Web3MQMessageStatusResp> 
       contentTopic: '',
       messageStatus: '',
       version: '',
-      from: '',
+      comeFrom: '',
       fromSign: '',
       timestamp: 0n,
     };
@@ -416,8 +416,8 @@ class Web3MQMessageStatusResp$Type extends MessageType<Web3MQMessageStatusResp> 
       case /* string version */ 4:
         message.version = reader.string();
         break;
-      case /* string from */ 5:
-        message.from = reader.string();
+      case /* string comeFrom */ 5:
+        message.comeFrom = reader.string();
         break;
       case /* string fromSign */ 6:
         message.fromSign = reader.string();
@@ -459,8 +459,8 @@ class Web3MQMessageStatusResp$Type extends MessageType<Web3MQMessageStatusResp> 
       writer.tag(3, WireType.LengthDelimited).string(message.messageStatus);
     /* string version = 4; */
     if (message.version !== '') writer.tag(4, WireType.LengthDelimited).string(message.version);
-    /* string from = 5; */
-    if (message.from !== '') writer.tag(5, WireType.LengthDelimited).string(message.from);
+    /* string comeFrom = 5; */
+    if (message.comeFrom !== '') writer.tag(5, WireType.LengthDelimited).string(message.comeFrom);
     /* string fromSign = 6; */
     if (message.fromSign !== '') writer.tag(6, WireType.LengthDelimited).string(message.fromSign);
     /* uint64 timestamp = 7; */
@@ -482,7 +482,7 @@ class Web3MQChangeMessageStatus$Type extends MessageType<Web3MQChangeMessageStat
       { no: 2, name: 'contentTopic', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 3, name: 'messageStatus', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 4, name: 'version', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
-      { no: 5, name: 'from', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+      { no: 5, name: 'comeFrom', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 6, name: 'fromSign', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       {
         no: 7,
@@ -499,7 +499,7 @@ class Web3MQChangeMessageStatus$Type extends MessageType<Web3MQChangeMessageStat
       contentTopic: '',
       messageStatus: '',
       version: '',
-      from: '',
+      comeFrom: '',
       fromSign: '',
       timestamp: 0n,
     };
@@ -531,8 +531,8 @@ class Web3MQChangeMessageStatus$Type extends MessageType<Web3MQChangeMessageStat
       case /* string version */ 4:
         message.version = reader.string();
         break;
-      case /* string from */ 5:
-        message.from = reader.string();
+      case /* string comeFrom */ 5:
+        message.comeFrom = reader.string();
         break;
       case /* string fromSign */ 6:
         message.fromSign = reader.string();
@@ -574,8 +574,8 @@ class Web3MQChangeMessageStatus$Type extends MessageType<Web3MQChangeMessageStat
       writer.tag(3, WireType.LengthDelimited).string(message.messageStatus);
     /* string version = 4; */
     if (message.version !== '') writer.tag(4, WireType.LengthDelimited).string(message.version);
-    /* string from = 5; */
-    if (message.from !== '') writer.tag(5, WireType.LengthDelimited).string(message.from);
+    /* string comeFrom = 5; */
+    if (message.comeFrom !== '') writer.tag(5, WireType.LengthDelimited).string(message.comeFrom);
     /* string fromSign = 6; */
     if (message.fromSign !== '') writer.tag(6, WireType.LengthDelimited).string(message.fromSign);
     /* uint64 timestamp = 7; */
@@ -597,7 +597,7 @@ class MessageItem$Type extends MessageType<MessageItem> {
       { no: 2, name: 'version', kind: 'scalar', T: 13 /*ScalarType.UINT32*/ },
       { no: 3, name: 'payload', kind: 'scalar', T: 12 /*ScalarType.BYTES*/ },
       { no: 4, name: 'payloadType', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
-      { no: 5, name: 'from', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+      { no: 5, name: 'comeFrom', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 6, name: 'fromSign', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 7, name: 'contentTopic', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 8, name: 'cipherSuite', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
@@ -624,7 +624,7 @@ class MessageItem$Type extends MessageType<MessageItem> {
       version: 0,
       payload: new Uint8Array(0),
       payloadType: '',
-      from: '',
+      comeFrom: '',
       fromSign: '',
       contentTopic: '',
       cipherSuite: '',
@@ -659,8 +659,8 @@ class MessageItem$Type extends MessageType<MessageItem> {
       case /* string payloadType */ 4:
         message.payloadType = reader.string();
         break;
-      case /* string from */ 5:
-        message.from = reader.string();
+      case /* string comeFrom */ 5:
+        message.comeFrom = reader.string();
         break;
       case /* string fromSign */ 6:
         message.fromSign = reader.string();
@@ -713,8 +713,8 @@ class MessageItem$Type extends MessageType<MessageItem> {
     /* string payloadType = 4; */
     if (message.payloadType !== '')
       writer.tag(4, WireType.LengthDelimited).string(message.payloadType);
-    /* string from = 5; */
-    if (message.from !== '') writer.tag(5, WireType.LengthDelimited).string(message.from);
+    /* string comeFrom = 5; */
+    if (message.comeFrom !== '') writer.tag(5, WireType.LengthDelimited).string(message.comeFrom);
     /* string fromSign = 6; */
     if (message.fromSign !== '') writer.tag(6, WireType.LengthDelimited).string(message.fromSign);
     /* string contentTopic = 7; */
@@ -816,7 +816,7 @@ export const Web3MQMessageListResponse = new Web3MQMessageListResponse$Type();
 class GetHistoryMessagesRequest$Type extends MessageType<GetHistoryMessagesRequest> {
   constructor() {
     super('pb.GetHistoryMessagesRequest', [
-      { no: 1, name: 'from', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+      { no: 1, name: 'comeFrom', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 2, name: 'fromSign', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 3, name: 'version', kind: 'scalar', T: 13 /*ScalarType.UINT32*/ },
       {
@@ -829,7 +829,7 @@ class GetHistoryMessagesRequest$Type extends MessageType<GetHistoryMessagesReque
     ]);
   }
   create(value?: PartialMessage<GetHistoryMessagesRequest>): GetHistoryMessagesRequest {
-    const message = { from: '', fromSign: '', version: 0, timestamp: 0n };
+    const message = { comeFrom: '', fromSign: '', version: 0, timestamp: 0n };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
     if (value !== undefined)
       reflectionMergePartial<GetHistoryMessagesRequest>(this, message, value);
@@ -846,8 +846,8 @@ class GetHistoryMessagesRequest$Type extends MessageType<GetHistoryMessagesReque
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-      case /* string from */ 1:
-        message.from = reader.string();
+      case /* string comeFrom */ 1:
+        message.comeFrom = reader.string();
         break;
       case /* string fromSign */ 2:
         message.fromSign = reader.string();
@@ -882,8 +882,8 @@ class GetHistoryMessagesRequest$Type extends MessageType<GetHistoryMessagesReque
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* string from = 1; */
-    if (message.from !== '') writer.tag(1, WireType.LengthDelimited).string(message.from);
+    /* string comeFrom = 1; */
+    if (message.comeFrom !== '') writer.tag(1, WireType.LengthDelimited).string(message.comeFrom);
     /* string fromSign = 2; */
     if (message.fromSign !== '') writer.tag(2, WireType.LengthDelimited).string(message.fromSign);
     /* uint32 version = 3; */
