@@ -1,7 +1,7 @@
 import { Client } from '../client';
 import {
   ClientKeyPaires,
-  PageParams,
+  Web3PageParams,
   MessageStatus,
   MessageListItem,
   NotifyResponse,
@@ -23,7 +23,7 @@ export class Message {
     this.messageList = null;
   }
 
-  async getMessageList(option: PageParams) {
+  async getMessageList(option: Web3PageParams) {
     const params = await getParams(this._keys);
     const topic = this._client.channel.activeChannel?.topic;
     if (topic) {

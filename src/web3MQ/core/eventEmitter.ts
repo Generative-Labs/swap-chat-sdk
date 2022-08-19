@@ -1,5 +1,5 @@
 import { isValidEventType } from './events';
-import { EventTypes } from '../types';
+import { Web3EventTypes } from '../types';
 class EventEmitter {
   events: Record<string, any>;
 
@@ -8,7 +8,7 @@ class EventEmitter {
   }
 
   // 订阅
-  on(eventName: EventTypes, callback: any) {
+  on(eventName: Web3EventTypes, callback: any) {
     const valid = isValidEventType(eventName);
     if (!valid) {
       throw Error(`Invalid event type ${eventName}`);
@@ -23,7 +23,7 @@ class EventEmitter {
   }
 
   // 触发
-  emit(eventName: EventTypes, ...args: any[]) {
+  emit(eventName: Web3EventTypes, ...args: any[]) {
     const callbacks = this.events[eventName] || [];
     if (callbacks.length === 0) {
       throw new Error(`The ${eventName} event was not registered`);
@@ -32,7 +32,7 @@ class EventEmitter {
   }
 
   // 取消订阅，
-  off(eventName: EventTypes, callback: any) {
+  off(eventName: Web3EventTypes, callback: any) {
     if (callback === undefined) {
       this.events[eventName] = [];
       // throw new Error('The callback function is required');
@@ -45,7 +45,7 @@ class EventEmitter {
     this.events[eventName] = newCallbacks;
   }
 
-  once(eventName: EventTypes, callback: any) {
+  once(eventName: Web3EventTypes, callback: any) {
     if (callback === undefined) {
       throw new Error('The callback function is required');
     }

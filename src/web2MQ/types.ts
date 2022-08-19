@@ -2,12 +2,6 @@ import { EVENT_MAP } from './core/events';
 
 export type EventTypes = 'all' | keyof typeof EVENT_MAP;
 
-export type SDKTypes = 'none' | 'web2' | 'web3';
-
-export type OptionsType = {
-  sdkType: SDKTypes;
-  isNotify: boolean;
-};
 export interface ServiceResponse {
   data: any;
   msg: string;

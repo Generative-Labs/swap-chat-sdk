@@ -7,7 +7,7 @@ import { Notify } from '../notify';
 
 import event from '../core/eventEmitter';
 import { selectUrl } from '../utils';
-import { KeyPairsType, ClientKeyPaires, EventTypes } from '../types';
+import { KeyPairsType, ClientKeyPaires, Web3EventTypes } from '../types';
 
 export class Client {
   private static _instance: Client | null;
@@ -43,9 +43,9 @@ export class Client {
     return Client._instance as Client;
   };
 
-  on = (eventName: EventTypes, callback: any) => this.listeners.on(eventName, callback);
-  emit = (eventName: EventTypes, data: { type: EventTypes; data?: any }) =>
+  on = (eventName: Web3EventTypes, callback: any) => this.listeners.on(eventName, callback);
+  emit = (eventName: Web3EventTypes, data: { type: Web3EventTypes; data?: any }) =>
     this.listeners.emit(eventName, data);
-  off = (eventName: EventTypes, callback?: any) => this.listeners.off(eventName, callback);
-  once = (eventName: EventTypes, callback: any) => this.listeners.once(eventName, callback);
+  off = (eventName: Web3EventTypes, callback?: any) => this.listeners.off(eventName, callback);
+  once = (eventName: Web3EventTypes, callback: any) => this.listeners.once(eventName, callback);
 }

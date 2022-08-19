@@ -4,7 +4,7 @@ import request from './request';
 import { getUserInfoFromToken, hasNotifyPermission, isCurrentWindow, notifyMessage } from './utils';
 import type { SendMessageData, GetRoomsParams } from '../types';
 
-export class Web2Connect {
+export class Connect {
   token: string;
   isNotify: boolean;
   hasNotifyPermission: boolean;

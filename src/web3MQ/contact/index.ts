@@ -1,5 +1,5 @@
 import { Client } from '../client';
-import { ActionType, ClientKeyPaires, PageParams, ContactListItemType } from '../types';
+import { ActionType, ClientKeyPaires, Web3PageParams, ContactListItemType } from '../types';
 import { getParams } from '../utils';
 import {
   searchContactRequest,
@@ -31,7 +31,7 @@ export class Contact {
     return data;
   }
 
-  async getContactList(option: PageParams) {
+  async getContactList(option: Web3PageParams) {
     const { emit } = this._client;
     const params = await getParams(this._keys);
     const { data } = await getContactListRequest({ ...params, ...option });
@@ -45,7 +45,7 @@ export class Contact {
     return data;
   }
 
-  async getMyFriendRequestList(option: PageParams) {
+  async getMyFriendRequestList(option: Web3PageParams) {
     const { emit } = this._client;
     const params = await getParams(this._keys);
     const { data } = await getMyFriendListRequset({ ...params, ...option });
@@ -54,7 +54,7 @@ export class Contact {
     // return data;
   }
 
-  async getReceiveFriendRequestList(option: PageParams) {
+  async getReceiveFriendRequestList(option: Web3PageParams) {
     const { emit } = this._client;
     const params = await getParams(this._keys);
     const { data } = await getRreceiveFriendListRequests({ ...params, ...option });

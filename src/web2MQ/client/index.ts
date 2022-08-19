@@ -1,11 +1,9 @@
 import type { PacketCallback } from 'mqtt';
 import event from '../core/eventEmitter';
-import { Web2Connect } from '../core/web2Connect';
-import { Web3Connect } from '../core/web3Connect';
-import { NotifyConnect } from '../core/notifyConnect';
+import { Connect } from '../core/connect';
 import { login, setToken } from '../core/utils';
 
-import { OptionsType, LoginParams, EventTypes } from '../types';
+import { LoginParams, EventTypes } from '../types';
 
 import { Message } from '../message';
 import { Channel } from '../channel';
@@ -16,8 +14,7 @@ import { Notify } from '../notify';
 export class Client {
   private static _instance: Client | null;
   token?: string;
-  mqtt?: Web2Connect | Web3Connect | NotifyConnect;
-  options: OptionsType;
+  mqtt?: Connect;
   listeners: event;
   channel: Channel;
   messages: Message;
@@ -31,19 +28,17 @@ export class Client {
    * @param {OptionsType} options - Web2 is used by default and system notifications are enabled
    */
 
-  constructor(props: LoginParams | string, options?: OptionsType) {
-    const defaultOptions = { sdkType: 'web2', isNotify: true } as OptionsType;
-    this.options = options ? { ...defaultOptions, ...options } : defaultOptions;
+  constructor(props: LoginParams | string, isNotify: boolean) {
     if (typeof props === 'object') {
       login(props).then(({ access_token }) => {
         this.token = access_token;
-        this.initSDK(access_token);
+        this.mqtt = new Connect(access_token, isNotify);
       });
     }
     if (typeof props === 'string') {
       this.token = props;
       setToken(props);
-      this.initSDK(props);
+      this.mqtt = new Connect(props, isNotify);
     }
     this.listeners = new event();
     this.channel = new Channel(this);
@@ -53,26 +48,11 @@ export class Client {
     this.notify = new Notify(this);
   }
 
-  public static getInstance = (props: LoginParams | string, options?: OptionsType) => {
+  public static getInstance = (props: LoginParams | string, isNotify: boolean = true) => {
     if (!Client._instance) {
-      Client._instance = new Client(props, options);
+      Client._instance = new Client(props, isNotify);
     }
     return Client._instance as Client;
-  };
-
-  private initSDK = (token: string) => {
-    const { sdkType, isNotify } = this.options;
-    console.log(this.options);
-    if (sdkType === 'web2') {
-      this.mqtt = new Web2Connect(token, isNotify);
-    }
-    if (sdkType === 'web3') {
-      this.mqtt = new Web3Connect(token, isNotify);
-    }
-    // Developed later as a separate feature
-    if (sdkType === 'none' && isNotify) {
-      this.mqtt = new NotifyConnect(token);
-    }
   };
 
   send = (messageData: any, callback?: PacketCallback) => {

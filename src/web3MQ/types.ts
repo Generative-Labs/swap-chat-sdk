@@ -1,14 +1,14 @@
 import { EVENT_MAP } from './core/events';
 
-export type EventTypes = 'all' | keyof typeof EVENT_MAP;
+export type Web3EventTypes = 'all' | keyof typeof EVENT_MAP;
 
-export type ServiceResponse = {
+export type Web3ServiceResponse = {
   data: any;
   msg: string;
   code: number;
 };
 
-export type PageParams = {
+export type Web3PageParams = {
   page?: number;
   size?: number;
 };
@@ -44,7 +44,7 @@ export type BaseParams = {
   timestamp: number;
 };
 
-export interface createRoomParams extends PageParams {
+export interface createRoomParams extends Web3PageParams {
   userid: string;
   signature: string;
   timestamp: number;

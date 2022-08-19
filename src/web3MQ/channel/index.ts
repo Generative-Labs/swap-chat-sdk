@@ -6,7 +6,7 @@ import {
   inviteGroupMemberRequest,
 } from '../api';
 import { getParams } from '../utils';
-import { PageParams, ActiveChannelType, ClientKeyPaires } from '../types';
+import { Web3PageParams, ActiveChannelType, ClientKeyPaires } from '../types';
 
 export class Channel {
   private readonly _client: Client;
@@ -26,7 +26,7 @@ export class Channel {
     this._client.emit('channel.activeChange', { type: 'channel.activeChange' });
   }
 
-  async queryChannels(option: PageParams) {
+  async queryChannels(option: Web3PageParams) {
     const params = await getParams(this._keys);
     const {
       data: { result = [] },
@@ -52,7 +52,7 @@ export class Channel {
     this._client.emit('channel.getList', { type: 'channel.getList' });
   }
 
-  async getGroupMemberList(option: PageParams) {
+  async getGroupMemberList(option: Web3PageParams) {
     const params = await getParams(this._keys);
     const groupid = this.activeChannel?.topic || '';
     const data = await getGroupMemberListRequest({ ...params, groupid, ...option });
