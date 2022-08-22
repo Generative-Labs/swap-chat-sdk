@@ -42,15 +42,7 @@ const commonConf = {
       exclude: '**/node_modules/**',
     }),
   ],
-  external: [
-    'axios',
-    'mqtt',
-    '@walletconnect/client',
-    '@walletconnect/qrcode-modal',
-    '@protobuf-ts/plugin',
-    'js-sha3',
-    '@noble/ed25519',
-  ],
+  external: ['axios', 'mqtt', '@walletconnect/client', '@walletconnect/qrcode-modal'],
 };
 
 // 需要导出的模块类型
@@ -63,9 +55,6 @@ const outputMap = [
       mqtt: 'mqtt',
       '@walletconnect/client': 'WalletConnect',
       '@walletconnect/qrcode-modal': 'QRCodeModal',
-      '@noble/ed25519': 'ed',
-      '@protobuf-ts/plugin': 'pb',
-      'js-sha3': 'js-sha3',
     },
   },
   // {

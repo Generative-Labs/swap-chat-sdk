@@ -1,4 +1,8 @@
-export * as Web2MQ from './web2MQ';
-export * as Web3MQ from './web3MQ';
-export * from './web2MQ/types';
-export * from './web3MQ/types';
+export * from './authorization';
+export * from './client';
+export * from './message';
+export * from './user';
+export * from './channel';
+export * from './contact';
+export * from './types';
+export { login, register, getLoginRandomSecret } from './core/utils';
