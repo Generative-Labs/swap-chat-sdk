@@ -312,6 +312,24 @@ export type getNextIdSignPayloadParams = {
   identity: string;
   public_key: string;
 };
+
+export type GetUserNameTagParams = {
+  user_id: string;
+  wallet_address: string;
+};
+
+export type GetUserDotBitsParams = {
+  user_id: string;
+  wallet_address: string;
+};
+
+export type GetUserNFTListParams = {
+  user_id: string;
+  wallet_address: string;
+  page: number;
+  size: number;
+};
+
 export type CreateNextIdUserParams = {
   action: string;
   platform: string;

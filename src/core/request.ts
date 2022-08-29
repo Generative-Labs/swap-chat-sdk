@@ -55,7 +55,12 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   (response: AxiosResponse<ServiceResponse>) => {
-    const { data } = response;
+    const { data, config } = response;
+    // 第三方url
+    let secondUrl = config.url?.split('?')[0];
+    if (secondUrl === 'https://proof-service.next.id/v1/proof') {
+      return data;
+    }
     if (data.code !== 0) {
       throw new Error(data.msg);
     }

@@ -9,13 +9,16 @@ import {
   // GetOpenSeaAssetResponse,
   UserInfo,
   // GetOpenseaUserInfoParams,
-  // GetNextIdUserInfoParams,
+  GetNextIdUserInfoParams,
+  GetUserNameTagParams,
+  GetUserDotBitsParams,
+  GetUserNFTListParams,
   // GetTwitterUserInfoParams,
   // CreateNextIdUserParams,
 } from '../types';
 import request from '../core/request';
 import { getUserAvatar, getUserInfoFromToken } from '../core/utils';
-// import { NEXT_ID_HOST } from '../core/config';
+import { NEXT_ID_HOST } from '../core/config';
 
 export class User {
   _client: Client;
@@ -99,11 +102,38 @@ export class User {
   //  * @name 获取nextid用户信息
   //  * @param params
   //  */
-  // getNextIdUserInfo(params: GetNextIdUserInfoParams) {
-  //   return request.get(
-  //     `${NEXT_ID_HOST}/v1/proof?platform=${params.platform}&identity=${params.identity}`,
-  //   );
-  // }
+  getNextIdUserInfo(params: GetNextIdUserInfoParams): Promise<any> {
+    return request.get(
+      `${NEXT_ID_HOST}/v1/proof?platform=${params.platform}&identity=${params.identity}`,
+    );
+  }
+
+  /**
+   *  @name 获取nametag
+   */
+  getUserNameTag(params: GetUserNameTagParams): Promise<any> {
+    return request.post(`/users/${params.user_id}/nametags `, {
+      wallet_address: params.wallet_address,
+    });
+  }
+
+  /**
+   *  @name 获取.bit
+   */
+  getUserDotBits(params: GetUserDotBitsParams): Promise<any> {
+    return request.post(`/users/${params.user_id}/dotbits`, {
+      wallet_address: params.wallet_address,
+    });
+  }
+
+  // 获取用户nft列表
+  getUserNFTList(params: GetUserNFTListParams): Promise<any> {
+    return request.post(`/users/${params.user_id}/nfts`, {
+      wallet_address: params.wallet_address,
+      page: params.page,
+      size: params.size,
+    });
+  }
 
   // /**
   //  * @name 创建nextid用户
